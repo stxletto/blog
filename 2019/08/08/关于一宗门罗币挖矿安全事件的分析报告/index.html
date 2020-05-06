@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="关于一宗门罗币挖矿安全事件的分析报告概述2019年08月08日，我们检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。  事件攻击流程图 详情通过终端EDR反馈的定时任务和CPU资源占用情况，我们在&#x2F;var&#x2F;tmp&#x2F;路径下发现9个可疑">
+  <meta name="description" content="2019年08月08日，stxletto检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于一宗门罗币挖矿安全事件的分析报告">
 <meta property="og:url" content="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/index.html">
 <meta property="og:site_name" content="深澜深蓝">
-<meta property="og:description" content="关于一宗门罗币挖矿安全事件的分析报告概述2019年08月08日，我们检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。  事件攻击流程图 详情通过终端EDR反馈的定时任务和CPU资源占用情况，我们在&#x2F;var&#x2F;tmp&#x2F;路径下发现9个可疑">
+<meta property="og:description" content="2019年08月08日，stxletto检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg">
 <meta property="og:image" content="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-2.jpg">
@@ -67,7 +67,7 @@
 <meta property="og:image" content="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-38.jpg">
 <meta property="og:image" content="http://www.stxletto.com/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-39.jpg">
 <meta property="article:published_time" content="2019-08-08T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-05T15:05:13.264Z">
+<meta property="article:modified_time" content="2019-08-08T00:00:00.000Z">
 <meta property="article:author" content="stxletto">
 <meta property="article:tag" content="安全">
 <meta property="article:tag" content="漏洞">
@@ -226,15 +226,9 @@
 
               <time title="创建时间：2019-08-08 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-08T08:00:00+08:00">2019-08-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:05:13" itemprop="dateModified" datetime="2020-05-05T23:05:13+08:00">2020-05-05</time>
-              </span>
 
           
+            <div class="post-description">2019年08月08日，stxletto检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</div>
 
         </div>
       </header>
@@ -245,7 +239,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="关于一宗门罗币挖矿安全事件的分析报告"><a href="#关于一宗门罗币挖矿安全事件的分析报告" class="headerlink" title="关于一宗门罗币挖矿安全事件的分析报告"></a>关于一宗门罗币挖矿安全事件的分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年08月08日，我们检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</p>
+        <h1 id="关于一宗门罗币挖矿安全事件的分析报告"><a href="#关于一宗门罗币挖矿安全事件的分析报告" class="headerlink" title="关于一宗门罗币挖矿安全事件的分析报告"></a>关于一宗门罗币挖矿安全事件的分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年08月08日，stxletto检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</p>
 <p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg" alt="图-1"></p>
 <p>事件攻击流程图</p>
 <h2 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h2><p>通过终端EDR反馈的定时任务和CPU资源占用情况，我们在/var/tmp/路径下发现9个可疑文件，并有一个以空格做为名称的文件夹。</p>
@@ -592,7 +586,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">stxletto</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         

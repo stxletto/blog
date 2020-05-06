@@ -17,19 +17,19 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"www.stxletto.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Linux系统安全缺陷缓解机制现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。 例如只读重定位（RELRO，RELocation Read-Only），禁止执行（NX，NoExecute），栈保护（Canaries），地址空间布局随机化（ASLR，Address Space Layout Randomization）和位置无关可执行文件（PIE，Position Independe">
+  <meta name="description" content="现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux系统安全缺陷缓解机制">
 <meta property="og:url" content="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="深澜深蓝">
-<meta property="og:description" content="Linux系统安全缺陷缓解机制现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。 例如只读重定位（RELRO，RELocation Read-Only），禁止执行（NX，NoExecute），栈保护（Canaries），地址空间布局随机化（ASLR，Address Space Layout Randomization）和位置无关可执行文件（PIE，Position Independe">
+<meta property="og:description" content="现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png">
 <meta property="article:published_time" content="2020-04-28T00:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-05T15:27:23.228Z">
+<meta property="article:modified_time" content="2020-04-28T00:00:00.000Z">
 <meta property="article:author" content="stxletto">
 <meta property="article:tag" content="安全">
 <meta property="article:tag" content="漏洞">
@@ -188,15 +188,9 @@
 
               <time title="创建时间：2020-04-28 08:00:00" itemprop="dateCreated datePublished" datetime="2020-04-28T08:00:00+08:00">2020-04-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 23:27:23" itemprop="dateModified" datetime="2020-05-05T23:27:23+08:00">2020-05-05</time>
-              </span>
 
           
+            <div class="post-description">现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</div>
 
         </div>
       </header>
@@ -466,7 +460,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">stxletto</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
