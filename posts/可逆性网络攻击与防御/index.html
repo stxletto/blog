@@ -23,36 +23,36 @@
   <meta name="description" content="在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度">
 <meta property="og:type" content="article">
 <meta property="og:title" content="可逆性网络攻击与防御">
-<meta property="og:url" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/index.html">
+<meta property="og:url" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/index.html">
 <meta property="og:site_name" content="深澜深蓝">
 <meta property="og:description" content="在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png">
-<meta property="og:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png">
 <meta property="article:published_time" content="2018-10-28T05:00:00.000Z">
 <meta property="article:modified_time" content="2018-10-28T05:00:00.000Z">
 <meta property="article:author" content="stxletto">
@@ -63,9 +63,9 @@
 <meta property="article:tag" content="识别">
 <meta property="article:tag" content="检测">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png">
+<meta name="twitter:image" content="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png">
 
-<link rel="canonical" href="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
+<link rel="canonical" href="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
 
 
 <script id="page-configurations">
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -215,6 +215,27 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
             <div class="post-description">在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度分层体系防御方案。</div>
 
         </div>
@@ -230,10 +251,10 @@
 <p>有一群穿着格子衫背着双肩包的年轻人，他们中不乏段子手、理论家、操作神，也有文艺青年。他们是普通的开发者，也是这场网络攻防对抗的主角，也会一起分享和探讨安全领域的前沿技术和发展趋势。</p>
 <p>深澜深蓝(stxletto)，在安全行业浸染十余年，多次参与响应网络高危漏洞、国家级会议网络安全保障，拥有丰富的从业经验。其致力于高级威胁识别与缓解方向，曾主导设计并实现了新一代安全产品重要模块，拥有多篇技术发明专利。</p>
 <p>面对组织化、商业化、武器化的安全趋势，stxletto倡议应该尤其注意可逆性网络攻击及防御，提炼先进的模型思想，构建深度分层防御体系。在2018年10月某安全会议中，stxletto做了《可逆性网络攻击与防御》的主题分享，本主题在特朗普废止PPD-20并签署新的美国国家网络战略的时代背景下，从已经发生的网络攻击实际案例中揭示可逆性攻击的趋势、梳理总结网络攻击发起方式。以安全三要素为支点，介绍赛博空间的三类威胁，总结四种潜在的可逆性攻击形式及四大基础应用，最后结合经典的攻击链模型钻石模型，和安全从业者们共同解读一个实际案例中的深度分层体系防御方案。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="美国废除-PPD-20"><a href="#美国废除-PPD-20" class="headerlink" title="美国废除 PPD-20"></a>美国废除 PPD-20</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png" alt="图-1"></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="美国废除-PPD-20"><a href="#美国废除-PPD-20" class="headerlink" title="美国废除 PPD-20"></a>美国废除 PPD-20</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-1.png" alt="图-1"></p>
 <p>2018年9月20日，美国总统特朗普签署新的国家网络战略。</p>
 <p>这项政策这代替了前总统奥巴马2012年签署的“第20号总统政策指令”（Presidential Policy Directive 20，PPD-20）。“PPD-20”中要求，进攻型行动需要经过美国政府批准。主要目的是控制那些超出日常数字间谍活动或计算机利用行动。如果发起具有重大后果的行动，除了需跨机构小组同意，还需取得总统的批准。</p>
-<h3 id="美国新版国家网络战略"><a href="#美国新版国家网络战略" class="headerlink" title="美国新版国家网络战略"></a>美国新版国家网络战略</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png" alt="图-2"></p>
+<h3 id="美国新版国家网络战略"><a href="#美国新版国家网络战略" class="headerlink" title="美国新版国家网络战略"></a>美国新版国家网络战略</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-2.png" alt="图-2"></p>
 <h4 id="三大特点"><a href="#三大特点" class="headerlink" title="三大特点"></a>三大特点</h4><ul>
 <li>战略对手瞄准中俄；</li>
 <li>战略布局立足构建体系；</li>
@@ -284,28 +305,28 @@
 <p>斯坦福大学的网络安全研究员Max Smeets表示：“战争行动就是棍棒加胡萝卜。虽然网络行动通常被认为可以惩罚或增加对手的成本，但是如果网络行动是可逆的，则可以增加“胡萝卜”效应，对一些敌人的可能行为做出奖励反应。 可逆性网络攻击类似于经济制裁，但更有效。</p>
 <p>可逆性网络攻击的概念类似于勒索软件，当犯罪分子将数据作为“人质”索取“赎金”。可逆攻击性网络攻击的一个例子是加密对手的数据以强制改变敌人行为，然后在达成协议后解密该信息。</p>
 <p>在未来，不可逆网络攻击可能会被解释为违反战争法规。</p>
-<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="2010-年美以攻击伊朗核电站"><a href="#2010-年美以攻击伊朗核电站" class="headerlink" title="2010 年美以攻击伊朗核电站"></a>2010 年美以攻击伊朗核电站</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png" alt="图-3"><br>通过U盘进入核电站内部网络的Stuxnet导致纳坦兹核设施大约五分之一离心机瘫痪。图中右侧显示器中的灰点表示离线的离心机，数量明显偏多。</p>
-<h3 id="2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统"><a href="#2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统" class="headerlink" title="2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统"></a>2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png" alt="图-4"></p>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><h3 id="2010-年美以攻击伊朗核电站"><a href="#2010-年美以攻击伊朗核电站" class="headerlink" title="2010 年美以攻击伊朗核电站"></a>2010 年美以攻击伊朗核电站</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-3.png" alt="图-3"><br>通过U盘进入核电站内部网络的Stuxnet导致纳坦兹核设施大约五分之一离心机瘫痪。图中右侧显示器中的灰点表示离线的离心机，数量明显偏多。</p>
+<h3 id="2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统"><a href="#2013-年伊朗黑客攻击纽约市鲍曼大坝控制系统" class="headerlink" title="2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统"></a>2013 年伊朗黑客攻击纽约市鲍曼大坝控制系统</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-4.png" alt="图-4"></p>
 <p>鲍曼大坝位于纽约市以北不到20英里（合32公里）的地方，在2013年花费2百万美元修缮后，包含一个15英尺宽（1英尺=0.3048米），2.5英尺高的水闸，主要用于防洪，灌溉下游庄稼。</p>
-<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png" alt="图-5"></p>
+<p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-5.png" alt="图-5"></p>
 <p>2013年伊朗黑客利用Google搜索技巧确定了纽约市鲍曼大坝控制系统的系统漏洞。由于鲍曼大道水坝正在修复，在当时处于离网状态，任何尝试远程操纵的操作都会失败。伊朗黑客试图接管的举动还是引起了美国调查人员的不安。</p>
 <h3 id="2015-年俄罗斯攻击乌克兰电网"><a href="#2015-年俄罗斯攻击乌克兰电网" class="headerlink" title="2015 年俄罗斯攻击乌克兰电网"></a>2015 年俄罗斯攻击乌克兰电网</h3><p>2015年12月23日，乌克兰首都基辅部分地区和乌克兰西部的 140 万名居民断电数小时。电力系统是由发电、输电、变电、配电和用电连接成的统一整体，在整个电力系统中，几乎每个环节都依赖计算机技术的支撑，比如各级电网调度控制中心的计算机系统、变电站的计算机监控系统等。</p>
-<p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png" alt="图-6"><br><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png" alt="图-7"></p>
+<p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-6.png" alt="图-6"><br><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-7.png" alt="图-7"></p>
 <p>黑客通过邮件向电力公司员工发送了恶意的office文件，欺骗其下载了一款恶意软件“BlackEnergy”(黑暗力量)。该恶意软件最早可追溯到2007年，由俄罗斯地下黑客组织开发并广泛使用，包括用来“刺探”全球各国的电力公司。</p>
 <p>当天，黑客攻击了约60座变电站。黑客首先操作恶意软件将电力公司的主控电脑与变电站断连，随后又在系统中植入病毒，让电脑全体瘫痪。与此同时，黑客还对电力公司的电话通讯进行了干扰，导致受到停电影响的居民无法和电力公司进行联系。</p>
-<h3 id="2016-年俄罗斯操作美国总统大选"><a href="#2016-年俄罗斯操作美国总统大选" class="headerlink" title="2016 年俄罗斯操作美国总统大选"></a>2016 年俄罗斯操作美国总统大选</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png" alt="图-8"></p>
+<h3 id="2016-年俄罗斯操作美国总统大选"><a href="#2016-年俄罗斯操作美国总统大选" class="headerlink" title="2016 年俄罗斯操作美国总统大选"></a>2016 年俄罗斯操作美国总统大选</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-8.png" alt="图-8"></p>
 <p>俄罗斯黑客渗透进民主党全国委员会的电子邮件服务器，还入侵了希拉里·克林顿(Hillary Clinton)的竞选团队主席约翰·D·波德斯塔(John D. Podesta)的私人电子邮件帐户。</p>
 <p>没有证据表明来自俄罗斯或其他地方的黑客篡改了票数。俄罗斯“对选举采取黑客行动”，指的是某种比改变选票本身微妙得多的东西。</p>
 <p>告诉你什么是已知的东西，什么不是；还有什么是事实，什么是错误的理解。</p>
-<h3 id="2018-年沙特阿拉伯记者失踪事件"><a href="#2018-年沙特阿拉伯记者失踪事件" class="headerlink" title="2018 年沙特阿拉伯记者失踪事件"></a>2018 年沙特阿拉伯记者失踪事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png" alt="图-9"></p>
+<h3 id="2018-年沙特阿拉伯记者失踪事件"><a href="#2018-年沙特阿拉伯记者失踪事件" class="headerlink" title="2018 年沙特阿拉伯记者失踪事件"></a>2018 年沙特阿拉伯记者失踪事件</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-9.png" alt="图-9"></p>
 <p>卡舒吉在10月2日进入沙特驻伊斯坦布尔领事馆之后失踪。土耳其官方声称，已经掌握了卡舒吉在领馆内被谋杀的视频和音频证据。</p>
-<h3 id="NSA历史事件"><a href="#NSA历史事件" class="headerlink" title="NSA历史事件"></a>NSA历史事件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png" alt="图-10"></p>
+<h3 id="NSA历史事件"><a href="#NSA历史事件" class="headerlink" title="NSA历史事件"></a>NSA历史事件</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-10.png" alt="图-10"></p>
 <h4 id="网络漏洞流入"><a href="#网络漏洞流入" class="headerlink" title="网络漏洞流入"></a>网络漏洞流入</h4><ul>
 <li>经济刺激，赏金计划；</li>
 <li>文化吸引，名人堂+感谢信；</li>
 </ul>
 <h4 id="网络漏洞流出"><a href="#网络漏洞流出" class="headerlink" title="网络漏洞流出"></a>网络漏洞流出</h4><p>瓦森纳协定（Wassenaar Arrangement，WA） 对漏洞、零日漏洞、入侵软件进行开发、测试、评估、产品化现在都受到了限制。如果没有获得许可就开始出口，有可能被视为非法行为。</p>
-<h2 id="攻击场景"><a href="#攻击场景" class="headerlink" title="攻击场景"></a>攻击场景</h2><h3 id="攻击发起方式"><a href="#攻击发起方式" class="headerlink" title="攻击发起方式"></a>攻击发起方式</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png" alt="图-11"></p>
+<h2 id="攻击场景"><a href="#攻击场景" class="headerlink" title="攻击场景"></a>攻击场景</h2><h3 id="攻击发起方式"><a href="#攻击发起方式" class="headerlink" title="攻击发起方式"></a>攻击发起方式</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-11.png" alt="图-11"></p>
 <h3 id="安全三要素"><a href="#安全三要素" class="headerlink" title="安全三要素"></a>安全三要素</h3><ul>
 <li><p>保密性(Confidentiality)<br>很多网络攻击都是从窃取或复制目标的个人信息开始的，包括各种各样的犯罪攻击活动，如信用卡欺诈、身份盗窃、或盗取比特币钱包。国家间谍也将保密性攻击作为其工作的重要部分，试图获取政治、军事或经济利益方面的机密信息</p>
 </li>
@@ -314,28 +335,28 @@
 <li><p>可用性(Availability)<br>阻止目标访问数据是如今勒索软件和拒绝服务(DoS)攻击最常见的形式。勒索软件一般会加密目标设备的数据，并索要赎金进行解密。拒绝服务(DoS)攻击(通常以分布式拒绝服务攻击的形式)向目标发送大量的请求占用网络资源，使网络资源不可用。</p>
 </li>
 </ul>
-<h3 id="网络空间的三类威胁"><a href="#网络空间的三类威胁" class="headerlink" title="网络空间的三类威胁"></a>网络空间的三类威胁</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png" alt="图-12"></p>
+<h3 id="网络空间的三类威胁"><a href="#网络空间的三类威胁" class="headerlink" title="网络空间的三类威胁"></a>网络空间的三类威胁</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-12.png" alt="图-12"></p>
 <h4 id="探查、开采、利用"><a href="#探查、开采、利用" class="headerlink" title="探查、开采、利用"></a>探查、开采、利用</h4><p>从别人的网络中窃取信息，这是当前最普遍、最现实的威胁</p>
 <h4 id="中断、扰乱、否定"><a href="#中断、扰乱、否定" class="headerlink" title="中断、扰乱、否定"></a>中断、扰乱、否定</h4><p>通过僵尸网络、拒绝服务等手段，阻塞信道、占用服务器资源、毁坏数据和软件，使网络不能正常运转</p>
 <h4 id="摧毁、破坏、瘫痪"><a href="#摧毁、破坏、瘫痪" class="headerlink" title="摧毁、破坏、瘫痪"></a>摧毁、破坏、瘫痪</h4><p>典型的硬杀伤，通常会引起有形的物理毁坏、经济损失乃至人员伤亡。</p>
-<h3 id="网络空间四类可逆性攻击"><a href="#网络空间四类可逆性攻击" class="headerlink" title="网络空间四类可逆性攻击"></a>网络空间四类可逆性攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png" alt="图-13"></p>
+<h3 id="网络空间四类可逆性攻击"><a href="#网络空间四类可逆性攻击" class="headerlink" title="网络空间四类可逆性攻击"></a>网络空间四类可逆性攻击</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-13.png" alt="图-13"></p>
 <h4 id="锁定系统"><a href="#锁定系统" class="headerlink" title="锁定系统"></a>锁定系统</h4><p>使用仅由攻击者拥有的密钥加密来受害者的计算机操作系统以达到“锁定”效果</p>
 <h4 id="混淆数据"><a href="#混淆数据" class="headerlink" title="混淆数据:"></a>混淆数据:</h4><p>使用难以破译的算法或可逆的数据操作以混淆受害者的数据</p>
 <h4 id="拦截信息"><a href="#拦截信息" class="headerlink" title="拦截信息:"></a>拦截信息:</h4><p>拦截或扣留对受害者重要的关键信息，同时将其保存在备份中</p>
 <h4 id="拒绝服务"><a href="#拒绝服务" class="headerlink" title="拒绝服务:"></a>拒绝服务:</h4><p>欺骗受害者使得他们认为系统实际上是不可操作的。</p>
-<h3 id="网络空间四大基础应用"><a href="#网络空间四大基础应用" class="headerlink" title="网络空间四大基础应用"></a>网络空间四大基础应用</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png" alt="图-14"></p>
-<h3 id="APT攻击路径繁多载体多样"><a href="#APT攻击路径繁多载体多样" class="headerlink" title="APT攻击路径繁多载体多样"></a>APT攻击路径繁多载体多样</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png" alt="图-15"></p>
-<h2 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h2><h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png" alt="图-16"></p>
+<h3 id="网络空间四大基础应用"><a href="#网络空间四大基础应用" class="headerlink" title="网络空间四大基础应用"></a>网络空间四大基础应用</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-14.png" alt="图-14"></p>
+<h3 id="APT攻击路径繁多载体多样"><a href="#APT攻击路径繁多载体多样" class="headerlink" title="APT攻击路径繁多载体多样"></a>APT攻击路径繁多载体多样</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-15.png" alt="图-15"></p>
+<h2 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h2><h3 id="根域名服务器"><a href="#根域名服务器" class="headerlink" title="根域名服务器"></a>根域名服务器</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-16.png" alt="图-16"></p>
 <p>根域名服务器是互联网域名解析系统（DNS）中最高级别的域名服务器，负责返回顶级域的权威域名服务器地址。所有的域名解析操作都离不开它们，它们是互联网基础设施中的重要部分。根域名服务器地址的数量被限制为13个。</p>
-<h3 id="域名解析服务安全性改进"><a href="#域名解析服务安全性改进" class="headerlink" title="域名解析服务安全性改进"></a>域名解析服务安全性改进</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png" alt="图-17"></p>
+<h3 id="域名解析服务安全性改进"><a href="#域名解析服务安全性改进" class="headerlink" title="域名解析服务安全性改进"></a>域名解析服务安全性改进</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-17.png" alt="图-17"></p>
 <p>DNS 安全扩展 (DNS Security Extensions, DNSSEC)</p>
 <p>通过对数据进行数字“签名”来抵御DNS劫持攻击，从而确信数据有效。</p>
 <p>为了从互联网中消除该攻击，必须在从根区域到最终域名（例如， <a href="http://www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署" target="_blank" rel="noopener">www.h3c.com）的查找过程中的每一步部署该项技术。对根区域进行签名（在根区域部署</a> DNSSEC ）是整个过程中的必要步骤。</p>
 <p>该技术并不对数据进行加密，只是验证所访问的站点地址是否有效。</p>
 <p>2015年6月23日国际互联网名称与数字地址分配机构（ICANN）正式对外发布雪人计划 (Yeti DNS Project)。</p>
 <p>截至2017年11月27日，“雪人计划”已完成全球25台IPv6根服务器架设，其中中国部署4台。</p>
-<h3 id="关键基础设施"><a href="#关键基础设施" class="headerlink" title="关键基础设施"></a>关键基础设施</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png" alt="图-18"></p>
-<h3 id="暴露在-Internet-上的工控设备"><a href="#暴露在-Internet-上的工控设备" class="headerlink" title="暴露在 Internet 上的工控设备"></a>暴露在 Internet 上的工控设备</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png" alt="图-19"></p>
+<h3 id="关键基础设施"><a href="#关键基础设施" class="headerlink" title="关键基础设施"></a>关键基础设施</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-18.png" alt="图-18"></p>
+<h3 id="暴露在-Internet-上的工控设备"><a href="#暴露在-Internet-上的工控设备" class="headerlink" title="暴露在 Internet 上的工控设备"></a>暴露在 Internet 上的工控设备</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-19.png" alt="图-19"></p>
 <h3 id="基础设施脆弱点"><a href="#基础设施脆弱点" class="headerlink" title="基础设施脆弱点"></a>基础设施脆弱点</h3><h4 id="供应链"><a href="#供应链" class="headerlink" title="供应链"></a>供应链</h4><p>系统软硬件设备多种多样，来自系统内外、国内外的供应商，设备存在被预装恶意软件的风险，受攻击后，可能造成局部或系统性安全事故。</p>
 <h4 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h4><p>终端设备或系统的运营主体繁多、应用场景复杂，这都增加了其被恶意渗透或监听、控制的风险。</p>
 <h4 id="通信网络"><a href="#通信网络" class="headerlink" title="通信网络"></a>通信网络</h4><p>存在假冒终端、非授权人员非法接入、窃取信息的风险，导致通信网络设备运行异常或者中断。</p>
@@ -344,14 +365,14 @@
 <p>同一个生产流程，采用多套预备系统，分别采用不同国家的控制器，不同的操作系统、不同的软件逻辑。在这种情况下，机器的每一个动作都需要三套控制系统进行表决，如果有一套系统被攻击，给出异常的数据，那么它就会被表决踢出局。</p>
 <p>即使出现极端的情况：三个系统都遭到攻击，产生的结果全不一致，此时会自动调用备用系统。备用系统可以是一套隐藏系统，平时处于静默状态。攻击者根本感觉不到这套备用系统的存在，从而无法预先进行攻击。</p>
 <p>缺点: 投资巨大</p>
-<h3 id="可逆的-Satan-勒索软件"><a href="#可逆的-Satan-勒索软件" class="headerlink" title="可逆的 Satan 勒索软件"></a>可逆的 Satan 勒索软件</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png" alt="图-20"></p>
-<h3 id="20-个重要管控"><a href="#20-个重要管控" class="headerlink" title="20 个重要管控"></a>20 个重要管控</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png" alt="图-21"></p>
-<h3 id="攻击链模型"><a href="#攻击链模型" class="headerlink" title="攻击链模型"></a>攻击链模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png" alt="图-22"></p>
-<h3 id="入侵分析钻石扩展模型"><a href="#入侵分析钻石扩展模型" class="headerlink" title="入侵分析钻石扩展模型"></a>入侵分析钻石扩展模型</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png" alt="图-23"></p>
+<h3 id="可逆的-Satan-勒索软件"><a href="#可逆的-Satan-勒索软件" class="headerlink" title="可逆的 Satan 勒索软件"></a>可逆的 Satan 勒索软件</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-20.png" alt="图-20"></p>
+<h3 id="20-个重要管控"><a href="#20-个重要管控" class="headerlink" title="20 个重要管控"></a>20 个重要管控</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-21.png" alt="图-21"></p>
+<h3 id="攻击链模型"><a href="#攻击链模型" class="headerlink" title="攻击链模型"></a>攻击链模型</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-22.png" alt="图-22"></p>
+<h3 id="入侵分析钻石扩展模型"><a href="#入侵分析钻石扩展模型" class="headerlink" title="入侵分析钻石扩展模型"></a>入侵分析钻石扩展模型</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-23.png" alt="图-23"></p>
 <p>2013年塞尔吉奥 卡尔塔吉罗(Sergio Caltagirone）提出的入侵分析钻石模型</p>
-<h3 id="以受害者为中心的分析方法"><a href="#以受害者为中心的分析方法" class="headerlink" title="以受害者为中心的分析方法"></a>以受害者为中心的分析方法</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png" alt="图-24"></p>
+<h3 id="以受害者为中心的分析方法"><a href="#以受害者为中心的分析方法" class="headerlink" title="以受害者为中心的分析方法"></a>以受害者为中心的分析方法</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-24.png" alt="图-24"></p>
 <p>大多数组织，执行的网络上和主机内的检测和防御行为，属于以受害者为中心的方法。</p>
-<h3 id="使用攻击链与钻石模型复现分析攻击"><a href="#使用攻击链与钻石模型复现分析攻击" class="headerlink" title="使用攻击链与钻石模型复现分析攻击"></a>使用攻击链与钻石模型复现分析攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png" alt="图-25"></p>
+<h3 id="使用攻击链与钻石模型复现分析攻击"><a href="#使用攻击链与钻石模型复现分析攻击" class="headerlink" title="使用攻击链与钻石模型复现分析攻击"></a>使用攻击链与钻石模型复现分析攻击</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-25.png" alt="图-25"></p>
 <ol>
 <li>攻击者使用扫描技术发现一个受害者IP地址；</li>
 <li>攻击者向受害者IP地址投递攻击载荷；</li>
@@ -361,13 +382,60 @@
 <li>受害者设备被用于横向扫描;</li>
 <li>受害者设备被当做跳板肉鸡向外投递攻击载荷。</li>
 </ol>
-<h3 id="使用威胁指示器防御攻击"><a href="#使用威胁指示器防御攻击" class="headerlink" title="使用威胁指示器防御攻击"></a>使用威胁指示器防御攻击</h3><p><img src="/2018/10/28/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png" alt="图-26"></p>
+<h3 id="使用威胁指示器防御攻击"><a href="#使用威胁指示器防御攻击" class="headerlink" title="使用威胁指示器防御攻击"></a>使用威胁指示器防御攻击</h3><p><img src="/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/%E5%9B%BE-26.png" alt="图-26"></p>
 
     </div>
 
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 安全边界，过犹不及。正文结束，感谢观赏。 ------</div>
+    
+</div>
+      
+    </div>
+  
     
     
     
+        <div class="reward-container">
+  <div>你看到的我<br>是哪一种颜色，悲伤或快乐<br>我偶尔沉默，但也勇敢执着<br>热血依然沸腾着我的脉搏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="stxletto 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="stxletto 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>stxletto
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.stxletto.com/posts/%E5%8F%AF%E9%80%86%E6%80%A7%E7%BD%91%E7%BB%9C%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1/" title="可逆性网络攻击与防御">http://www.stxletto.com/posts/可逆性网络攻击与防御/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
 
@@ -378,13 +446,14 @@
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/08/08/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" rel="next" title="关于一宗门罗币挖矿安全事件的分析报告">
+    <a href="/posts/%E5%85%B3%E4%BA%8E%E4%B8%80%E5%AE%97%E9%97%A8%E7%BD%97%E5%B8%81%E6%8C%96%E7%9F%BF%E5%AE%89%E5%85%A8%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/" rel="next" title="关于一宗门罗币挖矿安全事件的分析报告">
       关于一宗门罗币挖矿安全事件的分析报告 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
     
   </article>
+ 
   
   
   
@@ -494,11 +563,41 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">stxletto</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">52k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">47 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 

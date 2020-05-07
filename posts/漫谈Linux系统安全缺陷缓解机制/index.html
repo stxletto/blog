@@ -22,12 +22,12 @@
 
   <meta name="description" content="现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux系统安全缺陷缓解机制">
-<meta property="og:url" content="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:title" content="漫谈Linux系统安全缺陷缓解机制">
+<meta property="og:url" content="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="深澜深蓝">
 <meta property="og:description" content="现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png">
+<meta property="og:image" content="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png">
 <meta property="article:published_time" content="2020-04-28T00:00:00.000Z">
 <meta property="article:modified_time" content="2020-04-28T00:00:00.000Z">
 <meta property="article:author" content="stxletto">
@@ -38,9 +38,9 @@
 <meta property="article:tag" content="识别">
 <meta property="article:tag" content="检测">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png">
+<meta name="twitter:image" content="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png">
 
-<link rel="canonical" href="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/">
+<link rel="canonical" href="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/">
 
 
 <script id="page-configurations">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>Linux系统安全缺陷缓解机制 | 深澜深蓝</title>
+  <title>漫谈Linux系统安全缺陷缓解机制 | 深澜深蓝</title>
   
 
 
@@ -163,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -176,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linux系统安全缺陷缓解机制
+          漫谈Linux系统安全缺陷缓解机制
         </h1>
 
         <div class="post-meta">
@@ -190,7 +190,28 @@
             </span>
 
           
-            <div class="post-description">现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</div>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+            <div class="post-description">现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。例如只读重定位(RELRO，RELocation Read-Only)，禁止执行(NX，NoExecute)，栈保护(Canaries)，地址空间布局随机化(ASLR，Address Space Layout Randomization)和位置无关可执行文件(PIE，Position Independent Executables)之类的缓解措施，本文主要介绍了Linux系统中相关安全缺陷缓解机制。</div>
 
         </div>
       </header>
@@ -201,7 +222,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Linux系统安全缺陷缓解机制"><a href="#Linux系统安全缺陷缓解机制" class="headerlink" title="Linux系统安全缺陷缓解机制"></a>Linux系统安全缺陷缓解机制</h1><p>现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。 例如只读重定位（RELRO，RELocation Read-Only），禁止执行（NX，NoExecute），栈保护（Canaries），地址空间布局随机化（ASLR，Address Space Layout Randomization）和位置无关可执行文件（PIE，Position Independent Executables）之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</p>
+        <h1 id="漫谈Linux系统安全缺陷缓解机制"><a href="#漫谈Linux系统安全缺陷缓解机制" class="headerlink" title="漫谈Linux系统安全缺陷缓解机制"></a>漫谈Linux系统安全缺陷缓解机制</h1><p>现代Linux发行版提供了一些缓解技术，使更难稳定利用软件漏洞。 例如只读重定位（RELRO，RELocation Read-Only），禁止执行（NX，NoExecute），栈保护（Canaries），地址空间布局随机化（ASLR，Address Space Layout Randomization）和位置无关可执行文件（PIE，Position Independent Executables）之类的缓解措施，已经使稳定利已知漏洞的挑战的更加困难。</p>
 <h2 id="1-用户空间强化-Userspace-Hardening"><a href="#1-用户空间强化-Userspace-Hardening" class="headerlink" title="1 用户空间强化(Userspace Hardening)"></a>1 用户空间强化(Userspace Hardening)</h2><p>通过用于构建软件包的默认编译器标志以及Ubuntu内核，可以启用许多安全特性。 注意：Ubuntu的编译器强化不仅适用于其官方发布的程序，也适用于使用其编译器在Ubuntu上构建的任何内容。</p>
 <h3 id="1-1-栈的保护-Stack-Protector"><a href="#1-1-栈的保护-Stack-Protector" class="headerlink" title="1.1 栈的保护(Stack Protector)"></a>1.1 栈的保护(Stack Protector)</h3><p>很久之前，矿工在煤井中挖煤时，经常遇到瓦斯泄露的安全事故。后来有人发现一种鸟–金丝雀对瓦斯很敏感。于是矿工就用它作为安全报警装置。</p>
 <p>Stack Protector又名canary、stack cookie等，gcc中的-fstack-protector参数提供了一个随机的栈金丝雀(stack canary)，类似于Windows平台下Visual Studio中的GS。</p>
@@ -319,20 +340,62 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$checksec --file&#x3D;&#x2F;bin&#x2F;ls</span><br><span class="line">RELRO           STACK CANARY      NX            PIE             RPATH      RUNPATH      FILE</span><br><span class="line">Partial RELRO   Canary found      NX enabled    No PIE          No RPATH   No RUNPATH   &#x2F;bin&#x2F;ls</span><br></pre></td></tr></table></figure>
 
 <p>一般来说，也可以使用gdb中peda插件自带的checksec功能，如下图所示：</p>
-<p><img src="/2020/04/28/Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png" alt="图 1"></p>
+<p><img src="/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/%E5%9B%BE-1.png" alt="图 1"></p>
 <p>上图所示的<font color="red"><strong>CANARY: disabled</strong></font>表示没有开启栈保护特性。</p>
-<h2 id="4-参考和引用"><a href="#4-参考和引用" class="headerlink" title="4 参考和引用"></a>4 参考和引用</h2><p><a href="https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/</a></p>
-<p><a href="https://www.infoq.cn/article/Linux-PaX-Grsecurity/" target="_blank" rel="noopener">https://www.infoq.cn/article/Linux-PaX-Grsecurity/</a></p>
-<p><a href="https://blog.csdn.net/zsj2102/article/details/78734981" target="_blank" rel="noopener">https://blog.csdn.net/zsj2102/article/details/78734981</a></p>
-<p><a href="https://bbs.pediy.com/thread-226696.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-226696.htm</a></p>
-<p><a href="https://wiki.ubuntu.com/Security/Features" target="_blank" rel="noopener">https://wiki.ubuntu.com/Security/Features</a></p>
-<p><a href="https://manybutfinite.com/post/anatomy-of-a-program-in-memory/" target="_blank" rel="noopener">https://manybutfinite.com/post/anatomy-of-a-program-in-memory/</a></p>
+<h2 id="4-参考和引用"><a href="#4-参考和引用" class="headerlink" title="4 参考和引用"></a>4 参考和引用</h2><p><a href="https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">https://introspelliam.github.io/2017/09/30/linux%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/</a><br><a href="https://www.infoq.cn/article/Linux-PaX-Grsecurity/" target="_blank" rel="noopener">https://www.infoq.cn/article/Linux-PaX-Grsecurity/</a><br><a href="https://blog.csdn.net/zsj2102/article/details/78734981" target="_blank" rel="noopener">https://blog.csdn.net/zsj2102/article/details/78734981</a><br><a href="https://bbs.pediy.com/thread-226696.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-226696.htm</a><br><a href="https://wiki.ubuntu.com/Security/Features" target="_blank" rel="noopener">https://wiki.ubuntu.com/Security/Features</a><br><a href="https://manybutfinite.com/post/anatomy-of-a-program-in-memory/" target="_blank" rel="noopener">https://manybutfinite.com/post/anatomy-of-a-program-in-memory/</a></p>
 
     </div>
 
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------ 安全边界，过犹不及。正文结束，感谢观赏。 ------</div>
+    
+</div>
+      
+    </div>
+  
     
     
     
+        <div class="reward-container">
+  <div>你看到的我<br>是哪一种颜色，悲伤或快乐<br>我偶尔沉默，但也勇敢执着<br>热血依然沸腾着我的脉搏</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="stxletto 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="stxletto 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>stxletto
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.stxletto.com/posts/%E6%BC%AB%E8%B0%88Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E7%BC%BA%E9%99%B7%E7%BC%93%E8%A7%A3%E6%9C%BA%E5%88%B6/" title="漫谈Linux系统安全缺陷缓解机制">http://www.stxletto.com/posts/漫谈Linux系统安全缺陷缓解机制/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
       <footer class="post-footer">
 
@@ -342,7 +405,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/21/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" rel="prev" title="漏洞利用视角下的CVE-2020-0796漏洞">
+    <a href="/posts/%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E8%A7%86%E8%A7%92%E4%B8%8B%E7%9A%84CVE-2020-0796%E6%BC%8F%E6%B4%9E/" rel="prev" title="漏洞利用视角下的CVE-2020-0796漏洞">
       <i class="fa fa-chevron-left"></i> 漏洞利用视角下的CVE-2020-0796漏洞
     </a></div>
       <div class="post-nav-item"></div>
@@ -350,6 +413,7 @@
       </footer>
     
   </article>
+ 
   
   
   
@@ -404,7 +468,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux系统安全缺陷缓解机制"><span class="nav-text">Linux系统安全缺陷缓解机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-用户空间强化-Userspace-Hardening"><span class="nav-text">1 用户空间强化(Userspace Hardening)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-栈的保护-Stack-Protector"><span class="nav-text">1.1 栈的保护(Stack Protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-堆的保护-Heap-Protector"><span class="nav-text">1.2 堆的保护(Heap Protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-指针混淆-Pointer-Obfuscation"><span class="nav-text">1.3 指针混淆(Pointer Obfuscation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-不可执行内存-Non-Executable-Memory"><span class="nav-text">1.4 不可执行内存(Non-Executable Memory)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-地址空间布局随机化-Address-Space-Layout-Randomisation"><span class="nav-text">1.5 地址空间布局随机化(Address Space Layout Randomisation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-栈的ASLR"><span class="nav-text">1.5.1 栈的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-2-LIBS-MMAP的ASLR"><span class="nav-text">1.5.2 LIBS&#x2F;MMAP的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-EXEC的ASLR"><span class="nav-text">1.5.3 EXEC的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-4-BRK的ASLR"><span class="nav-text">1.5.4 BRK的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-5-VDSO的ASLR"><span class="nav-text">1.5.5 VDSO的ASLR</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-编译时强化-Built-with"><span class="nav-text">1.6 编译时强化(Built with)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-1-编译时使用PIE参数-Built-as-PIE"><span class="nav-text">1.6.1 编译时使用PIE参数(Built as PIE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-编译时使用Fortify-Source参数-Built-with-Fortify-Source"><span class="nav-text">1.6.2 编译时使用Fortify Source参数(Built with Fortify Source)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-3-编译时使用RELRO参数-Built-with-RELRO"><span class="nav-text">1.6.3 编译时使用RELRO参数(Built with RELRO)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-4-编译时使用BIND-NOW参数-Built-with-BIND-NOW"><span class="nav-text">1.6.4 编译时使用BIND_NOW参数(Built with BIND_NOW)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-5-编译时使用fstack-clash参数-Built-with-fstack-clash-protection"><span class="nav-text">1.6.5 编译时使用fstack-clash参数(Built with -fstack-clash-protection)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-6-编译时使用-fcf-protection参数-Built-with-fcf-protection"><span class="nav-text">1.6.6 编译时使用-fcf-protection参数(Built with -fcf-protection)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-内核强化-Kernel-Hardening"><span class="nav-text">2 内核强化(Kernel Hardening)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-零地址保护-0-address-protection"><span class="nav-text">2.1 零地址保护(0-address protection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-dev-mem保护-dev-mem-protection"><span class="nav-text">2.2 &#x2F;dev&#x2F;mem保护(&#x2F;dev&#x2F;mem protection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-禁用-dev-kmem-dev-kmem-disabled"><span class="nav-text">2.3 禁用&#x2F;dev&#x2F;kmem(&#x2F;dev&#x2F;kmem disabled)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-禁止模块加载-Block-module-loading"><span class="nav-text">2.4 禁止模块加载(Block module loading)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-只读数据节-Read-only-data-sections"><span class="nav-text">2.5 只读数据节(Read-only data sections)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-栈的保护-Stack-protector"><span class="nav-text">2.6 栈的保护(Stack protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-模块只读或不可执行-Module-RO-NX"><span class="nav-text">2.7 模块只读或不可执行(Module RO&#x2F;NX)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-限制内核地址显示-Kernel-Address-Display-Restriction"><span class="nav-text">2.8 限制内核地址显示(Kernel Address Display Restriction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-内核地址空间布局随机化-Kernel-Address-Space-Layout-Randomisation"><span class="nav-text">2.9 内核地址空间布局随机化(Kernel Address Space Layout Randomisation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-冷门协议黑名单-Blacklist-Rare-Protocols"><span class="nav-text">2.10 冷门协议黑名单(Blacklist Rare Protocols)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-过滤系统调用-Syscall-Filtering"><span class="nav-text">2.11 过滤系统调用(Syscall Filtering)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-限制dmesg-dmesg-restrictions"><span class="nav-text">2.12 限制dmesg(dmesg restrictions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-禁止kexec-Block-kexec"><span class="nav-text">2.13 禁止kexec(Block kexec)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-14-UEFI安全启动-UEFI-Secure-Boot"><span class="nav-text">2.14 UEFI安全启动(UEFI Secure Boot)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15-内核页表隔离-Kernel-PageTable-Isolation"><span class="nav-text">2.15 内核页表隔离(Kernel PageTable Isolation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-16-SMAP-SMEP"><span class="nav-text">2.16 SMAP&#x2F;SMEP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-checksec"><span class="nav-text">3 checksec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-参考和引用"><span class="nav-text">4 参考和引用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#漫谈Linux系统安全缺陷缓解机制"><span class="nav-text">漫谈Linux系统安全缺陷缓解机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-用户空间强化-Userspace-Hardening"><span class="nav-text">1 用户空间强化(Userspace Hardening)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-栈的保护-Stack-Protector"><span class="nav-text">1.1 栈的保护(Stack Protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-堆的保护-Heap-Protector"><span class="nav-text">1.2 堆的保护(Heap Protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-指针混淆-Pointer-Obfuscation"><span class="nav-text">1.3 指针混淆(Pointer Obfuscation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-不可执行内存-Non-Executable-Memory"><span class="nav-text">1.4 不可执行内存(Non-Executable Memory)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-地址空间布局随机化-Address-Space-Layout-Randomisation"><span class="nav-text">1.5 地址空间布局随机化(Address Space Layout Randomisation)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-栈的ASLR"><span class="nav-text">1.5.1 栈的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-2-LIBS-MMAP的ASLR"><span class="nav-text">1.5.2 LIBS&#x2F;MMAP的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-3-EXEC的ASLR"><span class="nav-text">1.5.3 EXEC的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-4-BRK的ASLR"><span class="nav-text">1.5.4 BRK的ASLR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-5-VDSO的ASLR"><span class="nav-text">1.5.5 VDSO的ASLR</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-编译时强化-Built-with"><span class="nav-text">1.6 编译时强化(Built with)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-1-编译时使用PIE参数-Built-as-PIE"><span class="nav-text">1.6.1 编译时使用PIE参数(Built as PIE)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-编译时使用Fortify-Source参数-Built-with-Fortify-Source"><span class="nav-text">1.6.2 编译时使用Fortify Source参数(Built with Fortify Source)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-3-编译时使用RELRO参数-Built-with-RELRO"><span class="nav-text">1.6.3 编译时使用RELRO参数(Built with RELRO)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-4-编译时使用BIND-NOW参数-Built-with-BIND-NOW"><span class="nav-text">1.6.4 编译时使用BIND_NOW参数(Built with BIND_NOW)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-5-编译时使用fstack-clash参数-Built-with-fstack-clash-protection"><span class="nav-text">1.6.5 编译时使用fstack-clash参数(Built with -fstack-clash-protection)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-6-编译时使用-fcf-protection参数-Built-with-fcf-protection"><span class="nav-text">1.6.6 编译时使用-fcf-protection参数(Built with -fcf-protection)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-内核强化-Kernel-Hardening"><span class="nav-text">2 内核强化(Kernel Hardening)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-零地址保护-0-address-protection"><span class="nav-text">2.1 零地址保护(0-address protection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-dev-mem保护-dev-mem-protection"><span class="nav-text">2.2 &#x2F;dev&#x2F;mem保护(&#x2F;dev&#x2F;mem protection)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-禁用-dev-kmem-dev-kmem-disabled"><span class="nav-text">2.3 禁用&#x2F;dev&#x2F;kmem(&#x2F;dev&#x2F;kmem disabled)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-禁止模块加载-Block-module-loading"><span class="nav-text">2.4 禁止模块加载(Block module loading)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-只读数据节-Read-only-data-sections"><span class="nav-text">2.5 只读数据节(Read-only data sections)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-栈的保护-Stack-protector"><span class="nav-text">2.6 栈的保护(Stack protector)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-模块只读或不可执行-Module-RO-NX"><span class="nav-text">2.7 模块只读或不可执行(Module RO&#x2F;NX)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-8-限制内核地址显示-Kernel-Address-Display-Restriction"><span class="nav-text">2.8 限制内核地址显示(Kernel Address Display Restriction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-9-内核地址空间布局随机化-Kernel-Address-Space-Layout-Randomisation"><span class="nav-text">2.9 内核地址空间布局随机化(Kernel Address Space Layout Randomisation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-10-冷门协议黑名单-Blacklist-Rare-Protocols"><span class="nav-text">2.10 冷门协议黑名单(Blacklist Rare Protocols)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-11-过滤系统调用-Syscall-Filtering"><span class="nav-text">2.11 过滤系统调用(Syscall Filtering)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-12-限制dmesg-dmesg-restrictions"><span class="nav-text">2.12 限制dmesg(dmesg restrictions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-13-禁止kexec-Block-kexec"><span class="nav-text">2.13 禁止kexec(Block kexec)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-14-UEFI安全启动-UEFI-Secure-Boot"><span class="nav-text">2.14 UEFI安全启动(UEFI Secure Boot)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-15-内核页表隔离-Kernel-PageTable-Isolation"><span class="nav-text">2.15 内核页表隔离(Kernel PageTable Isolation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-16-SMAP-SMEP"><span class="nav-text">2.16 SMAP&#x2F;SMEP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-checksec"><span class="nav-text">3 checksec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-参考和引用"><span class="nav-text">4 参考和引用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -459,11 +523,41 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">stxletto</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">52k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">47 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
