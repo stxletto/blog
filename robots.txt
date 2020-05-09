@@ -1,0 +1,12 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /posts/
+Allow: /about/
+Disallow: /css/
+Disallow: /images/
+Disallow: /js/
+Disallow: /lib/
+Sitemap: http://www.stxletto.com/sitemap.xml
+Sitemap: http://www.stxletto.com/baidusitemap.xml
